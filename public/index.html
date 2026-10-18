@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0b0c10" />
+  <meta name="application-name" content="BookFlix" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="BookFlix" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <title>BookFlix</title>
+  <link rel="manifest" href="/manifest.json?v=17" />
+  <link rel="icon" type="image/svg+xml" href="/logo.svg?v=17" />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico?v=17" />
+  <link rel="shortcut icon" href="/favicon.ico?v=17" />
+  <link rel="apple-touch-icon" href="/logo.svg?v=17" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Outfit:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" defer></script>
+  <link rel="stylesheet" href="/styles.css?v=28" />
+</head>
+<body>
+  <!-- MATTE FINISH CONTRAST BACKGROUND CANVAS -->
+  <div class="ambient-canvas" aria-hidden="true">
+    <div class="ambient-orb orb-1"></div>
+    <div class="ambient-orb orb-2"></div>
+    <div class="ambient-orb orb-3"></div>
+  </div>
+
+  <!-- ========================================================================
+       JIOHOTSTAR-STYLE EXPANDING LEFT GLASS MENU RAIL
+  ========================================================================= -->
+  <aside class="hotstar-rail" id="sideRail">
+    <div class="rail-backdrop"></div>
+
+    <!-- Top Brand Logo: Apple Liquid Glass Squircle Emblem + Dual-Tone Wordmark -->
+    <a href="#" class="rail-brand" id="logoBtn" title="BookFlix Home">
+      <div class="rail-logo-mark">
+        <img src="/logo.svg?v=16" alt="BookFlix" class="brand-logo-svg" />
+      </div>
+      <div class="rail-label brand-lockup">
+        <div class="brand-wordmark">
+          <span class="brand-word-book">BOOK</span><span class="brand-word-flix">FLIX</span>
+        </div>
+        <span class="brand-subtag">DIGITAL LIBRARY</span>
+      </div>
+    </a>
+
+    <!-- Center Navigation Icons (Expands on Hover like JioHotstar) -->
+    <nav class="rail-nav">
+      <button class="rail-item active" data-tab="home">
+        <span class="rail-icon">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+          </svg>
+        </span>
+        <span class="rail-label">Home</span>
+      </button>
+
+      <button class="rail-item" data-tab="ebook">
+        <span class="rail-icon">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path>
+          </svg>
+        </span>
+        <span class="rail-label">Books</span>
+      </button>
+
+      <button class="rail-item" data-tab="manga">
+        <span class="rail-icon">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+          </svg>
+        </span>
+        <span class="rail-label">Manga</span>
+      </button>
+
+      <button class="rail-item" data-tab="comic">
+        <span class="rail-icon">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+          </svg>
+        </span>
+        <span class="rail-label">Comics</span>
+      </button>
+
+      <button class="rail-item" data-tab="audiobook">
+        <span class="rail-icon">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
+            <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
+          </svg>
+        </span>
+        <span class="rail-label">Audiobooks</span>
+      </button>
+
+      <button class="rail-item" data-tab="categories">
+        <span class="rail-icon">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="7" height="7" rx="1.5"></rect>
+            <rect x="14" y="3" width="7" height="7" rx="1.5"></rect>
+            <rect x="14" y="14" width="7" height="7" rx="1.5"></rect>
+            <rect x="3" y="14" width="7" height="7" rx="1.5"></rect>
+          </svg>
+        </span>
+        <span class="rail-label">Categories</span>
+      </button>
+
+      <button class="rail-item" data-tab="mylist">
+        <span class="rail-icon">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+          </svg>
+        </span>
+        <span class="rail-label">My Space <span id="myListCount" class="rail-badge">0</span></span>
+      </button>
+
+      <button class="rail-item rail-install-btn hidden" id="railInstallAppBtn" title="Install BookFlix as an App">
+        <span class="rail-icon">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+        </span>
+        <span class="rail-label">Install App</span>
+      </button>
+    </nav>
+  </aside>
+
+  <!-- ========================================================================
+       MAIN STAGE (OFFSET FOR JIOHOTSTAR LEFT RAIL)
+  ========================================================================= -->
+  <div class="stage-container">
+    <!-- TOP FLOATING SEARCH & SUGGESTIONS BAR -->
+    <div class="top-search-strip">
+      <a href="#" class="mobile-brand-pill" id="mobileLogoBtn" title="BookFlix Home">
+        <img src="/logo.svg?v=17" alt="BookFlix" class="mobile-brand-img" />
+        <span class="mobile-brand-text"><span class="brand-word-book">BOOK</span><span class="brand-word-flix">FLIX</span></span>
+      </a>
+      <div class="search-wrapper" id="searchWrapper">
+        <form class="search-box" id="searchForm">
+          <svg class="search-lead-icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input
+            type="text"
+            id="searchInput"
+            placeholder="Search books, series, manga, comics, or authors..."
+            autocomplete="off"
+          />
+          <button type="button" class="search-clear-btn hidden" id="searchClearBtn" title="Clear">×</button>
+          <select id="searchCategory" class="search-select" aria-label="Category">
+            <option value="all">All</option>
+            <option value="ebook">Books</option>
+            <option value="manga">Manga</option>
+            <option value="comic">Comics</option>
+            <option value="audiobook">Audiobooks</option>
+          </select>
+        </form>
+
+        <!-- LIVE INSTANT SEARCH SUGGESTIONS DROPDOWN -->
+        <div class="search-dropdown hidden" id="searchDropdown">
+          <div class="dropdown-header">
+            <span id="dropdownStatusText">Suggestions</span>
+            <span class="dropdown-hint">Press Enter for all results</span>
+          </div>
+          <div class="dropdown-list" id="dropdownList"></div>
+        </div>
+      </div>
+
+      <!-- APPLE LIQUID GLASS TOP UTILITY BAR -->
+      <div class="top-utility-bar" id="topUtilityBar">
+        <!-- Single Quick Category Segmented Control -->
+        <div class="top-segmented-control" id="topSegmentedControl" role="tablist" aria-label="Media Category">
+          <button type="button" class="seg-pill active" data-cat="home">All</button>
+          <button type="button" class="seg-pill" data-cat="ebook">Books</button>
+          <button type="button" class="seg-pill" data-cat="manga">Manga</button>
+          <button type="button" class="seg-pill" data-cat="comic">Comics</button>
+          <button type="button" class="seg-pill" data-cat="audiobook">Audiobooks</button>
+        </div>
+
+        <!-- Quick Actions: Surprise Me + Resume + Host on Local Network QR -->
+        <div class="top-quick-actions">
+          <button type="button" class="top-action-btn" id="surpriseMeBtn" title="Open a random featured book, manga, or audiobook">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="16 3 21 3 21 8"></polyline>
+              <line x1="4" y1="20" x2="21" y2="3"></line>
+              <polyline points="21 16 21 21 16 21"></polyline>
+              <line x1="15" y1="15" x2="21" y2="21"></line>
+              <line x1="4" y1="4" x2="9" y2="9"></line>
+            </svg>
+            <span>Surprise Me</span>
+          </button>
+
+          <button type="button" class="top-action-btn" id="topResumeBtn" title="Resume your last opened title">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+            <span id="topResumeLabel">Resume Read</span>
+          </button>
+
+          <button type="button" class="top-action-btn top-qr-btn" id="lanQrBtn" title="Share on Local Wi-Fi (QR Code & Link for Phone / Tablet / Other PC)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="7" height="7"></rect>
+              <rect x="14" y="3" width="7" height="7"></rect>
+              <rect x="14" y="14" width="7" height="7"></rect>
+              <rect x="3" y="14" width="7" height="7"></rect>
+              <path d="M7 7h.01M17 7h.01M7 17h.01"></path>
+            </svg>
+            <span>Devices &amp; QR</span>
+          </button>
+
+          <button type="button" class="top-action-btn install-pwa-btn hidden" id="topInstallAppBtn" title="Install BookFlix as an App on Phone, Tablet or PC">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            <span>Install App</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======================================================================
+         HERO BANNER WITH 3D BOOK SHOWCASE & SUGGESTION CAROUSEL
+    ======================================================================= -->
+    <section class="hero-wrapper" id="heroSection">
+      <div class="hero" id="heroBanner">
+        <div
+          class="hero-backdrop"
+          id="heroBackdrop"
+          style="background-image: url('https://images.unsplash.com/photo-1507842229356-51c61504d3ab?auto=format&fit=crop&w=1600&q=80');"
+        ></div>
+        <div class="hero-gradient"></div>
+
+        <!-- Left: Featured Book Details & Actions -->
+        <div class="hero-content" id="heroContentBox">
+          <div class="hero-badges">
+            <span class="hero-match" id="heroCategoryPill">FEATURED CLASSIC</span>
+            <span class="hero-tag" id="heroAuthorBadge">Arthur Conan Doyle</span>
+            <span class="hero-tag" id="heroFormatBadge">PDF • EPUB • AUDIO</span>
+            <span class="hero-tag" id="heroRatingBadge">Rating 4.9</span>
+          </div>
+          <h1 class="hero-title" id="heroTitle">The Adventures of Sherlock Holmes</h1>
+          <p class="hero-desc" id="heroDesc">
+            Step into Victorian London’s most iconic detective cases. Read the complete illustrated edition in interactive 2-page flip, Flow Reader, or listen to the unabridged audiobook.
+          </p>
+          <div class="hero-actions" id="heroActions">
+            <button type="button" class="btn btn-primary" id="heroReadBtn">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+              <span id="heroReadBtnLabel">Read Now</span>
+            </button>
+            <button type="button" class="btn btn-secondary" id="heroSaveBtn">
+              Save to My Space
+            </button>
+          </div>
+        </div>
+
+        <!-- Right: 3D Floating Book Cover + Suggestion Thumbnail Switcher -->
+        <div class="hero-right-column">
+          <div class="hero-cover-showcase" id="heroCoverShowcase" title="Click to open">
+            <img
+              id="heroCoverPreview"
+              class="hero-cover-img"
+              src="https://archive.org/services/img/adventuresofsher00doylrich"
+              alt="Featured Cover"
+            />
+          </div>
+
+          <!-- Suggestion Carousel Strip (Bottom Right) -->
+          <div class="hero-carousel-dock">
+            <button type="button" class="hero-nav-arrow" id="heroPrevBtn" title="Previous Suggestion" aria-label="Previous">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            </button>
+            <div class="hero-thumbs-strip" id="heroThumbsStrip"></div>
+            <button type="button" class="hero-nav-arrow" id="heroNextBtn" title="Next Suggestion" aria-label="Next">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="main-content" id="mainContent">
+      <!-- Continue Reading Row -->
+      <section class="catalog-row hidden" id="continueRow">
+        <div class="row-header">
+          <h2>Continue Reading</h2>
+          <button class="clear-history-btn" id="clearHistoryBtn">Clear</button>
+        </div>
+        <div class="row-scroller" id="continueScroller"></div>
+      </section>
+
+      <!-- Search Results & Discover Search View -->
+      <section class="search-results-section hidden" id="searchResultsSection">
+        <div class="search-header">
+          <div>
+            <h2 id="searchResultsTitle">Search Results</h2>
+            <p id="searchResultsSubtitle" class="search-subtitle"></p>
+          </div>
+          <div class="search-controls-bar">
+            <select id="searchSortSelect" class="chapter-select" aria-label="Sort Results">
+              <option value="relevance">Best Match</option>
+              <option value="title">Title (A–Z)</option>
+              <option value="rating">Top Rated</option>
+            </select>
+            <button class="btn btn-secondary btn-sm" id="closeSearchBtn">Back to Home</button>
+          </div>
+        </div>
+
+        <!-- #1 Exact Match Featured Banner -->
+        <div id="topMatchSpotlight" class="top-match-card hidden"></div>
+
+        <!-- Results Grid -->
+        <div class="results-grid" id="searchResultsGrid"></div>
+
+        <!-- Infinite Scroll & Load More Pagination Footer -->
+        <div class="load-more-wrap hidden" id="loadMoreWrap">
+          <button type="button" class="btn btn-secondary load-more-btn" id="loadMoreBtn">
+            <span id="loadMoreBtnText">Load More Titles</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Categories & Genres Hub (JioHotstar Style) -->
+      <section class="sources-section hidden" id="categoriesSection">
+        <div class="search-header">
+          <div>
+            <h2>Browse by Category & Genre</h2>
+            <p class="search-subtitle">Select any collection or connected provider below to explore.</p>
+          </div>
+        </div>
+
+        <div class="genre-cards-grid" id="genreCardsGrid">
+          <div class="genre-tile" data-q="Bestseller Fiction Literature Novel" data-type="ebook" data-heading="Fiction & Bestsellers">
+            <div class="genre-tile-title">Fiction & Literature</div>
+            <div class="genre-tile-sub">Novels, Thrillers & Classics</div>
+          </div>
+          <div class="genre-tile" data-q="Python Algorithms Machine Learning Computer Science" data-type="ebook" data-heading="Computer Science & AI">
+            <div class="genre-tile-title">Computer Science & AI</div>
+            <div class="genre-tile-sub">Coding, Systems & Engineering</div>
+          </div>
+          <div class="genre-tile" data-q="One Punch Man Naruto Berserk Solo Leveling" data-type="manga" data-heading="Manga & Manhwa">
+            <div class="genre-tile-title">Manga & Webtoons</div>
+            <div class="genre-tile-sub">Shonen, Seinen & Manhwa</div>
+          </div>
+          <div class="genre-tile" data-q="Batman Spider-Man X-Men Marvel DC" data-type="comic" data-heading="Superhero & Graphic Novels">
+            <div class="genre-tile-title">Marvel, DC & Indie Comics</div>
+            <div class="genre-tile-sub">Full Issues & Omnibuses</div>
+          </div>
+          <div class="genre-tile" data-q="Harry Potter Percy Jackson Stephen King Sherlock" data-type="audiobook" data-heading="Full-Length Audiobooks">
+            <div class="genre-tile-title">Audiobooks Studio</div>
+            <div class="genre-tile-sub">Unabridged Multi-Track Audio</div>
+          </div>
+          <div class="genre-tile" data-q="Physics Calculus Chemistry Biology Medicine" data-type="ebook" data-heading="University & STEM Textbooks">
+            <div class="genre-tile-title">University & STEM</div>
+            <div class="genre-tile-sub">Physics, Math & Medicine</div>
+          </div>
+          <div class="genre-tile" data-q="Psychology Philosophy Finance Habits Economics" data-type="ebook" data-heading="Self-Growth, Psychology & Business">
+            <div class="genre-tile-title">Psychology & Business</div>
+            <div class="genre-tile-sub">Mindset, Finance & Philosophy</div>
+          </div>
+          <div class="genre-tile" data-q="Dune Foundation Tolkien Cyberpunk Sci-Fi" data-type="ebook" data-heading="Sci-Fi & Fantasy Worlds">
+            <div class="genre-tile-title">Sci-Fi & Fantasy</div>
+            <div class="genre-tile-sub">Epic Worlds & Space Opera</div>
+          </div>
+        </div>
+
+        <div class="search-header" style="margin-top: 38px;">
+          <div>
+            <h2>Connected Library Catalogs</h2>
+            <p class="search-subtitle">Unified search across all 28 integrated book, manga, comic, and audiobook networks.</p>
+          </div>
+        </div>
+        <div class="sources-grid" id="sourcesGrid"></div>
+      </section>
+
+      <!-- My Space / Saved Library Section -->
+      <section class="search-results-section hidden" id="myListSection">
+        <div class="search-header">
+          <div>
+            <h2>My Space</h2>
+            <p class="search-subtitle">Your saved Books, Manga, Comics, and Audiobooks.</p>
+          </div>
+        </div>
+        <div class="results-grid" id="myListGrid"></div>
+      </section>
+
+      <!-- Horizontal Shelves Container -->
+      <div id="catalogRowsContainer">
+        <div class="loading-state" id="homeLoading">
+          <div class="spinner"></div>
+          <p>Loading your library shelves...</p>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- ========================================================================
+       APPLE VISION-OS LIQUID GLASS READER / PLAYER MODAL
+  ========================================================================= -->
+  <div class="modal-overlay hidden" id="readerModal">
+    <div class="modal-window">
+      <!-- Modal Top Header -->
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <span class="modal-type-badge" id="modalTypeBadge">BOOK</span>
+          <div>
+            <h3 id="modalTitle">Title</h3>
+            <span id="modalAuthor" class="modal-author">Author</span>
+          </div>
+        </div>
+
+        <!-- Segmented Glass Mode Tabs -->
+        <div class="reader-mode-tabs" id="readerModeTabs">
+          <button class="mode-tab active" data-mode="overview">Overview</button>
+          <button class="mode-tab hidden" data-mode="bookreader" id="tabBookReader">Page Flip</button>
+          <button class="mode-tab hidden" data-mode="pdfreader" id="tabPdfReader">PDF Viewer</button>
+          <button class="mode-tab hidden" data-mode="flowreader" id="tabFlowReader">Flow Reader</button>
+          <button class="mode-tab hidden" data-mode="mangareader" id="tabMangaReader">Manga Reader</button>
+          <button class="mode-tab hidden" data-mode="audioplayer" id="tabAudioPlayer">Audiobook Studio</button>
+        </div>
+
+        <div class="modal-actions-right">
+          <button class="btn-icon" id="modalBookmarkBtn" title="Save to My Space">Save</button>
+          <button class="btn-close" id="closeModalBtn" title="Close (Esc)" aria-label="Close">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="modal-body">
+        <!-- 1. OVERVIEW & DOWNLOADS PANE -->
+        <div class="reader-pane" id="paneOverview">
+          <div class="overview-layout">
+            <div class="overview-cover-wrap">
+              <img id="modalCoverImg" src="" alt="Cover" class="overview-cover" />
+            </div>
+            <div class="overview-details">
+              <div class="overview-meta-pills" id="modalMetaPills"></div>
+              <p class="overview-desc" id="modalDescription"></p>
+
+              <!-- Resolving Indicator -->
+              <div class="resolver-status" id="resolverStatus">
+                <div class="spinner-sm"></div>
+                <span>Locating best available edition...</span>
+              </div>
+
+              <!-- Instant Read / Listen Buttons -->
+              <div class="action-section">
+                <h4>Read or Listen</h4>
+                <div class="direct-buttons-grid" id="instantReadButtons"></div>
+              </div>
+
+              <!-- File Download Buttons -->
+              <div class="action-section">
+                <h4>Downloads</h4>
+                <div class="direct-buttons-grid" id="directDownloadButtons"></div>
+              </div>
+
+              <!-- Checked Mirrors List -->
+              <div class="mirrors-checked-box">
+                <span class="mirrors-label">Catalogs Indexed</span>
+                <div class="mirrors-tags" id="modalMirrorsList"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. INTERACTIVE 2-PAGE FLIP READER PANE -->
+        <div class="reader-pane hidden" id="paneBookReader">
+          <iframe
+            id="bookReaderIframe"
+            class="full-reader-iframe"
+            allowfullscreen
+            title="Interactive Book Reader"
+          ></iframe>
+        </div>
+
+        <!-- 3. PDF STREAM PANE -->
+        <div class="reader-pane hidden" id="panePdfReader">
+          <iframe
+            id="pdfReaderIframe"
+            class="full-reader-iframe"
+            title="PDF Viewer"
+          ></iframe>
+        </div>
+
+        <!-- 4. FLOWOSS REFLOWABLE EPUB & TEXT READER PANE -->
+        <div class="reader-pane hidden" id="paneFlowReader">
+          <div class="flow-toolbar">
+            <div class="flow-toolbar-group">
+              <label>Appearance</label>
+              <button class="theme-chip active" data-theme="dark">Charcoal</button>
+              <button class="theme-chip" data-theme="sepia">Sepia</button>
+              <button class="theme-chip" data-theme="oled">Midnight</button>
+              <button class="theme-chip" data-theme="light">Paper</button>
+            </div>
+            <div class="flow-toolbar-group">
+              <label>Typography</label>
+              <button class="flow-btn" id="fontDecBtn">A−</button>
+              <span id="fontSizeLabel">19px</span>
+              <button class="flow-btn" id="fontIncBtn">A+</button>
+            </div>
+            <div class="flow-toolbar-group" id="epubChapterGroup" style="display:none;">
+              <label>Section</label>
+              <select id="epubChapterSelect" class="chapter-select"></select>
+            </div>
+          </div>
+          <div class="flow-content-container theme-dark" id="flowContentContainer">
+            <div class="flow-article" id="flowArticle">Loading book text...</div>
+          </div>
+        </div>
+
+        <!-- 5. MANGA / MANHWA WEBTOON READER PANE -->
+        <div class="reader-pane hidden" id="paneMangaReader">
+          <div class="flow-toolbar">
+            <div class="flow-toolbar-group">
+              <label>Chapter</label>
+              <select id="mangaChapterSelect" class="chapter-select"></select>
+              <button class="flow-btn" id="prevChapterBtn">Previous</button>
+              <button class="flow-btn" id="nextChapterBtn">Next</button>
+            </div>
+            <div class="flow-toolbar-group">
+              <label>View</label>
+              <button class="theme-chip active" data-mangalayout="webtoon" id="layoutWebtoonBtn">Vertical Scroll</button>
+              <button class="theme-chip" data-mangalayout="Wide" id="layoutWideBtn">Expanded Width</button>
+            </div>
+          </div>
+          <div class="manga-pages-container" id="mangaPagesContainer">
+            <p class="manga-placeholder">Select a chapter above to stream pages.</p>
+          </div>
+        </div>
+
+        <!-- 6. LIQUID-GLASS AUDIOBOOK STUDIO PLAYER PANE -->
+        <div class="reader-pane hidden" id="paneAudioPlayer">
+          <div class="sp-studio-view">
+            <!-- Top Liquid-Glass Audiobook Hero Header -->
+            <div class="sp-studio-header">
+              <div class="sp-header-glow" id="spHeaderGlow"></div>
+              <div class="sp-cover-wrap">
+                <img id="audioStudioCover" src="" alt="Audiobook Cover" class="sp-studio-cover" />
+              </div>
+              <div class="sp-studio-meta">
+                <div class="sp-verified-badge">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="#38bdf8"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm-1.9 14.7L6 12.6l1.5-1.5 2.6 2.6 6.4-6.4 1.5 1.5-7.9 7.9z"/></svg>
+                  <span>LIQUID-GLASS AUDIOBOOK STUDIO</span>
+                </div>
+                <h2 id="audioStudioTitle" class="sp-studio-title">Audiobook Title</h2>
+                <p id="audioStudioTrackName" class="sp-now-playing-pill">Select a chapter below or press Play to start listening</p>
+                <div class="sp-meta-subline">
+                  <span class="sp-meta-author" id="audioStudioAuthor">BookFlix Audio</span>
+                  <span class="sp-dot">•</span>
+                  <span><strong id="audioChapterCount">0</strong> Chapters</span>
+                  <span class="sp-dot">•</span>
+                  <span class="sp-hq-tag">HQ 320kbps MP3 Stream</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Liquid-Glass Action & Transport Bar -->
+            <div class="sp-action-bar">
+              <div class="sp-action-left">
+                <button type="button" class="sp-big-play-btn" id="spStudioPlayBtn" title="Play / Pause Audiobook">
+                  <svg id="spStudioPlayIcon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <polygon points="6 3 20 12 6 21 6 3"></polygon>
+                  </svg>
+                </button>
+                <button type="button" class="sp-circle-btn" id="spStudioRewindBtn" title="Rewind 15 seconds">−15s</button>
+                <button type="button" class="sp-circle-btn" id="spStudioForwardBtn" title="Forward 15 seconds">+15s</button>
+                <button type="button" class="sp-circle-btn" id="openNowPlayingCardBtn" title="Open Full Liquid-Glass Now Playing View">
+                  ✦ Full Now Playing View
+                </button>
+
+                <div class="sp-equalizer hidden" id="spLiveEqualizer" aria-hidden="true">
+                  <span></span><span></span><span></span><span></span>
+                </div>
+              </div>
+
+              <div class="audio-speed-controls">
+                <span class="sp-speed-label">Speed</span>
+                <button type="button" class="speed-chip active" data-speed="1">1.0x</button>
+                <button type="button" class="speed-chip" data-speed="1.25">1.25x</button>
+                <button type="button" class="speed-chip" data-speed="1.5">1.5x</button>
+                <button type="button" class="speed-chip" data-speed="2">2.0x</button>
+              </div>
+            </div>
+
+            <!-- Liquid-Glass Tracklist Table -->
+            <div class="sp-tracklist-wrap">
+              <div class="sp-tracklist-header">
+                <span class="sp-col-num">#</span>
+                <span class="sp-col-title">CHAPTER TITLE</span>
+                <span class="sp-col-format">AUDIO STREAM</span>
+                <span class="sp-col-dl">DIRECT MP3</span>
+              </div>
+              <div class="audio-chapters-list" id="audioChaptersList"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       SHINY LIQUID-GLASS PERSISTENT BOTTOM NOW-PLAYING BAR
+       (Click anywhere on bar to expand the Full Liquid-Glass Now Playing Page)
+  ========================================================================= -->
+  <div class="bottom-audio-bar hidden" id="bottomAudioBar">
+    <div class="bar-ambient-glow" id="barAmbientGlow"></div>
+    <!-- Hidden Native Audio Engine -->
+    <audio id="globalAudioElement" preload="none" playsinline webkit-playsinline></audio>
+
+    <!-- Left: Cover Art + Track & Book Info (Click to open Full Now Playing Page) -->
+    <div class="sp-bar-left" id="spBarLeftClick" title="Click to open Full Liquid-Glass Now Playing Page">
+      <div class="sp-bar-cover-wrap">
+        <img id="barAudioCover" src="" alt="Cover" class="bar-audio-cover" />
+        <span class="sp-playing-dot"></span>
+        <span class="bar-expand-Chevron" aria-hidden="true">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+        </span>
+      </div>
+      <div class="sp-bar-text">
+        <div id="barAudioChapter" class="bar-audio-chapter">Chapter 1</div>
+        <div id="barAudioTitle" class="bar-audio-title">Audiobook</div>
+      </div>
+    </div>
+
+    <!-- Center: Spotify Functions + Liquid-Glass Seek Scrubber -->
+    <div class="sp-bar-center">
+      <div class="sp-transport-row">
+        <button type="button" class="sp-ctrl-icon-btn" id="barShuffleBtn" title="Shuffle Chapters">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"></polyline><line x1="4" y1="20" x2="21" y2="3"></line><polyline points="21 16 21 21 16 21"></polyline><line x1="15" y1="15" x2="21" y2="21"></line><line x1="4" y1="4" x2="9" y2="9"></line></svg>
+        </button>
+        <button type="button" class="sp-ctrl-btn" id="audioRewindBtn" title="Rewind 15s">−15s</button>
+        <button type="button" class="sp-ctrl-icon-btn" id="audioPrevTrackBtn" title="Previous Chapter">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="19 20 9 12 19 4 19 20"></polygon><line x1="5" y1="19" x2="5" y2="5" stroke="currentColor" stroke-width="2.4"></line></svg>
+        </button>
+        <button type="button" class="sp-bar-play-btn" id="spBarPlayPauseBtn" title="Play / Pause">
+          <svg id="spBarPlayIcon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <polygon points="6 3 20 12 6 21 6 3"></polygon>
+          </svg>
+        </button>
+        <button type="button" class="sp-ctrl-icon-btn" id="audioNextTrackBtn" title="Next Chapter">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 4 15 12 5 20 5 4"></polygon><line x1="19" y1="5" x2="19" y2="19" stroke="currentColor" stroke-width="2.4"></line></svg>
+        </button>
+        <button type="button" class="sp-ctrl-btn" id="audioForwardBtn" title="Forward 15s">+15s</button>
+        <button type="button" class="sp-ctrl-icon-btn" id="barRepeatBtn" title="Repeat Chapter / All">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 23 3 19 7 15"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg>
+        </button>
+      </div>
+
+      <div class="sp-scrubber-row">
+        <span class="sp-time-label" id="spBarCurrentTime">0:00</span>
+        <input
+          type="range"
+          id="spBarSeekSlider"
+          class="sp-range-slider"
+          min="0"
+          max="100"
+          value="0"
+          step="0.1"
+          aria-label="Seek Audio"
+        />
+        <span class="sp-time-label" id="spBarDuration">0:00</span>
+      </div>
+    </div>
+
+    <!-- Right: Now Playing View + Volume Slider + Download MP3 + Close -->
+    <div class="sp-bar-right">
+      <button type="button" class="sp-expand-pill" id="barExpandNowPlayingBtn" title="Open Full Liquid-Glass Now Playing View">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg>
+        <span>Now Playing</span>
+      </button>
+      <div class="sp-volume-group">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="sp-vol-icon">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+          <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+        </svg>
+        <input
+          type="range"
+          id="spBarVolumeSlider"
+          class="sp-range-slider sp-vol-slider"
+          min="0"
+          max="1"
+          step="0.02"
+          value="1"
+          aria-label="Volume"
+        />
+      </div>
+      <a id="barDownloadMp3Btn" class="sp-dl-pill" href="#" download title="Download Current Chapter MP3">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+        <span>MP3</span>
+      </a>
+      <button type="button" class="sp-bar-close" id="closeAudioBarBtn" title="Close Player">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       FULL-SCREEN TRANSLUCENT FROSTED LIQUID-GLASS "NOW PLAYING" PAGE
+       (Matches Reference Design + Full Spotify Functions & Chapter Drawer)
+  ========================================================================= -->
+  <div class="np-overlay fullscreen-mode hidden" id="nowPlayingOverlay" role="dialog" aria-modal="true" aria-label="Now Playing">
+    <!-- Blurred Cover Art & Aurora Mesh Backdrop -->
+    <div class="np-backdrop-art" id="npBackdropArt"></div>
+    <div class="np-backdrop-tint"></div>
+
+    <div class="np-stage-wrap" id="npStageWrap">
+      <!-- MAIN TRANSLUCENT FROSTED LIQUID-GLASS PLAYER (FULLSCREEN THEATER OR COMPACT CARD) -->
+      <div class="np-glass-card" id="npGlassCard">
+        <!-- 1. Top Header: Minimize | Now Playing + Mode Pill | Fullscreen Toggle | More Menu -->
+        <div class="np-top-bar">
+          <div class="np-top-bar-left">
+            <button type="button" class="np-icon-btn" id="npMinimizeBtn" title="Minimize to Bottom Audio Bar">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </button>
+          </div>
+          <div class="np-top-bar-center">
+            <span class="np-top-title">Now Playing</span>
+            <span class="np-mode-pill" id="npModePill">✦ Theater Full Screen</span>
+          </div>
+          <div class="np-top-bar-right">
+            <button type="button" class="np-icon-btn active" id="npFullscreenToggleBtn" title="Switch to Compact Card (Press F)">
+              <svg id="npFullscreenIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="4 14 10 14 10 20"></polyline>
+                <polyline points="20 10 14 10 14 4"></polyline>
+                <line x1="14" y1="10" x2="21" y2="3"></line>
+                <line x1="3" y1="21" x2="10" y2="14"></line>
+              </svg>
+            </button>
+            <button type="button" class="np-icon-btn" id="npMoreMenuBtn" title="Toggle Chapters &amp; MP3 Downloads">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <circle cx="5" cy="12" r="2"></circle>
+                <circle cx="12" cy="12" r="2"></circle>
+                <circle cx="19" cy="12" r="2"></circle>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- 2. Dual-Column Theater / Vertical Card Body -->
+        <div class="np-card-body" id="npCardBody">
+          <!-- Column A: Large Liquid-Glass Cover Artwork + Ambient Overlay -->
+          <div class="np-artwork-col">
+            <div class="np-artwork-box">
+              <img id="npCoverImg" src="" alt="Now Playing Cover" class="np-artwork-img" />
+              <!-- Animated Equalizer Overlay Pill when Equalizer is toggled -->
+              <div class="np-live-visualizer hidden" id="npLiveVisualizer" aria-hidden="true">
+                <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+              </div>
+              <!-- Floating Coral-Pink Heart Button in Bottom-Right of Cover -->
+              <button type="button" class="np-heart-fab" id="npHeartBtn" title="Save to My Space / Favorites">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Column B: Track Title, Scrubber, Transport, Utility, Volume & Embedded Queue -->
+          <div class="np-controls-col">
+            <!-- Centered Track / Chapter Title & Book Subtitle -->
+            <div class="np-track-info">
+              <h2 class="np-track-title" id="npTrackTitle">01 – A Scandal in Bohemia</h2>
+              <p class="np-track-subtitle" id="npTrackSubtitle">The Adventures of Sherlock Holmes</p>
+            </div>
+
+            <!-- White Glass Progress Scrubber + Timestamps Underneath -->
+            <div class="np-scrubber-block">
+              <input
+                type="range"
+                id="npSeekSlider"
+                class="np-glass-slider"
+                min="0"
+                max="100"
+                value="0"
+                step="0.1"
+                aria-label="Seek Audio"
+              />
+              <div class="np-time-row">
+                <span id="npCurrentTime">0:00</span>
+                <span id="npDuration">0:00</span>
+              </div>
+            </div>
+
+            <!-- Master Unified 7-Button Transport Controls (Shuffle, Prev, Rewind 15s, Play/Pause, Forward 15s, Next, Repeat) -->
+            <div class="np-transport-controls">
+              <button type="button" class="np-transport-btn" id="npShuffleBtn" title="Shuffle Chapters">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="16 3 21 3 21 8"></polyline>
+                  <line x1="4" y1="20" x2="21" y2="3"></line>
+                  <polyline points="21 16 21 21 16 21"></polyline>
+                  <line x1="15" y1="15" x2="21" y2="21"></line>
+                  <line x1="4" y1="4" x2="9" y2="9"></line>
+                </svg>
+              </button>
+
+              <button type="button" class="np-transport-btn" id="npPrevBtn" title="Previous Chapter">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                  <polygon points="19 20 9 12 19 4 19 20"></polygon>
+                  <rect x="4" y="4" width="2.5" height="16" rx="1"></rect>
+                </svg>
+              </button>
+
+              <button type="button" class="np-transport-btn np-skip-btn" id="npRewind15Btn" title="Rewind 15 seconds">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+                  <path d="M3 3v5h5"></path>
+                  <text x="12" y="13.2" font-size="8.2" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-weight="900" text-anchor="middle" dominant-baseline="central" fill="currentColor" stroke="none">15</text>
+                </svg>
+              </button>
+
+              <button type="button" class="np-glass-play-circle" id="npPlayPauseBtn" title="Play / Pause">
+                <svg id="npPlayIcon" width="26" height="26" viewBox="0 0 24 24" fill="currentColor">
+                  <polygon points="6 3 20 12 6 21 6 3"></polygon>
+                </svg>
+              </button>
+
+              <button type="button" class="np-transport-btn np-skip-btn" id="npForward15Btn" title="Forward 15 seconds">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 12a9 9 0 1 1-9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path>
+                  <path d="M21 3v5h-5"></path>
+                  <text x="12" y="13.2" font-size="8.2" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-weight="900" text-anchor="middle" dominant-baseline="central" fill="currentColor" stroke="none">15</text>
+                </svg>
+              </button>
+
+              <button type="button" class="np-transport-btn" id="npNextBtn" title="Next Chapter">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                  <polygon points="5 4 15 12 5 20 5 4"></polygon>
+                  <rect x="17.5" y="4" width="2.5" height="16" rx="1"></rect>
+                </svg>
+              </button>
+
+              <button type="button" class="np-transport-btn" id="npRepeatBtn" title="Repeat Mode">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="17 1 21 5 17 9"></polyline>
+                  <path d="M3 11V9a4 4 0 0 1 4-4h14"></path>
+                  <polyline points="7 23 3 19 7 15"></polyline>
+                  <path d="M21 13v2a4 4 0 0 1-4 4H3"></path>
+                </svg>
+              </button>
+            </div>
+
+            <!-- Frosted-Glass 5-Control Utility Capsule Dock + Settings Popover -->
+            <div class="np-utility-capsule-wrap" id="npUtilityCapsuleWrap">
+              <div class="np-utility-capsule" id="npUtilityCapsule">
+                <button type="button" class="np-capsule-btn np-capsule-speed-btn" id="npSpeedBtn" title="Playback Speed (Click to cycle: 0.75x / 1.0x / 1.25x / 1.5x / 2.0x)">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                  </svg>
+                  <span class="np-speed-capsule-text" id="npSpeedReadout">1.0x</span>
+                </button>
+
+                <button type="button" class="np-capsule-btn" id="npQueueBtn" title="Chapters &amp; Audio Queue (Click to View)">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="8" y1="6" x2="21" y2="6"></line>
+                    <line x1="8" y1="12" x2="21" y2="12"></line>
+                    <line x1="8" y1="18" x2="16" y2="18"></line>
+                    <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                    <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                    <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                  </svg>
+                  <span class="np-capsule-badge" id="npQueueCountBadge">0</span>
+                </button>
+
+                <button type="button" class="np-capsule-btn active" id="npVisualizerBtn" title="Toggle Live Audio Visualizer">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="20" x2="18" y2="10"></line>
+                    <line x1="12" y1="20" x2="12" y2="4"></line>
+                    <line x1="6" y1="20" x2="6" y2="14"></line>
+                  </svg>
+                </button>
+
+                <button type="button" class="np-capsule-btn" id="npSleepTimerBtn" title="Sleep Timer (Click to cycle: 15m / 30m / 45m / 60m / End of Ch. / Off)">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                  </svg>
+                  <span class="np-capsule-timer-badge hidden" id="npSleepTimerBadge">15m</span>
+                </button>
+
+                <button type="button" class="np-capsule-btn" id="npSettingsBtn" title="Audio Player Settings &amp; Playback Speed">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="3"></circle>
+                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                  </svg>
+                </button>
+              </div>
+
+              <!-- Interactive Floating Settings Popover for Button 4 -->
+              <div class="np-settings-popover hidden" id="npSettingsPopover">
+                <div class="np-popover-header">
+                  <span class="np-popover-title">Audio Player Settings</span>
+                  <button type="button" class="np-popover-close" id="npSettingsCloseBtn" title="Close Settings">&times;</button>
+                </div>
+                <div class="np-popover-section">
+                  <label class="np-popover-label">Playback Speed</label>
+                  <div class="np-speed-options">
+                    <button type="button" class="np-pop-speed-btn" data-spd="0.75">0.75x</button>
+                    <button type="button" class="np-pop-speed-btn active" data-spd="1">1.0x</button>
+                    <button type="button" class="np-pop-speed-btn" data-spd="1.25">1.25x</button>
+                    <button type="button" class="np-pop-speed-btn" data-spd="1.5">1.5x</button>
+                    <button type="button" class="np-pop-speed-btn" data-spd="2">2.0x</button>
+                  </div>
+                </div>
+                <div class="np-popover-section">
+                  <label class="np-popover-label">Sleep Timer</label>
+                  <div class="np-sleep-options">
+                    <button type="button" class="np-pop-sleep-btn active" data-sleep="off">Off</button>
+                    <button type="button" class="np-pop-sleep-btn" data-sleep="15">15m</button>
+                    <button type="button" class="np-pop-sleep-btn" data-sleep="30">30m</button>
+                    <button type="button" class="np-pop-sleep-btn" data-sleep="45">45m</button>
+                    <button type="button" class="np-pop-sleep-btn" data-sleep="chapter">End of Ch.</button>
+                  </div>
+                </div>
+                <div class="np-popover-section">
+                  <label class="np-popover-label">Stream Format &amp; Sound Profile</label>
+                  <div class="np-format-options">
+                    <button type="button" class="np-pop-format-btn active" id="npQualityFormatBtn" title="Click to cycle Audio Quality: HQ 320kbps / Standard 192kbps / Data Saver 96kbps">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                      </svg>
+                      <span id="npQualityFormatLabel">HQ 320kbps MP3</span>
+                    </button>
+                    <button type="button" class="np-pop-format-btn active" id="npAudioEffectBtn" title="Click to cycle Sound Profile: Studio Stereo / Spatial 3D Audio / Voice Clarity EQ">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
+                        <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
+                      </svg>
+                      <span id="npAudioEffectLabel">Studio Stereo</span>
+                    </button>
+                  </div>
+                </div>
+                <div class="np-popover-footer">
+                  <span class="np-popover-meta-tag">✦ BookFlix Liquid-Glass Audio</span>
+                </div>
+              </div>
+
+              <!-- Floating Live Toast Notification for Instant Feedback on Any Action -->
+              <div class="np-toast hidden" id="npToast" aria-live="polite"></div>
+            </div>
+
+            <!-- Bottom Volume Slider Row -->
+            <div class="np-volume-row">
+              <button type="button" class="np-vol-btn" id="npVolMinBtn" title="Mute / Quiet">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
+                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                </svg>
+              </button>
+              <input
+                type="range"
+                id="npVolumeSlider"
+                class="np-glass-slider np-vol-slider"
+                min="0"
+                max="1"
+                step="0.02"
+                value="1"
+                aria-label="Volume"
+              />
+              <button type="button" class="np-vol-btn" id="npVolMaxBtn" title="Full Volume">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="currentColor"></polygon>
+                  <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                  <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE-OUT FROSTED LIQUID-GLASS CHAPTERS & DIRECT MP3 DRAWER -->
+      <div class="np-chapters-drawer hidden" id="npChaptersDrawer">
+        <div class="np-drawer-header">
+          <div>
+            <h3>Chapters &amp; Audio Queue</h3>
+            <p id="npDrawerSub">Select any chapter to stream or download MP3</p>
+          </div>
+          <div class="np-drawer-actions">
+            <a id="npCurrentMp3DownloadBtn" href="#" download class="np-drawer-dl-btn" title="Download Current Chapter MP3">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+              </svg>
+              <span>Download MP3</span>
+            </a>
+            <button type="button" class="np-icon-btn" id="npCloseDrawerBtn" title="Close Queue">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div class="np-drawer-list" id="npDrawerChaptersList"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       LOCAL NETWORK HOSTING & MULTI-DEVICE QR MODAL
+  ========================================================================= -->
+  <div class="modal-overlay hidden" id="lanModal">
+    <div class="lan-modal-card">
+      <div class="lan-modal-header">
+        <div class="lan-header-title">
+          <div class="lan-status-dot"></div>
+          <div>
+            <h3>Multi-Device Local Network Host</h3>
+            <p>Optimized for Phones, iPads, Tablets, Desktops &amp; 4K Smart TVs</p>
+          </div>
+        </div>
+        <button type="button" class="btn-close" id="closeLanModalBtn" title="Close">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Device Target Preset Selector Bar -->
+      <div class="lan-device-presets-bar">
+        <span class="lan-presets-label">Target Device Optimization:</span>
+        <div class="lan-device-pills" id="lanDevicePills">
+          <button type="button" class="lan-device-pill active" data-devmode="auto" title="Auto-detect screen size & input">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4"/></svg>
+            <span>Auto-Detect</span>
+          </button>
+          <button type="button" class="lan-device-pill" data-devmode="phone" title="Phone Layout (Bottom Glass Bar + 2-Col Touch Grid)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+            <span>Phone</span>
+          </button>
+          <button type="button" class="lan-device-pill" data-devmode="ipad" title="iPad & Tablet Layout (Touch Dock + 3/4-Col Grid)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+            <span>iPad / Tablet</span>
+          </button>
+          <button type="button" class="lan-device-pill" data-devmode="desktop" title="Desktop / Laptop Layout (Expanding Glass Rail + 3D Hero)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            <span>Desktop</span>
+          </button>
+          <button type="button" class="lan-device-pill" data-devmode="tv" title="Smart TV / 4K Living Room (10-Foot Scale + Remote D-Pad)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="15" rx="2" ry="2"/><polyline points="17 2 12 7 7 2"/></svg>
+            <span>Smart TV</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="lan-modal-body">
+        <div class="lan-qr-column">
+          <div class="lan-qr-frame" id="lanQrFrame">
+            <img id="lanQrImg" src="" alt="Scan QR Code to open BookFlix" />
+          </div>
+          <span class="lan-qr-caption" id="lanQrCaption">Scan with your Phone, iPad, or Smart TV camera on the same Wi-Fi</span>
+          <button type="button" class="btn btn-secondary btn-sm lan-preview-btn" id="applyDeviceLayoutHereBtn" title="Switch this screen's layout to match the selected device preset">
+            Apply Layout on This Screen
+          </button>
+        </div>
+
+        <div class="lan-info-column">
+          <div class="lan-device-spec-banner" id="lanDeviceSpecBanner">
+            <strong>✨ Auto-Detect Responsive Engine Active</strong>
+            <span>Automatically adapts UI for Phones (Bottom Glass Dock), iPads (Touch Rail), Desktops (Hover Rail), and Smart TVs (10-Foot Scale + D-Pad Remote).</span>
+          </div>
+
+          <div class="lan-field-group">
+            <label>Primary Wi-Fi / LAN Link (Scan QR or Open on Device)</label>
+            <div class="lan-copy-row">
+              <input type="text" id="lanUrlInput" class="lan-url-input" readonly value="http://192.168.1.x:3000" />
+              <button type="button" class="btn btn-primary btn-sm" id="copyLanUrlBtn">Copy Link</button>
+            </div>
+          </div>
+
+          <div class="lan-field-group">
+            <label>This Desktop App Address</label>
+            <div class="lan-copy-row">
+              <input type="text" id="localUrlInput" class="lan-url-input" readonly value="http://localhost:3000" />
+              <button type="button" class="btn btn-secondary btn-sm" id="copyLocalUrlBtn">Copy</button>
+            </div>
+          </div>
+
+          <div class="lan-adapters-box">
+            <span class="lan-adapters-title">Available Network Interfaces (Click to switch QR)</span>
+            <div class="lan-adapters-list" id="lanAdaptersList"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       APPLE iOS / SAFARI "ADD TO HOME SCREEN" MODAL
+  ========================================================================= -->
+  <div class="modal-overlay hidden" id="iosInstallModal">
+    <div class="ios-sheet-card">
+      <div class="ios-sheet-header">
+        <div class="ios-app-badge">
+          <img src="/logo.svg?v=17" alt="BookFlix" class="ios-app-icon" />
+          <div>
+            <div class="ios-app-title">Install BookFlix App</div>
+            <div class="ios-app-sub">Add to iPhone or iPad Home Screen</div>
+          </div>
+        </div>
+        <button type="button" class="btn-close" id="closeIosInstallBtn" title="Close">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <div class="ios-sheet-body">
+        <p class="ios-sheet-intro">Install BookFlix on your home screen for full-screen reading, offline app shell, and zero browser address bars:</p>
+        <div class="ios-steps-list">
+          <div class="ios-step-item">
+            <div class="ios-step-num">1</div>
+            <div class="ios-step-text">
+              Tap the <strong>Share button</strong>
+              <span class="ios-inline-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+              </span>
+              in Safari’s bottom toolbar (or top right on iPad).
+            </div>
+          </div>
+          <div class="ios-step-item">
+            <div class="ios-step-num">2</div>
+            <div class="ios-step-text">
+              Scroll down the menu and tap <strong>"Add to Home Screen"</strong>
+              <span class="ios-inline-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="4"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+              </span>.
+            </div>
+          </div>
+          <div class="ios-step-item">
+            <div class="ios-step-num">3</div>
+            <div class="ios-step-text">
+              Tap <strong>"Add"</strong> in the top right corner. BookFlix is now ready on your phone!
+            </div>
+          </div>
+        </div>
+        <button type="button" class="btn btn-primary ios-got-it-btn" id="iosGotItBtn">Got It!</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/app.js?v=28"></script>
+</body>
+</html>

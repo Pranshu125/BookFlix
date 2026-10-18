@@ -1,0 +1,51 @@
+{
+  "name": "BookFlix — Digital Library",
+  "short_name": "BookFlix",
+  "description": "All-in-One E-Book, Manga, Comic & Audiobook Digital Library with Liquid Glass & Claymorphism UI",
+  "start_url": "/?pwa=1",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#08090c",
+  "theme_color": "#08090c",
+  "categories": ["books", "entertainment", "music", "comics"],
+  "icons": [
+    {
+      "src": "/logo.svg?v=17",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/logo.svg?v=17",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/favicon.ico?v=17",
+      "sizes": "256x256 64x64 48x48 32x32 16x16",
+      "type": "image/x-icon"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Audiobooks",
+      "short_name": "Audiobooks",
+      "url": "/?tab=audiobook",
+      "description": "Listen to Unabridged Audiobooks with Spotify Studio"
+    },
+    {
+      "name": "Manga & Webtoons",
+      "short_name": "Manga",
+      "url": "/?tab=manga",
+      "description": "Read HD Manga & Webtoons vertically"
+    },
+    {
+      "name": "E-Books",
+      "short_name": "Books",
+      "url": "/?tab=ebook",
+      "description": "Read E-Books in Flow Reader"
+    }
+  ]
+}
