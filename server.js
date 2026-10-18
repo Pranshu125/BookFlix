@@ -1456,7 +1456,10 @@ const MIME_TYPES = {
 
 async function requestHandler(req, res) {
   const reqUrl = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
-  const pathname = reqUrl.pathname;
+  let pathname = reqUrl.pathname;
+  if (!pathname.startsWith('/api/') && !pathname.includes('.') && pathname !== '/') {
+    pathname = '/api' + (pathname.startsWith('/') ? pathname : '/' + pathname);
+  }
 
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, HEAD, OPTIONS');

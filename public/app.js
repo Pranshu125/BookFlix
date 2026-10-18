@@ -260,17 +260,117 @@ document.addEventListener('DOMContentLoaded', () => {
   setupEventListeners();
 });
 
+function getFallbackHomeRows() {
+  return [
+    {
+      title: '🌟 Editor’s Choice & Trending Classics',
+      badge: 'POPULAR VAULT',
+      items: state.heroSuggestions || HERO_SUGGESTIONS,
+    },
+    {
+      title: '📖 Masterpiece Literature & Novels',
+      badge: 'FLOW READER READY',
+      items: [
+        {
+          id: 'ol_OL262758W',
+          title: 'The Great Gatsby',
+          author: 'F. Scott Fitzgerald',
+          year: 1925,
+          type: 'ebook',
+          format: 'Flow EPUB • PDF',
+          sourceBadge: 'CLASSIC',
+          cover: 'https://covers.openlibrary.org/b/id/10543660-L.jpg',
+          rating: '4.7',
+          description: 'A portrait of the Jazz Age and Jay Gatsby’s desperate quest for the American dream.'
+        },
+        {
+          id: 'ol_OL27479W',
+          title: 'Pride and Prejudice',
+          author: 'Jane Austen',
+          year: 1813,
+          type: 'ebook',
+          format: 'Flow EPUB • PDF',
+          sourceBadge: 'POPULAR',
+          cover: 'https://covers.openlibrary.org/b/id/8314144-L.jpg',
+          rating: '4.8',
+          description: 'A masterpiece of wit, romantic tension, and social realism in Regency England.'
+        },
+        {
+          id: 'ol_OL21635398W',
+          title: '1984',
+          author: 'George Orwell',
+          year: 1949,
+          type: 'ebook',
+          format: 'Flow EPUB • PDF',
+          sourceBadge: 'DYSTOPIAN',
+          cover: 'https://covers.openlibrary.org/b/id/8575786-L.jpg',
+          rating: '4.9',
+          description: 'The defining dystopian novel of surveillance, totalitarian control, and Big Brother.'
+        },
+        {
+          id: 'ol_OL14925761W',
+          title: 'Crime and Punishment',
+          author: 'Fyodor Dostoevsky',
+          year: 1866,
+          type: 'ebook',
+          format: 'Flow EPUB • PDF',
+          sourceBadge: 'PHILOSOPHY',
+          cover: 'https://covers.openlibrary.org/b/id/8775438-L.jpg',
+          rating: '4.8',
+          description: 'A gripping psychological drama of guilt, conscience, and redemption in Saint Petersburg.'
+        }
+      ]
+    },
+    {
+      title: '🎧 Essential Unabridged Audiobooks',
+      badge: 'STUDIO HQ',
+      items: [
+        {
+          id: 'iaa_art_of_war_librivox',
+          title: 'The Art of War',
+          author: 'Sun Tzu',
+          type: 'audiobook',
+          format: 'HQ MP3 Stream',
+          sourceBadge: 'LIBRIVOX HQ',
+          iaId: 'art_of_war_librivox',
+          cover: 'https://www.gutenberg.org/cache/epub/132/pg132.cover.medium.jpg',
+          rating: '4.9',
+          description: 'Sun Tzu’s masterwork on military strategy and wisdom.'
+        },
+        {
+          id: 'iaa_adventures_sherlock_holmes_librivox',
+          title: 'The Adventures of Sherlock Holmes',
+          author: 'Arthur Conan Doyle',
+          type: 'audiobook',
+          format: 'HQ MP3 Stream',
+          sourceBadge: 'LIBRIVOX HQ',
+          iaId: 'adventures_sherlock_holmes_0711_librivox',
+          cover: 'https://www.gutenberg.org/cache/epub/1661/pg1661.cover.medium.jpg',
+          rating: '4.9',
+          description: 'Iconic detective mysteries with full dramatic narration.'
+        }
+      ]
+    }
+  ];
+}
+
 async function loadHomeCatalog() {
   try {
     const res = await fetch('/api/home');
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
     state.homeRows = data.rows || [];
     state.sources = data.sources || {};
 
+    if (state.homeRows.length === 0) {
+      state.homeRows = getFallbackHomeRows();
+    }
     renderCatalogRows(state.homeRows);
     renderSourcesDirectory(state.sources);
   } catch (err) {
-    catalogRowsContainer.innerHTML = `<div class="loading-state"><p>Failed to load catalog: ${err.message}</p></div>`;
+    console.warn('Live catalog fetch notice, loading resilient catalog:', err);
+    state.homeRows = getFallbackHomeRows();
+    renderCatalogRows(state.homeRows);
   }
 }
 
@@ -1482,12 +1582,29 @@ async function executeSearch(query, category = 'all', customHeading = null) {
     const res = await fetch(
       `/api/search?q=${encodeURIComponent(query)}&type=${encodeURIComponent(category)}&page=1`
     );
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
     state.searchItems = data.items || [];
     state.searchHasMore = state.searchItems.length >= 6;
     renderFilteredSearchResults();
   } catch (err) {
-    searchResultsGrid.innerHTML = `<p style="grid-column: 1/-1; color: #f87171;">Search error: ${escapeHtml(err.message)}</p>`;
+    console.warn('Search API notice:', err);
+    const qLower = query.toLowerCase();
+    const fallbackList = (state.heroSuggestions || HERO_SUGGESTIONS).filter((item) =>
+      item.title.toLowerCase().includes(qLower) ||
+      (item.author && item.author.toLowerCase().includes(qLower)) ||
+      (category !== 'all' && item.type === category)
+    );
+    if (fallbackList.length > 0) {
+      state.searchItems = fallbackList;
+      renderFilteredSearchResults();
+    } else {
+      searchResultsGrid.innerHTML = `
+        <div class="loading-state" style="grid-column: 1 / -1;">
+          <p>No titles found for "${escapeHtml(query)}". Try another query or switch categories.</p>
+        </div>
+      `;
+    }
   }
 }
 
