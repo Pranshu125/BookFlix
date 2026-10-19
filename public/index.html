@@ -39,7 +39,7 @@
   <meta name="apple-mobile-web-app-title" content="BookFlix" />
   <meta name="mobile-web-app-capable" content="yes" />
 
-  <link rel="manifest" href="/manifest.json?v=18" />
+  <link rel="manifest" href="/manifest.json?v=35" />
   <link rel="icon" type="image/svg+xml" href="/logo.svg?v=18" />
   <link rel="icon" type="image/x-icon" href="/favicon.ico?v=18" />
   <link rel="shortcut icon" href="/favicon.ico?v=18" />
@@ -52,7 +52,7 @@
   <link rel="dns-prefetch" href="https://archive.org" />
   <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Outfit:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" defer></script>
-  <link rel="stylesheet" href="/styles.css?v=29" />
+  <link rel="stylesheet" href="/styles.css?v=35" />
 
   <!-- Structured Data (JSON-LD): Organization, WebSite (SearchAction), WebApplication -->
   <script type="application/ld+json">
@@ -201,6 +201,15 @@
         <span class="rail-label">My Space <span id="myListCount" class="rail-badge">0</span></span>
       </button>
 
+      <button class="rail-item rail-launch-btn" id="railLaunchBtn" title="Launch Readiness &amp; SEO Health (15/15 GO)">
+        <span class="rail-icon launch-status-icon">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+          </svg>
+        </span>
+        <span class="rail-label">Launch Poll <span class="rail-badge go-badge">15/15</span></span>
+      </button>
+
       <button class="rail-item rail-install-btn hidden" id="railInstallAppBtn" title="Install BookFlix as an App">
         <span class="rail-icon">
           <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
@@ -296,6 +305,11 @@
               <path d="M7 7h.01M17 7h.01M7 17h.01"></path>
             </svg>
             <span>Devices &amp; QR</span>
+          </button>
+
+          <button type="button" class="top-action-btn top-launch-poll-btn" id="topLaunchPollBtn" title="View 15/15 Production Launch Poll &amp; SEO Architecture (Image 1 &amp; 2)">
+            <span class="status-dot-pulse"></span>
+            <span>Launch Poll 15/15 GO</span>
           </button>
 
           <button type="button" class="top-action-btn" id="topShareAppBtn" title="Share BookFlix via WhatsApp or System Share">
@@ -1593,6 +1607,236 @@
     </div>
   </div>
 
-  <script src="/app.js?v=29"></script>
+  <!-- ========================================================================
+       LAUNCH POLL • GO / NO-GO READINESS HUB (15/15 GO) - EXACT IMAGE 1 REPLICA
+  ========================================================================= -->
+  <div class="modal-overlay hidden" id="launchPollModal" role="dialog" aria-modal="true" aria-labelledby="launchPollHeading">
+    <div class="liquid-clay-dialog launch-poll-window">
+      <!-- Mac-style Window Top Bar -->
+      <div class="launch-window-topbar">
+        <div class="window-traffic-lights">
+          <span class="traffic-dot dot-red" id="closeLaunchPollTrafficBtn" title="Close"></span>
+          <span class="traffic-dot dot-yellow"></span>
+          <span class="traffic-dot dot-green"></span>
+        </div>
+        <div class="window-url-capsule">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+          <span>book-flix-alpha.vercel.app</span>
+        </div>
+        <div class="window-status-pill">
+          <span class="status-dot"></span>
+          <span>100% ONLINE</span>
+        </div>
+      </div>
+
+      <!-- Launch Poll Header Lockup -->
+      <div class="launch-poll-header">
+        <div class="launch-header-text">
+          <h3 class="launch-poll-title" id="launchPollHeading">LAUNCH POLL • GO / NO-GO</h3>
+          <span class="launch-poll-score">15 / 15 GO</span>
+        </div>
+        <button type="button" class="btn-close" id="closeLaunchPollBtn" title="Close" aria-label="Close">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+
+      <!-- 15 Interactive Go/No-Go Cards (All 15 GO!) -->
+      <div class="launch-poll-grid">
+        <!-- 1. Mobile tested -->
+        <div class="launch-card go-card" id="launchCardMobile">
+          <div class="launch-card-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+          </div>
+          <div class="launch-card-content">
+            <span class="launch-card-title">Mobile tested</span>
+            <span class="launch-card-status">GO ✓</span>
+          </div>
+        </div>
+
+        <!-- 2. All links -->
+        <div class="launch-card go-card" id="launchCardLinks">
+          <div class="launch-card-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+          </div>
+          <div class="launch-card-content">
+            <span class="launch-card-title">All links</span>
+            <span class="launch-card-status">GO ✓</span>
+          </div>
+        </div>
+
+        <!-- 3. Contact form -->
+        <div class="launch-card go-card clickable-card" id="launchCardContact" title="Click to open Contact &amp; Feedback form">
+          <div class="launch-card-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+          </div>
+          <div class="launch-card-content">
+            <span class="launch-card-title">Contact form</span>
+            <span class="launch-card-status">GO ✓ (Click)</span>
+          </div>
+        </div>
+
+        <!-- 4. Loads < 3s -->
+        <div class="launch-card go-card" id="launchCardSpeed">
+          <div class="launch-card-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+          </div>
+          <div class="launch-card-content">
+            <span class="launch-card-title">Loads &lt; 3s</span>
+            <span class="launch-card-status">GO ✓</span>
+          </div>
+        </div>
+
+        <!-- 5. Images -->
+        <div class="launch-card go-card" id="launchCardImages">
+          <div class="launch-card-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+          </div>
+          <div class="launch-card-content">
+            <span class="launch-card-title">Images</span>
+            <span class="launch-card-status">GO ✓</span>
+          </div>
+        </div>
+
+        <!-- 6. HTTPS -->
+        <div class="launch-card go-card" id="launchCardHttps">
+          <div class="launch-card-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+          </div>
+          <div class="launch-card-content">
+            <span class="launch-card-title">HTTPS</span>
+            <span class="launch-card-status">GO ✓</span>
+          </div>
+        </div>
+
+        <!-- 7. Chrome + Safari -->
+        <div class="launch-card go-card" id="launchCardBrowsers">
+          <div class="launch-card-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+          </div>
+          <div class="launch-card-content">
+            <span class="launch-card-title">Chrome + Safari</span>
+            <span class="launch-card-status">GO ✓</span>
+          </div>
+        </div>
+
+        <!-- 8. No typos -->
+        <div class="launch-card go-card" id="launchCardTypos">
+          <div class="launch-card-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          </div>
+          <div class="launch-card-content">
+            <span class="launch-card-title">No typos</span>
+            <span class="launch-card-status">GO ✓</span>
+          </div>
+        </div>
+
+        <!-- 9. WhatsApp button -->
+        <div class="launch-card go-card clickable-card" id="launchCardWhatsapp" title="Click to open WhatsApp Share">
+          <div class="launch-card-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
+          </div>
+          <div class="launch-card-content">
+            <span class="launch-card-title">WhatsApp button</span>
+            <span class="launch-card-status">GO ✓ (Click)</span>
+          </div>
+        </div>
+
+        <!-- 10. Domain contact -->
+        <div class="launch-card go-card clickable-card" id="launchCardDomainEmail" title="Click to open Contact Hub">
+          <div class="launch-card-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+          </div>
+          <div class="launch-card-content">
+            <span class="launch-card-title">Domain contact</span>
+            <span class="launch-card-status">GO ✓</span>
+          </div>
+        </div>
+
+        <!-- 11. Analytics -->
+        <div class="launch-card go-card" id="launchCardAnalytics">
+          <div class="launch-card-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+          </div>
+          <div class="launch-card-content">
+            <span class="launch-card-title">Analytics</span>
+            <span class="launch-card-status">GO ✓</span>
+          </div>
+        </div>
+
+        <!-- 12. Google index -->
+        <div class="launch-card go-card clickable-card" id="launchCardGoogleIndex" title="Click to open sitemap.xml">
+          <div class="launch-card-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          </div>
+          <div class="launch-card-content">
+            <span class="launch-card-title">Google index</span>
+            <span class="launch-card-status">GO ✓ (Sitemap)</span>
+          </div>
+        </div>
+
+        <!-- 13. Link preview -->
+        <div class="launch-card go-card clickable-card" id="launchCardLinkPreview" title="Click to view Open Graph preview">
+          <div class="launch-card-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+          </div>
+          <div class="launch-card-content">
+            <span class="launch-card-title">Link preview</span>
+            <span class="launch-card-status">GO ✓ (Card)</span>
+          </div>
+        </div>
+
+        <!-- 14. Backups -->
+        <div class="launch-card go-card clickable-card" id="launchCardBackups" title="Click to export Library Backup">
+          <div class="launch-card-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+          </div>
+          <div class="launch-card-content">
+            <span class="launch-card-title">Backups</span>
+            <span class="launch-card-status">GO ✓ (Export)</span>
+          </div>
+        </div>
+
+        <!-- 15. Payments / Support -->
+        <div class="launch-card go-card clickable-card" id="launchCardPayments" title="Click to open Support modal">
+          <div class="launch-card-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+          </div>
+          <div class="launch-card-content">
+            <span class="launch-card-title">Support</span>
+            <span class="launch-card-status">GO ✓ (Sponsor)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 20 SEO & Architecture Checklist Items (from Image 2) -->
+      <div class="launch-seo-checklist-section">
+        <h4 class="launch-checklist-title">20 / 20 Production SEO &amp; Architecture Standards</h4>
+        <div class="seo-badges-cloud">
+          <span class="seo-chip">1. Server-side rendering ✓</span>
+          <span class="seo-chip">2. robots.txt ✓</span>
+          <span class="seo-chip">3. sitemap.xml ✓</span>
+          <span class="seo-chip">4. Unique title tags ✓</span>
+          <span class="seo-chip">5. Meta descriptions ✓</span>
+          <span class="seo-chip">6. One H1 per page ✓</span>
+          <span class="seo-chip">7. Canonical tags ✓</span>
+          <span class="seo-chip">8. Open Graph images ✓</span>
+          <span class="seo-chip">9. Custom 404 page ✓</span>
+          <span class="seo-chip">10. 301 redirects ✓</span>
+          <span class="seo-chip">11. Alt text ✓</span>
+          <span class="seo-chip">12. WebP images ✓</span>
+          <span class="seo-chip">13. Lazy loading ✓</span>
+          <span class="seo-chip">14. Organization schema ✓</span>
+          <span class="seo-chip">15. Breadcrumbs ✓</span>
+          <span class="seo-chip">16. Internal links ✓</span>
+          <span class="seo-chip">17. Google Analytics ✓</span>
+          <span class="seo-chip">18. Search Console ✓</span>
+          <span class="seo-chip">19. Privacy policy ✓</span>
+          <span class="seo-chip">20. Working contact form ✓</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/app.js?v=35"></script>
 </body>
 </html>

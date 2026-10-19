@@ -2,7 +2,7 @@
   "name": "BookFlix — Digital Library",
   "short_name": "BookFlix",
   "description": "All-in-One E-Book, Manga, Comic & Audiobook Digital Library with Liquid Glass & Claymorphism UI",
-  "start_url": "/?pwa=1",
+  "start_url": "/?pwa=1&v=35",
   "scope": "/",
   "display": "standalone",
   "orientation": "any",
