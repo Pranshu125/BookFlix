@@ -11,19 +11,19 @@
   "categories": ["books", "entertainment", "music", "comics"],
   "icons": [
     {
-      "src": "/logo.svg?v=17",
+      "src": "/logo.svg?v=18",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any"
     },
     {
-      "src": "/logo.svg?v=17",
+      "src": "/logo.svg?v=18",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "maskable"
     },
     {
-      "src": "/favicon.ico?v=17",
+      "src": "/favicon.ico?v=18",
       "sizes": "256x256 64x64 48x48 32x32 16x16",
       "type": "image/x-icon"
     }

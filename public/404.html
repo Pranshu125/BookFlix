@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0b0c10" />
+  <title>404 — Chapter Not Found | BookFlix</title>
+  <link rel="icon" type="image/svg+xml" href="/logo.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-canvas: #0b0c10;
+      --text-primary: rgba(255, 255, 255, 0.96);
+      --text-secondary: rgba(226, 232, 240, 0.72);
+      --accent-glow: #38bdf8;
+      --clay-inner-light: inset 2.5px 2.5px 4.5px rgba(255, 255, 255, 0.35);
+      --clay-inner-deep: inset -2.5px -2.5px 6px rgba(0, 0, 0, 0.58);
+      --clay-shadow-lg: 0 24px 50px rgba(0, 0, 0, 0.65);
+      --font-sans: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      --font-display: 'Outfit', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--bg-canvas);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Ambient Glowing Orbs */
+    .ambient-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(100px);
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.35;
+    }
+    .orb-1 {
+      width: 480px;
+      height: 480px;
+      background: #0284c7;
+      top: -120px;
+      left: -120px;
+    }
+    .orb-2 {
+      width: 520px;
+      height: 520px;
+      background: #7c3aed;
+      bottom: -150px;
+      right: -150px;
+    }
+
+    /* Glass Container Card */
+    .error-card {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 620px;
+      padding: 44px 36px;
+      background: linear-gradient(
+        155deg,
+        rgba(255, 255, 255, 0.12) 0%,
+        rgba(28, 34, 48, 0.72) 48%,
+        rgba(12, 16, 26, 0.92) 100%
+      );
+      backdrop-filter: blur(36px) saturate(200%);
+      -webkit-backdrop-filter: blur(36px) saturate(200%);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: 32px;
+      box-shadow: var(--clay-shadow-lg), var(--clay-inner-light), var(--clay-inner-deep);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    /* Logo Mark */
+    .brand-mark {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      margin-bottom: 8px;
+    }
+    .brand-logo-img {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+    }
+    .brand-wordmark {
+      font-family: var(--font-display);
+      font-size: 26px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+    }
+    .word-book {
+      color: #ffffff;
+    }
+    .word-flix {
+      color: #e50914;
+    }
+
+    /* Badge & 404 Big Heading */
+    .error-badge {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent-glow);
+      background: rgba(56, 189, 248, 0.12);
+      padding: 6px 16px;
+      border-radius: 9999px;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+
+    .error-title {
+      font-family: var(--font-display);
+      font-size: clamp(38px, 8vw, 56px);
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -1px;
+      background: linear-gradient(135deg, #ffffff 30%, #94a3b8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .error-desc {
+      font-size: 16px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      max-width: 480px;
+    }
+
+    /* Search Input in 404 */
+    .search-box {
+      width: 100%;
+      max-width: 460px;
+      position: relative;
+      margin-top: 6px;
+    }
+    .search-input {
+      width: 100%;
+      padding: 14px 20px 14px 44px;
+      font-size: 15px;
+      color: #ffffff;
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 9999px;
+      outline: none;
+      transition: all 0.25s ease;
+      font-family: var(--font-sans);
+    }
+    .search-input:focus {
+      border-color: var(--accent-glow);
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.25);
+    }
+    .search-icon {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 18px;
+      height: 18px;
+      stroke: rgba(255, 255, 255, 0.5);
+    }
+
+    /* Navigation Action Buttons */
+    .action-group {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 10px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 22px;
+      border-radius: 9999px;
+      font-weight: 600;
+      font-size: 14px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      border: none;
+    }
+    .btn-primary {
+      background: linear-gradient(145deg, #ffffff 0%, #e2e8f0 100%);
+      color: #0b0c10;
+      box-shadow: 0 8px 20px rgba(255, 255, 255, 0.2);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 26px rgba(255, 255, 255, 0.3);
+    }
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text-primary);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      box-shadow: var(--clay-inner-light);
+    }
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.3);
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body>
+  <div class="ambient-orb orb-1"></div>
+  <div class="ambient-orb orb-2"></div>
+
+  <main class="error-card">
+    <a href="/" class="brand-mark" title="BookFlix Home">
+      <img src="/logo.svg" alt="BookFlix Logo" class="brand-logo-img" />
+      <span class="brand-wordmark"><span class="word-book">BOOK</span><span class="word-flix">FLIX</span></span>
+    </a>
+
+    <span class="error-badge">Error 404 • Lost in the Stacks</span>
+    <h1 class="error-title">Chapter Not Found</h1>
+    <p class="error-desc">
+      The shelf, volume, or chapter you are looking for has been moved, shelved under another title, or does not exist in our library catalog.
+    </p>
+
+    <!-- Quick Search Redirect -->
+    <form class="search-box" action="/" method="GET" onsubmit="event.preventDefault(); const q = document.getElementById('errorSearch').value.trim(); if(q) { window.location.href = '/?q=' + encodeURIComponent(q); }">
+      <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+      <input type="text" id="errorSearch" class="search-input" placeholder="Search books, manga, comics, or authors..." />
+    </form>
+
+    <div class="action-group">
+      <a href="/" class="btn btn-primary">Return to Library</a>
+      <a href="/?tab=ebook" class="btn btn-secondary">Browse Books</a>
+      <a href="/?tab=manga" class="btn btn-secondary">Browse Manga</a>
+      <a href="/?tab=audiobook" class="btn btn-secondary">Audiobooks</a>
+    </div>
+  </main>
+</body>
+</html>

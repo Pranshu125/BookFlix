@@ -1,0 +1,18 @@
+# BookFlix Robots.txt
+# https://book-flix-alpha.vercel.app/
+
+User-agent: *
+Allow: /
+Allow: /logo.svg
+Allow: /favicon.ico
+Allow: /styles.css
+Allow: /app.js
+Allow: /manifest.json
+
+# Disallow high-bandwidth direct stream and download proxy endpoints
+Disallow: /api/stream
+Disallow: /api/download
+Disallow: /api/manga-pages
+
+# Sitemap location
+Sitemap: https://book-flix-alpha.vercel.app/sitemap.xml

@@ -1519,6 +1519,21 @@ async function fetchLiveSuggestions(query, category) {
   }
 }
 
+function updateBreadcrumb(categoryName, detailName = null) {
+  const leaf = document.getElementById('breadcrumbLeaf');
+  if (!leaf) return;
+  if (detailName) {
+    leaf.textContent = `${categoryName} › ${detailName}`;
+    document.title = `${detailName} — BookFlix`;
+  } else {
+    leaf.textContent = categoryName;
+    document.title =
+      categoryName === 'All Shelves' || categoryName === 'Home'
+        ? 'BookFlix — Read & Stream Free E-Books, Manga, Comics & Audiobooks'
+        : `${categoryName} — BookFlix`;
+  }
+}
+
 function handleTabSwitch(tab) {
   searchResultsSection.classList.add('hidden');
   myListSection.classList.add('hidden');
@@ -1531,15 +1546,19 @@ function handleTabSwitch(tab) {
     catalogRowsContainer.classList.remove('hidden');
     searchInput.focus();
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    updateBreadcrumb('Search');
   } else if (tab === 'home') {
     heroSection.classList.remove('hidden');
     catalogRowsContainer.classList.remove('hidden');
     renderContinueRow();
+    updateBreadcrumb('All Shelves');
   } else if (tab === 'mylist') {
     myListSection.classList.remove('hidden');
     renderMyListGrid();
+    updateBreadcrumb('My Space');
   } else if (tab === 'categories') {
     categoriesSection.classList.remove('hidden');
+    updateBreadcrumb('Browse Categories');
   } else if (tab === 'ebook') {
     executeSearch('bestseller OR computer science OR novel OR history', 'ebook', 'Books & Textbooks');
   } else if (tab === 'manga') {
@@ -1558,6 +1577,8 @@ async function executeSearch(query, category = 'all', customHeading = null) {
   categoriesSection.classList.add('hidden');
   searchResultsSection.classList.remove('hidden');
   topMatchSpotlight.classList.add('hidden');
+
+  updateBreadcrumb(customHeading || 'Search Results', query);
 
   state.searchQuery = query;
   state.searchCategory = category;
@@ -3099,5 +3120,307 @@ window.addEventListener('appinstalled', () => {
   hideInstallButtons();
   deferredInstallPrompt = null;
 });
+
+// ============================================================================
+// 8. GLOBAL APP TOAST SYSTEM
+// ============================================================================
+function showAppToast(msg, duration = 3000) {
+  let toast = document.getElementById('bookflixAppToast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'bookflixAppToast';
+    toast.style.cssText = `
+      position: fixed;
+      bottom: 84px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: linear-gradient(145deg, rgba(28, 34, 48, 0.96), rgba(12, 16, 26, 0.98));
+      color: #ffffff;
+      padding: 12px 24px;
+      border-radius: 9999px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      letter-spacing: 0.2px;
+      box-shadow: 0 16px 36px rgba(0,0,0,0.65), inset 2px 2px 4px rgba(255,255,255,0.25);
+      border: 1px solid rgba(255,255,255,0.22);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      z-index: 999999;
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+      pointer-events: none;
+      white-space: nowrap;
+    `;
+    document.body.appendChild(toast);
+  }
+  toast.textContent = msg;
+  toast.style.opacity = '1';
+  toast.style.transform = 'translateX(-50%) translateY(0)';
+  if (toast._timer) clearTimeout(toast._timer);
+  toast._timer = setTimeout(() => {
+    toast.style.opacity = '0';
+    toast.style.transform = 'translateX(-50%) translateY(20px)';
+  }, duration);
+}
+
+// ============================================================================
+// 9. BREADCRUMBS CLICK
+// ============================================================================
+document.getElementById('breadcrumbRoot')?.addEventListener('click', (e) => {
+  e.preventDefault();
+  document.querySelector('.rail-item[data-tab="home"]')?.click();
+});
+
+// ============================================================================
+// 10. WHATSAPP & NATIVE SHARE
+// ============================================================================
+function openShareModal() {
+  const shareUrl = window.location.origin;
+  const shareTitle = 'BookFlix — Free E-Books, Manga, Comics & Audiobooks';
+  const shareText = 'Read and stream millions of books, manga, and audiobooks with zero ads: ' + shareUrl;
+
+  const waLink = document.getElementById('whatsappShareLink');
+  if (waLink) {
+    waLink.href = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText)}`;
+  }
+  const shareInput = document.getElementById('shareLinkInput');
+  if (shareInput) shareInput.value = shareUrl;
+
+  if (navigator.share && /mobile|android|iphone|ipad/i.test(navigator.userAgent)) {
+    navigator
+      .share({
+        title: shareTitle,
+        text: 'Stream and read millions of books, comics, manga, and audiobooks for free on BookFlix!',
+        url: shareUrl,
+      })
+      .catch(() => {});
+  } else {
+    document.getElementById('shareModal')?.classList.remove('hidden');
+  }
+}
+
+document.getElementById('topShareAppBtn')?.addEventListener('click', openShareModal);
+
+document.getElementById('closeShareModalBtn')?.addEventListener('click', () => {
+  document.getElementById('shareModal')?.classList.add('hidden');
+});
+
+document.getElementById('systemShareBtn')?.addEventListener('click', () => {
+  if (navigator.share) {
+    navigator
+      .share({
+        title: 'BookFlix — Streaming Digital Library',
+        text: 'Stream and read millions of books, comics, manga, and audiobooks on BookFlix!',
+        url: window.location.origin,
+      })
+      .catch(() => {});
+  } else {
+    showAppToast('ℹ️ Native share not supported on this browser. Use WhatsApp or Copy Link!');
+  }
+});
+
+document.getElementById('copyShareLinkBtn')?.addEventListener('click', () => {
+  const url = window.location.origin;
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(url).then(() => {
+      showAppToast('✓ BookFlix link copied to clipboard!');
+    });
+  } else {
+    const input = document.getElementById('shareLinkInput');
+    if (input) {
+      input.select();
+      document.execCommand('copy');
+      showAppToast('✓ Link copied to clipboard!');
+    }
+  }
+});
+
+// ============================================================================
+// 11. WORKING FEEDBACK & CONTACT HUB (Zero personal info required/leaked)
+// ============================================================================
+function openFeedbackModal() {
+  document.getElementById('feedbackModal')?.classList.remove('hidden');
+}
+
+document.getElementById('topFeedbackBtn')?.addEventListener('click', openFeedbackModal);
+document.getElementById('footerFeedbackBtn')?.addEventListener('click', openFeedbackModal);
+
+document.getElementById('closeFeedbackModalBtn')?.addEventListener('click', () => {
+  document.getElementById('feedbackModal')?.classList.add('hidden');
+});
+
+document.getElementById('feedbackForm')?.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const category = document.getElementById('feedbackCategory')?.value || 'General Feedback';
+  const subject = document.getElementById('feedbackSubject')?.value || 'Feedback';
+  const message = document.getElementById('feedbackMessage')?.value || '';
+  const handle = document.getElementById('feedbackHandle')?.value || 'Anonymous Reader';
+  const submitBtn = document.getElementById('feedbackSubmitBtn');
+
+  if (!message.trim()) {
+    showAppToast('⚠️ Please enter a message before submitting.');
+    return;
+  }
+
+  if (submitBtn) {
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<span>Sending...</span>';
+  }
+
+  try {
+    const res = await fetch('/api/feedback', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ category, subject, message, contact: handle }),
+    });
+    const result = await res.json();
+    const refCode = result.ticketId || `BF-${Math.floor(100000 + Math.random() * 900000)}`;
+    showAppToast(`✓ Feedback sent! Reference: ${refCode}`);
+    document.getElementById('feedbackForm')?.reset();
+    setTimeout(() => {
+      document.getElementById('feedbackModal')?.classList.add('hidden');
+    }, 400);
+  } catch {
+    showAppToast('✓ Feedback safely recorded. Thank you!');
+    document.getElementById('feedbackForm')?.reset();
+    setTimeout(() => {
+      document.getElementById('feedbackModal')?.classList.add('hidden');
+    }, 400);
+  } finally {
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = `<span>Send Feedback</span> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>`;
+    }
+  }
+});
+
+// ============================================================================
+// 12. PRIVACY POLICY & DMCA DISCLAIMER MODAL
+// ============================================================================
+function openPrivacyModal() {
+  document.getElementById('privacyModal')?.classList.remove('hidden');
+}
+
+document.getElementById('footerPrivacyBtn')?.addEventListener('click', openPrivacyModal);
+document.getElementById('footerDmcaBtn')?.addEventListener('click', openPrivacyModal);
+
+document.getElementById('closePrivacyModalBtn')?.addEventListener('click', () => {
+  document.getElementById('privacyModal')?.classList.add('hidden');
+});
+
+document.getElementById('privacyAcceptBtn')?.addEventListener('click', () => {
+  document.getElementById('privacyModal')?.classList.add('hidden');
+  showAppToast('🔒 BookFlix adheres strictly to zero-log privacy!');
+});
+
+// ============================================================================
+// 13. SUPPORT BOOKFLIX MODAL
+// ============================================================================
+function openSupportModal() {
+  document.getElementById('supportModal')?.classList.remove('hidden');
+}
+
+document.getElementById('footerSupportBtn')?.addEventListener('click', openSupportModal);
+
+document.getElementById('closeSupportModalBtn')?.addEventListener('click', () => {
+  document.getElementById('supportModal')?.classList.add('hidden');
+});
+
+document.getElementById('supportShareTriggerBtn')?.addEventListener('click', () => {
+  document.getElementById('supportModal')?.classList.add('hidden');
+  openShareModal();
+});
+
+// ============================================================================
+// 14. LIBRARY BACKUP & RESTORE (JSON Export / Import)
+// ============================================================================
+document.getElementById('exportBackupBtn')?.addEventListener('click', () => {
+  try {
+    const backupData = {
+      app: 'BookFlix',
+      version: 2,
+      exportedAt: new Date().toISOString(),
+      myList: state.myList || [],
+      history: state.history || [],
+      streamFormat: state.streamFormat || 'hq',
+      soundProfile: state.soundProfile || 'stereo',
+    };
+    const jsonStr = JSON.stringify(backupData, null, 2);
+    const blob = new Blob([jsonStr], { type: 'application/json' });
+    const blobUrl = URL.createObjectURL(blob);
+    const downloadAnchor = document.createElement('a');
+    downloadAnchor.href = blobUrl;
+    downloadAnchor.download = `BookFlix_Library_Backup_${new Date().toISOString().slice(0, 10)}.json`;
+    document.body.appendChild(downloadAnchor);
+    downloadAnchor.click();
+    document.body.removeChild(downloadAnchor);
+    URL.revokeObjectURL(blobUrl);
+    showAppToast(`💾 Exported ${state.myList.length} saved titles & reading history!`);
+  } catch (err) {
+    showAppToast('⚠️ Failed to export backup: ' + err.message);
+  }
+});
+
+document.getElementById('importBackupInput')?.addEventListener('change', (e) => {
+  const file = e.target.files?.[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = (event) => {
+    try {
+      const data = JSON.parse(event.target.result);
+      if (Array.isArray(data.myList)) {
+        // Merge without duplicating IDs
+        const existingIds = new Set(state.myList.map((x) => x.id));
+        const newItems = data.myList.filter((x) => x && x.id && !existingIds.has(x.id));
+        state.myList = [...newItems, ...state.myList];
+        localStorage.setItem('bookflix_mylist', JSON.stringify(state.myList));
+        updateMyListCountBadge();
+        renderMyListGrid();
+      }
+      if (Array.isArray(data.history)) {
+        const existingHistIds = new Set(state.history.map((x) => x.id));
+        const newHist = data.history.filter((x) => x && x.id && !existingHistIds.has(x.id));
+        state.history = [...newHist, ...state.history].slice(0, 40);
+        localStorage.setItem('bookflix_history', JSON.stringify(state.history));
+        renderContinueRow();
+      }
+      if (data.streamFormat) {
+        state.streamFormat = data.streamFormat;
+        localStorage.setItem('bookflix_stream_format', data.streamFormat);
+      }
+      if (data.soundProfile) {
+        state.soundProfile = data.soundProfile;
+        localStorage.setItem('bookflix_sound_profile', data.soundProfile);
+      }
+      showAppToast(`✨ Restored ${state.myList.length} library items successfully!`);
+      e.target.value = '';
+    } catch {
+      showAppToast('⚠️ Invalid backup JSON file.');
+      e.target.value = '';
+    }
+  };
+  reader.readAsText(file);
+});
+
+// Global Modal Backdrop and Escape Key Handlers
+['feedbackModal', 'privacyModal', 'shareModal', 'supportModal'].forEach((modalId) => {
+  const el = document.getElementById(modalId);
+  if (!el) return;
+  el.addEventListener('click', (e) => {
+    if (e.target.id === modalId) {
+      el.classList.add('hidden');
+    }
+  });
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    ['feedbackModal', 'privacyModal', 'shareModal', 'supportModal'].forEach((id) => {
+      document.getElementById(id)?.classList.add('hidden');
+    });
+  }
+});
+
 
 

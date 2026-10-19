@@ -1,13 +1,17 @@
-// BookFlix PWA Service Worker (v28 - Liquid Glass + Claymorphism)
-const CACHE_NAME = 'bookflix-cache-v28';
+// BookFlix PWA Service Worker (v29 - SEO, Backups, Liquid Glass + Claymorphism)
+const CACHE_NAME = 'bookflix-cache-v29';
 const PRECACHE_ASSETS = [
   '/',
-  '/index.html?v=28',
-  '/styles.css?v=28',
-  '/app.js?v=28',
-  '/manifest.json?v=28',
-  '/logo.svg?v=17',
-  '/favicon.ico?v=17'
+  '/index.html?v=29',
+  '/styles.css?v=29',
+  '/app.js?v=29',
+  '/manifest.json?v=18',
+  '/logo.svg?v=18',
+  '/favicon.ico?v=18',
+  '/og-preview.svg',
+  '/404.html',
+  '/robots.txt',
+  '/sitemap.xml',
 ];
 
 self.addEventListener('install', (event) => {
@@ -36,11 +40,13 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   const url = new URL(event.request.url);
 
-  // Never cache audio/video streams, direct downloads, or external API streams in service worker
+  // Never cache audio/video streams, direct downloads, feedback POSTs, or range requests
   if (
     url.pathname.startsWith('/api/stream') ||
     url.pathname.startsWith('/api/download') ||
     url.pathname.startsWith('/api/read-text') ||
+    url.pathname.startsWith('/api/feedback') ||
+    event.request.method === 'POST' ||
     event.request.headers.get('range')
   ) {
     return;

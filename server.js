@@ -1451,7 +1451,10 @@ const MIME_TYPES = {
   '.svg': 'image/svg+xml',
   '.png': 'image/png',
   '.jpg': 'image/jpeg',
+  '.webp': 'image/webp',
   '.ico': 'image/x-icon',
+  '.xml': 'application/xml; charset=utf-8',
+  '.txt': 'text/plain; charset=utf-8',
 };
 
 async function requestHandler(req, res) {
@@ -1462,7 +1465,7 @@ async function requestHandler(req, res) {
   }
 
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, HEAD, OPTIONS');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, HEAD, POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Range, Origin, Accept, X-Requested-With, Content-Type');
   res.setHeader('Access-Control-Expose-Headers', 'Content-Range, Content-Length, Accept-Ranges, Content-Type');
   res.setHeader('Accept-Ranges', 'bytes');
@@ -1683,6 +1686,55 @@ async function requestHandler(req, res) {
     return proxyRemoteStream(targetUrl, req, res, filename);
   }
 
+  // API 8: Anonymous Working Contact & Feedback Endpoint (Zero personal info logged/required)
+  if (pathname === '/api/feedback') {
+    if (req.method === 'POST') {
+      let body = '';
+      req.on('data', (chunk) => {
+        body += chunk;
+        if (body.length > 50000) {
+          req.destroy();
+        }
+      });
+      req.on('end', () => {
+        try {
+          const data = body ? JSON.parse(body) : {};
+          const ticketId = 'BF-' + Math.floor(100000 + Math.random() * 900000);
+          const feedbackEntry = {
+            id: ticketId,
+            category: data.category || 'General Feedback',
+            subject: (data.subject || 'No Subject').slice(0, 150),
+            message: (data.message || '').slice(0, 3000),
+            contact: (data.contact || 'Anonymous Reader').slice(0, 100),
+            timestamp: new Date().toISOString(),
+          };
+          console.log(`📩 [BookFlix Feedback]: [${feedbackEntry.category}] ${feedbackEntry.subject} (${ticketId})`);
+          res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+          return res.end(
+            JSON.stringify({
+              ok: true,
+              ticketId,
+              message: 'Feedback received successfully. Thank you for helping improve BookFlix!',
+            })
+          );
+        } catch {
+          res.writeHead(400, { 'Content-Type': 'application/json' });
+          return res.end(JSON.stringify({ error: 'Invalid JSON payload' }));
+        }
+      });
+      return;
+    } else {
+      res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+      return res.end(
+        JSON.stringify({
+          status: 'online',
+          service: 'BookFlix In-App Feedback Hub',
+          anonymous: true,
+        })
+      );
+    }
+  }
+
   // Serve BookFlix Icon for /favicon.ico
   if (pathname === '/favicon.ico') {
     const icoPath = path.join(__dirname, 'icons', 'bookflix-glass.ico');
@@ -1708,6 +1760,11 @@ async function requestHandler(req, res) {
 
   fs.readFile(filePath, (err, content) => {
     if (err) {
+      const custom404 = path.join(PUBLIC_DIR, '404.html');
+      if (fs.existsSync(custom404)) {
+        res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
+        return fs.createReadStream(custom404).pipe(res);
+      }
       res.writeHead(404, { 'Content-Type': 'text/plain' });
       return res.end('Not found');
     }

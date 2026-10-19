@@ -4,22 +4,104 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="theme-color" content="#0b0c10" />
+  <title>BookFlix — Read &amp; Stream Free E-Books, Manga, Comics &amp; Audiobooks</title>
+
+  <!-- SEO & Canonical -->
+  <link rel="canonical" href="https://book-flix-alpha.vercel.app/" />
+  <meta name="description" content="Stream and read millions of e-books, manga chapters, comics, and unabridged audiobooks in a sleek Liquid Claymorphism PWA. Fast streaming, zero ads, offline reading." />
+  <meta name="keywords" content="ebooks, free books, manga online, comics stream, audiobooks, epub reader, pdf stream, bookflix, online library, digital library" />
+  <meta name="author" content="BookFlix Community" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <meta name="google-site-verification" content="google-site-verification-bookflix-token" />
+
+  <!-- Open Graph / Facebook / LinkedIn / WhatsApp Social Previews -->
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:url" content="https://book-flix-alpha.vercel.app/" />
+  <meta property="og:site_name" content="BookFlix" />
+  <meta property="og:title" content="BookFlix — Read &amp; Stream Free E-Books, Manga, Comics &amp; Audiobooks" />
+  <meta property="og:description" content="Stream and read millions of e-books, manga chapters, comics, and unabridged audiobooks with zero-delay streaming, offline PWA mode, and Liquid Claymorphism UI." />
+  <meta property="og:image" content="https://book-flix-alpha.vercel.app/og-preview.svg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="BookFlix — Streaming E-Books, Manga, Comics &amp; Audiobooks" />
+
+  <!-- Twitter / X Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="BookFlix — Read &amp; Stream Free E-Books, Manga, Comics &amp; Audiobooks" />
+  <meta name="twitter:description" content="Free streaming reader for E-Books, Manga, Comics, and Audiobooks with Liquid Clay UI and offline PWA mode." />
+  <meta name="twitter:image" content="https://book-flix-alpha.vercel.app/og-preview.svg" />
+
+  <!-- PWA & Mobile Web Capabilities -->
   <meta name="application-name" content="BookFlix" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="BookFlix" />
   <meta name="mobile-web-app-capable" content="yes" />
-  <title>BookFlix</title>
-  <link rel="manifest" href="/manifest.json?v=17" />
-  <link rel="icon" type="image/svg+xml" href="/logo.svg?v=17" />
-  <link rel="icon" type="image/x-icon" href="/favicon.ico?v=17" />
-  <link rel="shortcut icon" href="/favicon.ico?v=17" />
-  <link rel="apple-touch-icon" href="/logo.svg?v=17" />
+
+  <link rel="manifest" href="/manifest.json?v=18" />
+  <link rel="icon" type="image/svg+xml" href="/logo.svg?v=18" />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico?v=18" />
+  <link rel="shortcut icon" href="/favicon.ico?v=18" />
+  <link rel="apple-touch-icon" href="/logo.svg?v=18" />
+
+  <!-- Performance Preconnect Hints -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="dns-prefetch" href="https://covers.openlibrary.org" />
+  <link rel="dns-prefetch" href="https://archive.org" />
   <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Outfit:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" defer></script>
-  <link rel="stylesheet" href="/styles.css?v=28" />
+  <link rel="stylesheet" href="/styles.css?v=29" />
+
+  <!-- Structured Data (JSON-LD): Organization, WebSite (SearchAction), WebApplication -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://book-flix-alpha.vercel.app/#organization",
+        "name": "BookFlix",
+        "url": "https://book-flix-alpha.vercel.app/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://book-flix-alpha.vercel.app/logo.svg",
+          "caption": "BookFlix"
+        },
+        "description": "All-in-One Digital Library aggregating open-access and public domain e-books, manga, comics, and audiobooks with direct streaming."
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://book-flix-alpha.vercel.app/#website",
+        "url": "https://book-flix-alpha.vercel.app/",
+        "name": "BookFlix",
+        "publisher": {
+          "@id": "https://book-flix-alpha.vercel.app/#organization"
+        },
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://book-flix-alpha.vercel.app/?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      },
+      {
+        "@type": "WebApplication",
+        "@id": "https://book-flix-alpha.vercel.app/#webapp",
+        "name": "BookFlix Digital Library",
+        "url": "https://book-flix-alpha.vercel.app/",
+        "applicationCategory": "MultimediaApplication",
+        "operatingSystem": "All",
+        "browserRequirements": "Requires JavaScript. Requires HTML5.",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
   <!-- MATTE FINISH CONTRAST BACKGROUND CANVAS -->
@@ -216,6 +298,24 @@
             <span>Devices &amp; QR</span>
           </button>
 
+          <button type="button" class="top-action-btn" id="topShareAppBtn" title="Share BookFlix via WhatsApp or System Share">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="18" cy="5" r="3"></circle>
+              <circle cx="6" cy="12" r="3"></circle>
+              <circle cx="18" cy="19" r="3"></circle>
+              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+              <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+            </svg>
+            <span>Share</span>
+          </button>
+
+          <button type="button" class="top-action-btn" id="topFeedbackBtn" title="Send Feedback, Request Books, or Report Issues">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+            </svg>
+            <span>Feedback</span>
+          </button>
+
           <button type="button" class="top-action-btn install-pwa-btn hidden" id="topInstallAppBtn" title="Install BookFlix as an App on Phone, Tablet or PC">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
@@ -227,6 +327,24 @@
         </div>
       </div>
     </div>
+
+    <!-- DYNAMIC SEO BREADCRUMB BAR -->
+    <nav class="breadcrumb-container" id="breadcrumbNav" aria-label="Breadcrumb">
+      <ol class="breadcrumb-trail" itemscope itemtype="https://schema.org/BreadcrumbList">
+        <li class="breadcrumb-crumb" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="#" class="breadcrumb-link" id="breadcrumbRoot" itemprop="item">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+            <span itemprop="name">Home</span>
+          </a>
+          <meta itemprop="position" content="1" />
+        </li>
+        <li class="breadcrumb-sep" aria-hidden="true">›</li>
+        <li class="breadcrumb-crumb active" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <span class="breadcrumb-current" id="breadcrumbLeaf" itemprop="name">All Shelves</span>
+          <meta itemprop="position" content="2" />
+        </li>
+      </ol>
+    </nav>
 
     <!-- ======================================================================
          HERO BANNER WITH 3D BOOK SHOWCASE & SUGGESTION CAROUSEL
@@ -390,6 +508,25 @@
             <h2>My Space</h2>
             <p class="search-subtitle">Your saved Books, Manga, Comics, and Audiobooks.</p>
           </div>
+          <div class="space-backup-actions">
+            <button type="button" class="btn btn-secondary btn-sm" id="exportBackupBtn" title="Download a JSON backup of your saved titles & reading progress">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+              </svg>
+              <span>Export Backup</span>
+            </button>
+            <label class="btn btn-secondary btn-sm file-import-label" title="Restore your saved titles and reading progress from a JSON backup">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="17 8 12 3 7 8"></polyline>
+                <line x1="12" y1="3" x2="12" y2="15"></line>
+              </svg>
+              <span>Restore Backup</span>
+              <input type="file" id="importBackupInput" accept=".json,application/json" class="hidden-file-input" />
+            </label>
+          </div>
         </div>
         <div class="results-grid" id="myListGrid"></div>
       </section>
@@ -401,6 +538,74 @@
           <p>Loading your library shelves...</p>
         </div>
       </div>
+
+      <!-- ======================================================================
+           SEO & DISCOVERY FOOTER WITH INTERNAL LINKS & BRANDING
+      ======================================================================= -->
+      <footer class="app-footer" id="appFooter">
+        <div class="footer-grid">
+          <!-- Col 1: Brand & Manifesto -->
+          <div class="footer-col brand-col">
+            <div class="footer-brand">
+              <img src="/logo.svg" alt="BookFlix" class="footer-logo" />
+              <div class="brand-wordmark">
+                <span class="brand-word-book">BOOK</span><span class="brand-word-flix">FLIX</span>
+              </div>
+            </div>
+            <p class="footer-tagline">
+              Universal streaming reader and aggregator for e-books, manga, comics, and unabridged audiobooks. Fast, ad-free, and privacy-respecting.
+            </p>
+            <div class="footer-badges">
+              <span class="footer-pill-status">
+                <span class="status-dot"></span> HTTPS Secured • Zero Logs
+              </span>
+              <span class="footer-pill-status">PWA Offline Enabled</span>
+            </div>
+          </div>
+
+          <!-- Col 2: Content Catalogs -->
+          <div class="footer-col">
+            <h4 class="footer-heading">Library Catalogs</h4>
+            <ul class="footer-links">
+              <li><a href="/?tab=ebook" class="footer-link">Digital Books (PDF • EPUB)</a></li>
+              <li><a href="/?tab=manga" class="footer-link">Manga &amp; Manhwa Stream</a></li>
+              <li><a href="/?tab=comic" class="footer-link">Comics &amp; Graphic Novels</a></li>
+              <li><a href="/?tab=audiobook" class="footer-link">Audiobook Studio</a></li>
+              <li><a href="/?tab=categories" class="footer-link">All 28 Connected Catalogs</a></li>
+            </ul>
+          </div>
+
+          <!-- Col 3: Popular Genres -->
+          <div class="footer-col">
+            <h4 class="footer-heading">Top Categories</h4>
+            <ul class="footer-links">
+              <li><a href="/?q=Fiction" class="footer-link">Fiction &amp; Literature</a></li>
+              <li><a href="/?q=Computer+Science" class="footer-link">Computer Science &amp; AI</a></li>
+              <li><a href="/?q=Science+Fiction" class="footer-link">Sci-Fi &amp; Space Fantasy</a></li>
+              <li><a href="/?q=Philosophy" class="footer-link">Philosophy &amp; Psychology</a></li>
+              <li><a href="/?q=Classics" class="footer-link">Historical Classics</a></li>
+            </ul>
+          </div>
+
+          <!-- Col 4: Platform, Privacy & Community -->
+          <div class="footer-col">
+            <h4 class="footer-heading">Trust &amp; Community</h4>
+            <ul class="footer-links">
+              <li><button type="button" class="footer-btn-link" id="footerPrivacyBtn">Privacy Policy &amp; Terms</button></li>
+              <li><button type="button" class="footer-btn-link" id="footerDmcaBtn">DMCA &amp; Content Disclaimer</button></li>
+              <li><button type="button" class="footer-btn-link" id="footerFeedbackBtn">Working Contact &amp; Feedback</button></li>
+              <li><button type="button" class="footer-btn-link" id="footerSupportBtn">Support BookFlix</button></li>
+              <li><a href="/sitemap.xml" target="_blank" rel="noopener" class="footer-link">Sitemap (XML)</a></li>
+              <li><a href="/robots.txt" target="_blank" rel="noopener" class="footer-link">Robots.txt</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer-bottom-bar">
+          <span>© 2026 BookFlix Open Digital Library. Designed with Liquid Claymorphism.</span>
+          <span>Aggregates open-access archives: Open Library, Internet Archive, Gutenberg &amp; LibriVox.</span>
+        </div>
+      </footer>
     </main>
   </div>
 
@@ -1158,6 +1363,236 @@
     </div>
   </div>
 
-  <script src="/app.js?v=28"></script>
+  <!-- ========================================================================
+       WORKING CONTACT & FEEDBACK MODAL (Zero personal data required/leaked)
+  ========================================================================= -->
+  <div class="modal-overlay hidden" id="feedbackModal" role="dialog" aria-modal="true" aria-labelledby="feedbackModalTitle">
+    <div class="liquid-clay-dialog max-w-560">
+      <div class="dialog-header">
+        <div class="dialog-title-lockup">
+          <div class="dialog-icon-bubble">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+            </svg>
+          </div>
+          <div>
+            <h3 class="dialog-title" id="feedbackModalTitle">Contact &amp; Feedback Hub</h3>
+            <span class="dialog-subtitle">Send book requests, bug reports, or suggestions</span>
+          </div>
+        </div>
+        <button type="button" class="btn-close" id="closeFeedbackModalBtn" title="Close" aria-label="Close">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+
+      <form class="dialog-body" id="feedbackForm">
+        <div class="form-row">
+          <label for="feedbackCategory">Topic / Category</label>
+          <select id="feedbackCategory" class="dialog-select" required>
+            <option value="General Feedback">💡 General Feedback &amp; Ideas</option>
+            <option value="Book / Manga Request">📚 Book, Manga or Comic Request</option>
+            <option value="Bug Report">🐛 Bug Report / Reader Issue</option>
+            <option value="Audiobook Issue">🎧 Audiobook Stream Issue</option>
+            <option value="DMCA / Content Inquiry">⚖️ DMCA / Content Inquiry</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <label for="feedbackSubject">Subject</label>
+          <input type="text" id="feedbackSubject" class="dialog-input" placeholder="e.g. Manga zoom issue on mobile or book suggestion..." required maxlength="120" />
+        </div>
+
+        <div class="form-row">
+          <label for="feedbackMessage">Message</label>
+          <textarea id="feedbackMessage" class="dialog-textarea" rows="4" placeholder="Describe your request or thoughts in detail..." required maxlength="2500"></textarea>
+        </div>
+
+        <div class="form-row">
+          <label for="feedbackHandle">Your Handle or Email <span class="label-optional">(Optional — anonymous submissions fully supported)</span></label>
+          <input type="text" id="feedbackHandle" class="dialog-input" placeholder="Anonymous Reader or contact info" maxlength="80" />
+        </div>
+
+        <div class="form-actions">
+          <span class="privacy-note">🔒 Privacy guaranteed: Zero tracker cookies, zero personal data sharing.</span>
+          <button type="submit" class="btn btn-primary" id="feedbackSubmitBtn">
+            <span>Send Feedback</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       PRIVACY POLICY & DMCA DISCLAIMER MODAL
+  ========================================================================= -->
+  <div class="modal-overlay hidden" id="privacyModal" role="dialog" aria-modal="true" aria-labelledby="privacyModalTitle">
+    <div class="liquid-clay-dialog max-w-720">
+      <div class="dialog-header">
+        <div class="dialog-title-lockup">
+          <div class="dialog-icon-bubble">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+          </div>
+          <div>
+            <h3 class="dialog-title" id="privacyModalTitle">Privacy Policy &amp; Terms</h3>
+            <span class="dialog-subtitle">Zero data collection • 100% Client-side storage • Open Access Aggregator</span>
+          </div>
+        </div>
+        <button type="button" class="btn-close" id="closePrivacyModalBtn" title="Close" aria-label="Close">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+
+      <div class="dialog-body legal-content">
+        <section class="legal-section">
+          <h4>1. Absolute Privacy &amp; Zero Tracking</h4>
+          <p>
+            BookFlix does not require user accounts, passwords, or personal credentials. We do not sell, rent, or monetize user data. All reading bookmarks, favorites, and history are kept strictly on your local browser (LocalStorage and IndexedDB).
+          </p>
+        </section>
+
+        <section class="legal-section">
+          <h4>2. Public Domain &amp; Open Access Aggregation</h4>
+          <p>
+            BookFlix is an indexer and client reader interface. We aggregate open-access metadata, public domain books, and open digital repositories including Project Gutenberg, Internet Archive, Open Library, LibriVox, and public community feeds.
+          </p>
+        </section>
+
+        <section class="legal-section">
+          <h4>3. DMCA &amp; Takedown Requests</h4>
+          <p>
+            BookFlix respects copyright and intellectual property. BookFlix does not host infringing files on proprietary storage; all documents are streamed or indexed from upstream third-party sources. If you are a copyright owner and wish to request removal of an index link, please submit a notice via our in-app Contact &amp; Feedback Hub under "DMCA / Content Inquiry" for prompt review.
+          </p>
+        </section>
+
+        <section class="legal-section">
+          <h4>4. PWA Caching &amp; Offline Storage</h4>
+          <p>
+            When installed as a Progressive Web App (PWA), BookFlix caches interface assets locally on your device for instant offline launch. You can clear this anytime through browser settings.
+          </p>
+        </section>
+
+        <div class="dialog-actions-footer">
+          <button type="button" class="btn btn-primary" id="privacyAcceptBtn">Understood &amp; Agree</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       WHATSAPP & NATIVE SHARE MODAL
+  ========================================================================= -->
+  <div class="modal-overlay hidden" id="shareModal" role="dialog" aria-modal="true" aria-labelledby="shareModalTitle">
+    <div class="liquid-clay-dialog max-w-500">
+      <div class="dialog-header">
+        <div class="dialog-title-lockup">
+          <div class="dialog-icon-bubble">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="18" cy="5" r="3"></circle>
+              <circle cx="6" cy="12" r="3"></circle>
+              <circle cx="18" cy="19" r="3"></circle>
+              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+              <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+            </svg>
+          </div>
+          <div>
+            <h3 class="dialog-title" id="shareModalTitle">Share BookFlix</h3>
+            <span class="dialog-subtitle">Share with friends or send to another device</span>
+          </div>
+        </div>
+        <button type="button" class="btn-close" id="closeShareModalBtn" title="Close" aria-label="Close">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+
+      <div class="dialog-body">
+        <div class="share-grid">
+          <!-- WhatsApp Quick Share -->
+          <a href="#" target="_blank" rel="noopener" class="share-tile share-whatsapp" id="whatsappShareLink">
+            <div class="share-tile-icon whatsapp-bg">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+              </svg>
+            </div>
+            <div class="share-tile-info">
+              <strong>WhatsApp</strong>
+              <span>Send directly to chat</span>
+            </div>
+          </a>
+
+          <!-- Native Mobile Share -->
+          <button type="button" class="share-tile" id="systemShareBtn">
+            <div class="share-tile-icon native-bg">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <circle cx="18" cy="5" r="3"></circle>
+                <circle cx="6" cy="12" r="3"></circle>
+                <circle cx="18" cy="19" r="3"></circle>
+                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+              </svg>
+            </div>
+            <div class="share-tile-info">
+              <strong>System Share</strong>
+              <span>AirDrop, Telegram, SMS</span>
+            </div>
+          </button>
+        </div>
+
+        <div class="share-copy-row">
+          <input type="text" id="shareLinkInput" class="dialog-input" readonly value="https://book-flix-alpha.vercel.app/" />
+          <button type="button" class="btn btn-primary btn-sm" id="copyShareLinkBtn">Copy Link</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       SUPPORT BOOKFLIX / COMMUNITY MODAL
+  ========================================================================= -->
+  <div class="modal-overlay hidden" id="supportModal" role="dialog" aria-modal="true" aria-labelledby="supportModalTitle">
+    <div class="liquid-clay-dialog max-w-560">
+      <div class="dialog-header">
+        <div class="dialog-title-lockup">
+          <div class="dialog-icon-bubble">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+            </svg>
+          </div>
+          <div>
+            <h3 class="dialog-title" id="supportModalTitle">Support BookFlix</h3>
+            <span class="dialog-subtitle">100% Free, Ad-Free &amp; Community Maintained</span>
+          </div>
+        </div>
+        <button type="button" class="btn-close" id="closeSupportModalBtn" title="Close" aria-label="Close">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+
+      <div class="dialog-body">
+        <p class="support-intro">
+          BookFlix was created to keep universal reading accessible to everyone across the globe on any phone, tablet, or desktop with zero paywalls and zero tracker ads.
+        </p>
+
+        <div class="support-options-grid">
+          <div class="support-card">
+            <strong>⭐ Star on GitHub</strong>
+            <span>Help more readers discover the open-source library project.</span>
+            <a href="https://github.com/Pranshu125/BookFlix" target="_blank" rel="noopener" class="btn btn-secondary btn-sm">Visit GitHub Repo</a>
+          </div>
+
+          <div class="support-card">
+            <strong>📢 Spread the Word</strong>
+            <span>Share BookFlix with fellow bookworms, students, and manga fans.</span>
+            <button type="button" class="btn btn-primary btn-sm" id="supportShareTriggerBtn">Share with Friends</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/app.js?v=29"></script>
 </body>
 </html>
