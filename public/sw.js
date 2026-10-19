@@ -1,11 +1,11 @@
-// BookFlix PWA Service Worker (v35 - Force Network-First HTML & Instant UI Refresh)
-const CACHE_NAME = 'bookflix-cache-v35';
+// BookFlix PWA Service Worker (v36 - Force Network-First HTML & Instant UI Refresh)
+const CACHE_NAME = 'bookflix-cache-v36';
 const PRECACHE_ASSETS = [
   '/',
-  '/index.html?v=35',
-  '/styles.css?v=35',
-  '/app.js?v=35',
-  '/manifest.json?v=35',
+  '/index.html?v=36',
+  '/styles.css?v=36',
+  '/app.js?v=36',
+  '/manifest.json?v=36',
   '/logo.svg?v=18',
   '/favicon.ico?v=18',
   '/og-preview.svg',

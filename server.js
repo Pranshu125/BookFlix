@@ -1735,6 +1735,21 @@ async function requestHandler(req, res) {
     }
   }
 
+  // API 9: Anonymous Auth & Vault Sync Endpoint (Zero Personal Info Required)
+  if (pathname.startsWith('/api/auth')) {
+    res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+    return res.end(
+      JSON.stringify({
+        status: 'online',
+        service: 'BookFlix Client Vault & Auth Engine',
+        anonymous: true,
+        personalDataRequired: false,
+        standards: ['Client-Side SHA-256 Vault', 'Zero Personal Trackers', 'Guest First'],
+        timestamp: new Date().toISOString(),
+      })
+    );
+  }
+
   // Serve BookFlix Icon for /favicon.ico
   if (pathname === '/favicon.ico') {
     const icoPath = path.join(__dirname, 'icons', 'bookflix-glass.ico');

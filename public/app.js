@@ -73,6 +73,54 @@ const SECTION_QUERY_POOLS = {
   ],
 };
 
+// Subcategories Configuration across all media categories (Comics, Manga, E-Books, Audiobooks, Home)
+const SUBCATEGORIES_CONFIG = {
+  home: [
+    { id: 'trending', label: '🔥 Trending Now', query: 'bestseller OR popular OR trending', type: 'all', heading: 'Trending Across BookFlix' },
+    { id: 'comics_hub', label: '🦸 Marvel & DC', query: 'spider-man OR batman OR avengers OR x-men', type: 'comic', heading: 'Marvel & DC Superhero Comics' },
+    { id: 'manga_hub', label: '⚔️ Top Manga', query: 'one piece OR jujutsu kaisen OR berserk OR solo leveling', type: 'manga', heading: 'Top Manga & Webtoons' },
+    { id: 'fiction_hub', label: '📖 Fiction Bestsellers', query: 'bestseller fiction OR contemporary literature OR thriller novel', type: 'ebook', heading: 'Fiction & Bestsellers' },
+    { id: 'tech_hub', label: '💻 Computer Science & AI', query: 'python programming OR machine learning algorithms OR deep learning', type: 'ebook', heading: 'Computer Science & AI Hub' },
+    { id: 'audio_hub', label: '🎧 Audiobooks Studio', query: 'harry potter OR sherlock OR stephen king OR fantasy', type: 'audiobook', heading: 'Featured Audiobooks' },
+    { id: 'mature_hub', label: '🔞 Adult & Mature (18+)', query: 'mature comics OR dark romance novel OR mature seinen', type: 'all', heading: 'Adult & Mature Collection (18+)', is18Plus: true },
+  ],
+  comic: [
+    { id: 'all_comics', label: '💥 All Comics', query: 'batman OR spider-man OR marvel OR dc comics OR star wars', type: 'comic', heading: 'All Comics & Graphic Novels' },
+    { id: 'marvel', label: '🕷️ Marvel Universe', query: 'spider-man OR avengers OR x-men OR wolverine OR deadpool OR iron man', type: 'comic', heading: 'Marvel Universe (Spider-Man, Avengers, X-Men)' },
+    { id: 'dc', label: '🦇 DC Universe', query: 'batman OR superman OR justice league OR flash OR wonder woman OR joker', type: 'comic', heading: 'DC Universe (Batman, Superman, Justice League)' },
+    { id: 'darkhorse', label: '⚔️ Image & Dark Horse', query: 'spawn OR invincible OR the walking dead OR hellboy OR saga', type: 'comic', heading: 'Image, Dark Horse & Vertigo' },
+    { id: 'indie', label: '🎨 Graphic Novels & Indie', query: 'watchmen OR sandman OR v for vendetta OR maus OR locke key', type: 'comic', heading: 'Graphic Novels & Masterpieces' },
+    { id: 'adult_comics', label: '🔞 Adult & Mature (18+)', query: 'mature comics OR vertigo comics OR the boys OR heavy metal OR sin city', type: 'comic', heading: 'Adult & Mature Comics (18+)', is18Plus: true },
+  ],
+  manga: [
+    { id: 'all_manga', label: '⚡ All Manga', query: 'popular', type: 'manga', heading: 'All Manga, Manhwa & Webtoons' },
+    { id: 'shonen', label: '🔥 Shonen Action', query: 'one piece OR naruto OR jujutsu kaisen OR bleach OR dragon ball', type: 'manga', heading: 'Shonen Action (One Piece, JJK, Naruto)' },
+    { id: 'seinen', label: '⚔️ Seinen Dark Fantasy', query: 'berserk OR vinland saga OR monster OR tokyo ghoul OR vagabond', type: 'manga', heading: 'Seinen Dark Fantasy (Berserk, Vinland, Monster)' },
+    { id: 'manhwa', label: '📱 Manhwa & Webtoons', query: 'solo leveling OR tower of god OR omniscient reader OR beginning after end', type: 'manga', heading: 'Manhwa & Webtoons (Solo Leveling, Tower of God)' },
+    { id: 'romance', label: '🌸 Romance & Slice of Life', query: 'kaguya-sama OR horimiya OR fruits basket OR spy x family', type: 'manga', heading: 'Romance & Slice of Life Manga' },
+    { id: 'isekai', label: '✨ Isekai Worlds', query: 'mushoku tensei OR re:zero OR slime tensei OR overlord', type: 'manga', heading: 'Isekai Fantasy Worlds' },
+    { id: 'adult_manga', label: '🔞 Adult & Ecchi (18+)', query: 'mature seinen OR ecchi OR gantz OR highschool of dead OR berserk uncensored', type: 'manga', heading: 'Adult & Ecchi Manga (18+)', is18Plus: true },
+  ],
+  ebook: [
+    { id: 'all_books', label: '📚 All Books', query: 'bestseller OR computer science OR novel OR history', type: 'ebook', heading: 'All Books & E-Books' },
+    { id: 'fiction', label: '📖 Fiction & Bestsellers', query: 'bestseller fiction OR contemporary literature OR thriller novel', type: 'ebook', heading: 'Fiction & Contemporary Bestsellers' },
+    { id: 'scifi', label: '🚀 Sci-Fi & Cyberpunk', query: 'dune OR tolkien OR asimov OR cyberpunk OR foundation', type: 'ebook', heading: 'Sci-Fi, Cyberpunk & Epic Worlds' },
+    { id: 'mystery', label: '🔍 Mystery & Crime', query: 'sherlock holmes OR agatha christie OR thriller crime OR stephen king', type: 'ebook', heading: 'Mystery, Suspense & Crime' },
+    { id: 'cs_ai', label: '🤖 Computer Science & AI', query: 'python programming OR machine learning algorithms OR deep learning', type: 'ebook', heading: 'Computer Science, AI & Engineering' },
+    { id: 'stem', label: '🔬 STEM Textbooks', query: 'physics calculus OR biology medicine OR chemistry mathematics', type: 'ebook', heading: 'University STEM Textbooks' },
+    { id: 'psychology', label: '💡 Psychology & Finance', query: 'psychology mindset OR economics finance OR atomic habits OR philosophy', type: 'ebook', heading: 'Psychology, Mindset & Wealth' },
+    { id: 'adult_romance', label: '🔞 Adult & Dark Romance (18+)', query: 'dark romance novel OR adult fiction mature OR fifty shades', type: 'ebook', heading: 'Adult & Dark Romance (18+)', is18Plus: true },
+  ],
+  audiobook: [
+    { id: 'all_audio', label: '🎧 All Audiobooks', query: 'harry potter OR sherlock OR stephen king OR fantasy', type: 'audiobook', heading: 'All Audiobooks Studio' },
+    { id: 'classics', label: '🏛️ Literary Classics', query: 'adventures of sherlock holmes OR dracula stoker OR pride and prejudice', type: 'audiobook', heading: 'Literary Classics Unabridged' },
+    { id: 'scifi_audio', label: '🌌 Sci-Fi & Fantasy', query: 'dune frank herbert OR percy jackson OR lovecraft audio', type: 'audiobook', heading: 'Sci-Fi & Epic Fantasy Audio' },
+    { id: 'thriller_audio', label: '🕯️ Thriller & Mystery', query: 'edgar allan poe audio OR agatha christie audio OR horror mystery', type: 'audiobook', heading: 'Thriller, Mystery & Horror Audio' },
+    { id: 'philosophy', label: '📜 Philosophy & Strategy', query: 'the art of war sun tzu OR meditations marcus aurelius OR tao te ching', type: 'audiobook', heading: 'Philosophy & Strategy Audio' },
+    { id: 'adult_audio', label: '🔞 Mature Audio (18+)', query: 'dark gothic horror unabridged OR mature audio thriller', type: 'audiobook', heading: 'Mature & Gothic Audio (18+)', is18Plus: true },
+  ],
+};
+
 // DOM Elements
 const catalogRowsContainer = document.getElementById('catalogRowsContainer');
 const searchResultsSection = document.getElementById('searchResultsSection');
@@ -258,6 +306,9 @@ document.addEventListener('DOMContentLoaded', () => {
   initHeroSuggestionsCarousel();
   loadHomeCatalog();
   setupEventListeners();
+  initAuthSystem();
+  initAgeGate();
+  renderSubcategoryRibbon('home');
 });
 
 function getFallbackHomeRows() {
@@ -728,8 +779,18 @@ function setupEventListeners() {
       const q = tile.getAttribute('data-q');
       const type = tile.getAttribute('data-type') || 'all';
       const heading = tile.getAttribute('data-heading');
-      searchInput.value = q.split(' ')[0];
-      executeSearch(q, type, heading);
+      const isMature = tile.getAttribute('data-mature') === 'true';
+
+      const runTileSearch = () => {
+        searchInput.value = q.split(' ')[0];
+        executeSearch(q, type, heading);
+      };
+
+      if (isMature && !is18PlusVerified()) {
+        promptAgeGate(runTileSearch);
+      } else {
+        runTileSearch();
+      }
     });
   });
 
@@ -1540,6 +1601,8 @@ function handleTabSwitch(tab) {
   categoriesSection.classList.add('hidden');
   catalogRowsContainer.classList.add('hidden');
   heroSection.classList.add('hidden');
+
+  renderSubcategoryRibbon(tab);
 
   if (tab === 'search') {
     heroSection.classList.remove('hidden');
@@ -3500,7 +3563,18 @@ document.getElementById('launchCardImages')?.addEventListener('click', () => {
 });
 
 // Global Modal Backdrop and Escape Key Handlers
-['feedbackModal', 'privacyModal', 'shareModal', 'supportModal', 'launchPollModal'].forEach((modalId) => {
+const ALL_APP_MODAL_IDS = [
+  'feedbackModal',
+  'privacyModal',
+  'shareModal',
+  'supportModal',
+  'launchPollModal',
+  'authModal',
+  'userProfileModal',
+  'ageGateModal',
+];
+
+ALL_APP_MODAL_IDS.forEach((modalId) => {
   const el = document.getElementById(modalId);
   if (!el) return;
   el.addEventListener('click', (e) => {
@@ -3512,11 +3586,498 @@ document.getElementById('launchCardImages')?.addEventListener('click', () => {
 
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
-    ['feedbackModal', 'privacyModal', 'shareModal', 'supportModal', 'launchPollModal'].forEach((id) => {
+    ALL_APP_MODAL_IDS.forEach((id) => {
       document.getElementById(id)?.classList.add('hidden');
     });
   }
 });
+
+// ============================================================================
+// SUBCATEGORY RIBBON & 18+ AGE GATE SYSTEM
+// ============================================================================
+
+let currentSubcatCategory = 'home';
+let currentActiveSubId = null;
+let pendingAgeGateAction = null;
+
+function is18PlusVerified() {
+  const activeUser = getActiveUser();
+  if (activeUser && activeUser.matureEnabled) return true;
+  return localStorage.getItem('bookflix_age_verified') === 'true';
+}
+
+function promptAgeGate(actionCallback) {
+  pendingAgeGateAction = actionCallback;
+  const modal = document.getElementById('ageGateModal');
+  if (modal) modal.classList.remove('hidden');
+}
+
+function initAgeGate() {
+  const confirmBtn = document.getElementById('confirm18PlusBtn');
+  const cancelBtn = document.getElementById('cancel18PlusBtn');
+  const closeBtn = document.getElementById('closeAgeGateBtn');
+  const modal = document.getElementById('ageGateModal');
+
+  confirmBtn?.addEventListener('click', () => {
+    localStorage.setItem('bookflix_age_verified', 'true');
+    const activeUser = getActiveUser();
+    if (activeUser) {
+      activeUser.matureEnabled = true;
+      saveActiveUser(activeUser);
+    }
+    modal?.classList.add('hidden');
+    showAppToast('🔞 Age verified (18+). Welcome to Mature Lounge.');
+    if (typeof pendingAgeGateAction === 'function') {
+      const act = pendingAgeGateAction;
+      pendingAgeGateAction = null;
+      act();
+    }
+  });
+
+  const dismiss = () => {
+    modal?.classList.add('hidden');
+    pendingAgeGateAction = null;
+    showAppToast('Safe Mode active. Mature content restricted.');
+  };
+
+  cancelBtn?.addEventListener('click', dismiss);
+  closeBtn?.addEventListener('click', dismiss);
+}
+
+function renderSubcategoryRibbon(category = 'home', activeSubId = null) {
+  const ribbon = document.getElementById('subcatRibbon');
+  if (!ribbon) return;
+
+  const validCat = SUBCATEGORIES_CONFIG[category] ? category : 'home';
+  currentSubcatCategory = validCat;
+  const list = SUBCATEGORIES_CONFIG[validCat] || [];
+  ribbon.innerHTML = '';
+
+  list.forEach((sub, idx) => {
+    const chip = document.createElement('button');
+    chip.type = 'button';
+    chip.className = 'subcat-chip' + (sub.is18Plus ? ' subcat-18plus' : '');
+    chip.setAttribute('role', 'tab');
+    chip.setAttribute('data-subid', sub.id);
+
+    const isFirstActive = (activeSubId && sub.id === activeSubId) || (!activeSubId && idx === 0);
+    if (isFirstActive) {
+      chip.classList.add('active');
+      currentActiveSubId = sub.id;
+    }
+
+    const badgeHtml = sub.is18Plus ? '<span class="subcat-tag-badge badge-18">18+</span>' : '';
+    chip.innerHTML = `<span>${escapeHtml(sub.label)}</span>${badgeHtml}`;
+
+    chip.addEventListener('click', () => {
+      const runSubSearch = () => {
+        ribbon.querySelectorAll('.subcat-chip').forEach((c) => c.classList.remove('active'));
+        chip.classList.add('active');
+        currentActiveSubId = sub.id;
+        chip.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+
+        const searchCat = sub.type || (validCat === 'home' ? 'all' : validCat);
+        if (searchCategory) searchCategory.value = searchCat;
+
+        executeSearch(sub.query, searchCat, sub.heading);
+      };
+
+      if (sub.is18Plus && !is18PlusVerified()) {
+        promptAgeGate(runSubSearch);
+      } else {
+        runSubSearch();
+      }
+    });
+
+    ribbon.appendChild(chip);
+  });
+}
+
+// ============================================================================
+// AUTH & ANONYMOUS USER VAULT (ZERO PERSONAL INFO REQUIRED)
+// ============================================================================
+
+function getUsersVault() {
+  try {
+    return JSON.parse(localStorage.getItem('bookflix_users_vault') || '{}');
+  } catch {
+    return {};
+  }
+}
+
+function saveUsersVault(vault) {
+  localStorage.setItem('bookflix_users_vault', JSON.stringify(vault));
+}
+
+function getActiveUser() {
+  try {
+    const raw = localStorage.getItem('bookflix_active_user');
+    return raw ? JSON.parse(raw) : null;
+  } catch {
+    return null;
+  }
+}
+
+function saveActiveUser(user) {
+  if (user) {
+    localStorage.setItem('bookflix_active_user', JSON.stringify(user));
+    const vault = getUsersVault();
+    vault[user.username.toLowerCase()] = user;
+    saveUsersVault(vault);
+  } else {
+    localStorage.removeItem('bookflix_active_user');
+  }
+  updateAuthUI();
+}
+
+async function hashPassword(str) {
+  try {
+    if (window.crypto && crypto.subtle) {
+      const enc = new TextEncoder();
+      const data = enc.encode(str + '_bookflix_salt_2026');
+      const buf = await crypto.subtle.digest('SHA-256', data);
+      const arr = Array.from(new Uint8Array(buf));
+      return arr.map((b) => b.toString(16).padStart(2, '0')).join('');
+    }
+  } catch {
+    // Fallback if subtle crypto is restricted
+  }
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    hash = (hash << 5) - hash + str.charCodeAt(i);
+    hash |= 0;
+  }
+  return 'bf_hash_' + Math.abs(hash).toString(16);
+}
+
+function updateAuthUI() {
+  const user = getActiveUser();
+  const topAuthLabel = document.getElementById('topAuthLabel');
+  const topUserAvatar = document.getElementById('topUserAvatar');
+  const railAuthLabel = document.getElementById('railAuthLabel');
+  const railUserAvatar = document.getElementById('railUserAvatar');
+
+  if (user) {
+    const streak = user.streak || 1;
+    const name = user.nickname || user.username;
+    const shortName = name.length > 9 ? name.slice(0, 8) + '…' : name;
+    if (topAuthLabel) topAuthLabel.textContent = `${shortName} 🔥${streak}`;
+    if (topUserAvatar) topUserAvatar.textContent = user.avatar || '🦊';
+    if (railAuthLabel) railAuthLabel.textContent = shortName;
+    if (railUserAvatar) railUserAvatar.textContent = user.avatar || '🦊';
+  } else {
+    if (topAuthLabel) topAuthLabel.textContent = 'Sign In';
+    if (topUserAvatar) topUserAvatar.textContent = '👤';
+    if (railAuthLabel) railAuthLabel.textContent = 'Sign In';
+    if (railUserAvatar) railUserAvatar.textContent = '👤';
+  }
+}
+
+function openAuthOrProfileModal() {
+  const user = getActiveUser();
+  if (user) {
+    openProfileModal(user);
+  } else {
+    openAuthModal('signin');
+  }
+}
+
+function openAuthModal(mode = 'signin') {
+  const authModal = document.getElementById('authModal');
+  if (!authModal) return;
+  authModal.classList.remove('hidden');
+  switchAuthTab(mode);
+}
+
+function switchAuthTab(mode) {
+  const tabSignInBtn = document.getElementById('tabSignInBtn');
+  const tabSignUpBtn = document.getElementById('tabSignUpBtn');
+  const signInForm = document.getElementById('signInForm');
+  const signUpForm = document.getElementById('signUpForm');
+  const signInError = document.getElementById('signInError');
+  const signUpError = document.getElementById('signUpError');
+
+  if (signInError) signInError.classList.add('hidden');
+  if (signUpError) signUpError.classList.add('hidden');
+
+  if (mode === 'signup') {
+    tabSignInBtn?.classList.remove('active');
+    tabSignUpBtn?.classList.add('active');
+    signInForm?.classList.add('hidden');
+    signUpForm?.classList.remove('hidden');
+    const heading = document.getElementById('authModalHeading');
+    if (heading) heading.textContent = 'Create Reader Vault';
+    const sub = document.getElementById('authModalSub');
+    if (sub) sub.textContent = '100% Anonymous • Zero Personal Data Required';
+  } else {
+    tabSignUpBtn?.classList.remove('active');
+    tabSignInBtn?.classList.add('active');
+    signUpForm?.classList.add('hidden');
+    signInForm?.classList.remove('hidden');
+    const heading = document.getElementById('authModalHeading');
+    if (heading) heading.textContent = 'Welcome Back';
+    const sub = document.getElementById('authModalSub');
+    if (sub) sub.textContent = 'Sign In to Your Encrypted Library Vault';
+  }
+}
+
+function openProfileModal(user) {
+  const modal = document.getElementById('userProfileModal');
+  if (!modal) return;
+
+  const profileLargeAvatar = document.getElementById('profileLargeAvatar');
+  const profileModalHeading = document.getElementById('profileModalHeading');
+  const profileMemberSince = document.getElementById('profileMemberSince');
+  const profileStatRead = document.getElementById('profileStatRead');
+  const profileStatSaved = document.getElementById('profileStatSaved');
+  const profileStatStreak = document.getElementById('profileStatStreak');
+  const profileMatureToggle = document.getElementById('profileMatureToggle');
+
+  if (profileLargeAvatar) profileLargeAvatar.textContent = user.avatar || '🦊';
+  if (profileModalHeading) profileModalHeading.textContent = user.nickname || user.username;
+  if (profileMemberSince) {
+    const dateStr = user.createdAt ? new Date(user.createdAt).toLocaleDateString() : 'Active Member';
+    profileMemberSince.textContent = `Member since ${dateStr} • Vault Active`;
+  }
+
+  if (profileStatRead) profileStatRead.textContent = String(state.history.length || user.titlesRead || 0);
+  if (profileStatSaved) profileStatSaved.textContent = String(state.myList.length || 0);
+  if (profileStatStreak) profileStatStreak.textContent = `🔥 ${user.streak || 1}`;
+
+  if (profileMatureToggle) {
+    profileMatureToggle.checked = Boolean(user.matureEnabled || is18PlusVerified());
+  }
+
+  modal.classList.remove('hidden');
+}
+
+function initAuthSystem() {
+  updateAuthUI();
+
+  // Top and Rail Buttons
+  document.getElementById('topAuthBtn')?.addEventListener('click', openAuthOrProfileModal);
+  document.getElementById('railAuthBtn')?.addEventListener('click', openAuthOrProfileModal);
+
+  // Tabs
+  document.getElementById('tabSignInBtn')?.addEventListener('click', () => switchAuthTab('signin'));
+  document.getElementById('tabSignUpBtn')?.addEventListener('click', () => switchAuthTab('signup'));
+
+  // Close Buttons
+  document.getElementById('closeAuthModalBtn')?.addEventListener('click', () => {
+    document.getElementById('authModal')?.classList.add('hidden');
+  });
+  document.getElementById('closeProfileModalBtn')?.addEventListener('click', () => {
+    document.getElementById('userProfileModal')?.classList.add('hidden');
+  });
+
+  // Guest Continue
+  document.getElementById('guestContinueBtn')?.addEventListener('click', () => {
+    document.getElementById('authModal')?.classList.add('hidden');
+    showAppToast('📖 Browsing as Guest Reader. All reading features unlocked!');
+  });
+
+  // Avatar Picker
+  let selectedAvatar = '🦊';
+  document.querySelectorAll('.avatar-choice').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.avatar-choice').forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+      selectedAvatar = btn.getAttribute('data-avatar') || '🦊';
+      const headerAvatar = document.getElementById('authHeaderAvatar');
+      if (headerAvatar) headerAvatar.textContent = selectedAvatar;
+    });
+  });
+
+  // Toggle Password Eye Buttons
+  document.querySelectorAll('.toggle-password-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const targetId = btn.getAttribute('data-target');
+      const input = document.getElementById(targetId);
+      if (!input) return;
+      if (input.type === 'password') {
+        input.type = 'text';
+        btn.textContent = '🔒';
+      } else {
+        input.type = 'password';
+        btn.textContent = '👁️';
+      }
+    });
+  });
+
+  // Sign In Form Submit
+  const signInForm = document.getElementById('signInForm');
+  const signInError = document.getElementById('signInError');
+  signInForm?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    signInError?.classList.add('hidden');
+
+    const username = document.getElementById('signInUsername').value.trim();
+    const password = document.getElementById('signInPassword').value;
+
+    if (!username || !password) {
+      if (signInError) {
+        signInError.textContent = 'Please enter both username and password.';
+        signInError.classList.remove('hidden');
+      }
+      return;
+    }
+
+    const vault = getUsersVault();
+    const user = vault[username.toLowerCase()];
+
+    if (!user) {
+      if (signInError) {
+        signInError.textContent = 'Account not found. Create an anonymous account in 5 seconds!';
+        signInError.classList.remove('hidden');
+      }
+      return;
+    }
+
+    const hash = await hashPassword(password);
+    if (user.passwordHash !== hash) {
+      if (signInError) {
+        signInError.textContent = 'Incorrect password. Please try again.';
+        signInError.classList.remove('hidden');
+      }
+      return;
+    }
+
+    // Check reading streak
+    const now = new Date();
+    const lastLogin = user.lastLoginDate ? new Date(user.lastLoginDate) : null;
+    if (lastLogin && (now.getDate() !== lastLogin.getDate() || now.getMonth() !== lastLogin.getMonth())) {
+      user.streak = (user.streak || 1) + 1;
+    }
+    user.lastLoginDate = now.toISOString();
+
+    saveActiveUser(user);
+    document.getElementById('authModal')?.classList.add('hidden');
+    signInForm.reset();
+    showAppToast(`🎉 Welcome back, ${user.nickname || user.username}! Streak: 🔥${user.streak || 1}`);
+  });
+
+  // Sign Up Form Submit
+  const signUpForm = document.getElementById('signUpForm');
+  const signUpError = document.getElementById('signUpError');
+  signUpForm?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    signUpError?.classList.add('hidden');
+
+    const username = document.getElementById('signUpUsername').value.trim();
+    const password = document.getElementById('signUpPassword').value;
+    const nickname = document.getElementById('signUpNickname').value.trim();
+
+    if (!username || username.length < 3) {
+      if (signUpError) {
+        signUpError.textContent = 'Username must be at least 3 characters.';
+        signUpError.classList.remove('hidden');
+      }
+      return;
+    }
+
+    if (!/^[a-zA-Z0-9_-]+$/.test(username)) {
+      if (signUpError) {
+        signUpError.textContent = 'Username can only contain letters, numbers, hyphens, and underscores.';
+        signUpError.classList.remove('hidden');
+      }
+      return;
+    }
+
+    if (!password || password.length < 6) {
+      if (signUpError) {
+        signUpError.textContent = 'Password must be at least 6 characters.';
+        signUpError.classList.remove('hidden');
+      }
+      return;
+    }
+
+    const vault = getUsersVault();
+    if (vault[username.toLowerCase()]) {
+      if (signUpError) {
+        signUpError.textContent = 'That username is already taken. Choose another pseudonym.';
+        signUpError.classList.remove('hidden');
+      }
+      return;
+    }
+
+    const hash = await hashPassword(password);
+    const newUser = {
+      username,
+      nickname: nickname || username,
+      avatar: selectedAvatar || '🦊',
+      passwordHash: hash,
+      createdAt: new Date().toISOString(),
+      streak: 1,
+      lastLoginDate: new Date().toISOString(),
+      matureEnabled: localStorage.getItem('bookflix_age_verified') === 'true',
+      titlesRead: state.history.length || 0,
+    };
+
+    saveActiveUser(newUser);
+    document.getElementById('authModal')?.classList.add('hidden');
+    signUpForm.reset();
+    showAppToast(`✨ Anonymous account created! Welcome to BookFlix, ${newUser.nickname}!`);
+  });
+
+  // 18+ Mature Content Toggle in Profile
+  document.getElementById('profileMatureToggle')?.addEventListener('change', (e) => {
+    const isChecked = e.target.checked;
+    localStorage.setItem('bookflix_age_verified', isChecked ? 'true' : 'false');
+    const user = getActiveUser();
+    if (user) {
+      user.matureEnabled = isChecked;
+      saveActiveUser(user);
+    }
+    showAppToast(isChecked ? '🔞 18+ Mature Content unlocked.' : '🛡️ SafeSearch active. 18+ content locked.');
+  });
+
+  // Theme selection in Profile
+  document.querySelectorAll('.profile-theme-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.profile-theme-btn').forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+      const theme = btn.getAttribute('data-apptheme');
+      if (theme === 'amoled') {
+        document.body.style.background = '#000000';
+      } else if (theme === 'sepia') {
+        document.body.style.background = '#181512';
+      } else {
+        document.body.style.background = '';
+      }
+      showAppToast(`🎨 Theme set to ${btn.textContent}`);
+    });
+  });
+
+  // Export Reading Profile JSON
+  document.getElementById('profileExportBtn')?.addEventListener('click', () => {
+    const user = getActiveUser();
+    const backupData = {
+      bookflixVersion: '2.0-liquid-clay',
+      exportDate: new Date().toISOString(),
+      user: user ? { username: user.username, nickname: user.nickname, avatar: user.avatar, streak: user.streak } : null,
+      myList: state.myList || [],
+      history: state.history || [],
+    };
+    const blob = new Blob([JSON.stringify(backupData, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `BookFlix_Profile_${user ? user.username : 'Backup'}_${Date.now()}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    showAppToast('💾 Profile JSON exported successfully!');
+  });
+
+  // Sign Out Button
+  document.getElementById('profileSignOutBtn')?.addEventListener('click', () => {
+    saveActiveUser(null);
+    document.getElementById('userProfileModal')?.classList.add('hidden');
+    showAppToast('👋 Signed out. Switched back to Guest Mode.');
+  });
+}
+
 
 
 

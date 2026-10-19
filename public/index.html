@@ -39,7 +39,7 @@
   <meta name="apple-mobile-web-app-title" content="BookFlix" />
   <meta name="mobile-web-app-capable" content="yes" />
 
-  <link rel="manifest" href="/manifest.json?v=35" />
+  <link rel="manifest" href="/manifest.json?v=36" />
   <link rel="icon" type="image/svg+xml" href="/logo.svg?v=18" />
   <link rel="icon" type="image/x-icon" href="/favicon.ico?v=18" />
   <link rel="shortcut icon" href="/favicon.ico?v=18" />
@@ -52,7 +52,7 @@
   <link rel="dns-prefetch" href="https://archive.org" />
   <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Outfit:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" defer></script>
-  <link rel="stylesheet" href="/styles.css?v=35" />
+  <link rel="stylesheet" href="/styles.css?v=36" />
 
   <!-- Structured Data (JSON-LD): Organization, WebSite (SearchAction), WebApplication -->
   <script type="application/ld+json">
@@ -201,6 +201,13 @@
         <span class="rail-label">My Space <span id="myListCount" class="rail-badge">0</span></span>
       </button>
 
+      <button class="rail-item rail-auth-btn" id="railAuthBtn" title="Account & Reading Profile">
+        <span class="rail-icon">
+          <span class="rail-user-avatar" id="railUserAvatar">👤</span>
+        </span>
+        <span class="rail-label" id="railAuthLabel">Sign In</span>
+      </button>
+
       <button class="rail-item rail-launch-btn" id="railLaunchBtn" title="Launch Readiness &amp; SEO Health (15/15 GO)">
         <span class="rail-icon launch-status-icon">
           <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
@@ -276,8 +283,13 @@
           <button type="button" class="seg-pill" data-cat="audiobook">Audiobooks</button>
         </div>
 
-        <!-- Quick Actions: Surprise Me + Resume + Host on Local Network QR -->
+        <!-- Quick Actions: Auth/Profile + Surprise Me + Resume + Host on Local Network QR -->
         <div class="top-quick-actions">
+          <button type="button" class="top-action-btn top-auth-btn" id="topAuthBtn" title="Account & Reading Profile (100% Anonymous)">
+            <span class="top-avatar-icon" id="topUserAvatar">👤</span>
+            <span id="topAuthLabel">Sign In</span>
+          </button>
+
           <button type="button" class="top-action-btn" id="surpriseMeBtn" title="Open a random featured book, manga, or audiobook">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <polyline points="16 3 21 3 21 8"></polyline>
@@ -338,6 +350,15 @@
             </svg>
             <span>Install App</span>
           </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- DYNAMIC SUBCATEGORY RIBBON (Marvel, DC, Adult 18+, Sci-Fi, Shonen, Tech, etc.) -->
+    <div class="subcat-ribbon-container" id="subcatRibbonContainer">
+      <div class="subcat-ribbon-scroll" id="subcatRibbonScroll">
+        <div class="subcat-ribbon" id="subcatRibbon" role="tablist" aria-label="Subcategories">
+          <!-- Dynamically populated chips -->
         </div>
       </div>
     </div>
@@ -472,37 +493,127 @@
         </div>
 
         <div class="genre-cards-grid" id="genreCardsGrid">
-          <div class="genre-tile" data-q="Bestseller Fiction Literature Novel" data-type="ebook" data-heading="Fiction & Bestsellers">
-            <div class="genre-tile-title">Fiction & Literature</div>
-            <div class="genre-tile-sub">Novels, Thrillers & Classics</div>
+          <!-- COMICS SUBCATEGORIES -->
+          <div class="genre-tile" data-q="spider-man OR avengers OR x-men OR wolverine OR deadpool OR iron man" data-type="comic" data-heading="Marvel Universe Comics">
+            <div class="genre-tile-tag">Comics</div>
+            <div class="genre-tile-title">Marvel Universe</div>
+            <div class="genre-tile-sub">Spider-Man, Avengers, X-Men &amp; Deadpool</div>
           </div>
-          <div class="genre-tile" data-q="Python Algorithms Machine Learning Computer Science" data-type="ebook" data-heading="Computer Science & AI">
-            <div class="genre-tile-title">Computer Science & AI</div>
-            <div class="genre-tile-sub">Coding, Systems & Engineering</div>
+          <div class="genre-tile" data-q="batman OR superman OR justice league OR flash OR wonder woman OR joker" data-type="comic" data-heading="DC Universe Comics">
+            <div class="genre-tile-tag">Comics</div>
+            <div class="genre-tile-title">DC Universe</div>
+            <div class="genre-tile-sub">Batman, Superman, Justice League &amp; Joker</div>
           </div>
-          <div class="genre-tile" data-q="One Punch Man Naruto Berserk Solo Leveling" data-type="manga" data-heading="Manga & Manhwa">
-            <div class="genre-tile-title">Manga & Webtoons</div>
-            <div class="genre-tile-sub">Shonen, Seinen & Manhwa</div>
+          <div class="genre-tile" data-q="spawn OR invincible OR the walking dead OR hellboy OR saga" data-type="comic" data-heading="Image &amp; Dark Horse Comics">
+            <div class="genre-tile-tag">Comics</div>
+            <div class="genre-tile-title">Image &amp; Dark Horse</div>
+            <div class="genre-tile-sub">Spawn, Invincible, Walking Dead &amp; Hellboy</div>
           </div>
-          <div class="genre-tile" data-q="Batman Spider-Man X-Men Marvel DC" data-type="comic" data-heading="Superhero & Graphic Novels">
-            <div class="genre-tile-title">Marvel, DC & Indie Comics</div>
-            <div class="genre-tile-sub">Full Issues & Omnibuses</div>
+          <div class="genre-tile" data-q="watchmen OR sandman OR v for vendetta OR maus OR locke key" data-type="comic" data-heading="Graphic Novels &amp; Indie Classics">
+            <div class="genre-tile-tag">Comics</div>
+            <div class="genre-tile-title">Graphic Novels &amp; Indie</div>
+            <div class="genre-tile-sub">Watchmen, Sandman &amp; Masterpieces</div>
           </div>
-          <div class="genre-tile" data-q="Harry Potter Percy Jackson Stephen King Sherlock" data-type="audiobook" data-heading="Full-Length Audiobooks">
-            <div class="genre-tile-title">Audiobooks Studio</div>
-            <div class="genre-tile-sub">Unabridged Multi-Track Audio</div>
+          <div class="genre-tile subcat-tile-18plus" data-q="mature comics OR vertigo comics OR the boys OR heavy metal OR sin city" data-type="comic" data-heading="Adult &amp; Mature Comics (18+)" data-mature="true">
+            <div class="genre-tile-tag mature-tag">🔞 18+ Mature</div>
+            <div class="genre-tile-title">Adult &amp; Mature Comics</div>
+            <div class="genre-tile-sub">Vertigo, The Boys, Sin City &amp; Heavy Metal</div>
           </div>
-          <div class="genre-tile" data-q="Physics Calculus Chemistry Biology Medicine" data-type="ebook" data-heading="University & STEM Textbooks">
-            <div class="genre-tile-title">University & STEM</div>
-            <div class="genre-tile-sub">Physics, Math & Medicine</div>
+
+          <!-- MANGA SUBCATEGORIES -->
+          <div class="genre-tile" data-q="one piece OR naruto OR jujutsu kaisen OR bleach OR dragon ball" data-type="manga" data-heading="Shonen Action Manga">
+            <div class="genre-tile-tag">Manga</div>
+            <div class="genre-tile-title">Shonen Action</div>
+            <div class="genre-tile-sub">One Piece, JJK, Naruto &amp; Dragon Ball</div>
           </div>
-          <div class="genre-tile" data-q="Psychology Philosophy Finance Habits Economics" data-type="ebook" data-heading="Self-Growth, Psychology & Business">
-            <div class="genre-tile-title">Psychology & Business</div>
-            <div class="genre-tile-sub">Mindset, Finance & Philosophy</div>
+          <div class="genre-tile" data-q="berserk OR vinland saga OR monster OR tokyo ghoul OR vagabond" data-type="manga" data-heading="Seinen Dark Fantasy Manga">
+            <div class="genre-tile-tag">Manga</div>
+            <div class="genre-tile-title">Seinen Dark Fantasy</div>
+            <div class="genre-tile-sub">Berserk, Vinland Saga, Monster &amp; Vagabond</div>
           </div>
-          <div class="genre-tile" data-q="Dune Foundation Tolkien Cyberpunk Sci-Fi" data-type="ebook" data-heading="Sci-Fi & Fantasy Worlds">
-            <div class="genre-tile-title">Sci-Fi & Fantasy</div>
-            <div class="genre-tile-sub">Epic Worlds & Space Opera</div>
+          <div class="genre-tile" data-q="solo leveling OR tower of god OR omniscient reader OR beginning after end" data-type="manga" data-heading="Manhwa &amp; Webtoons">
+            <div class="genre-tile-tag">Manga</div>
+            <div class="genre-tile-title">Manhwa &amp; Webtoons</div>
+            <div class="genre-tile-sub">Solo Leveling, Tower of God &amp; Omniscient</div>
+          </div>
+          <div class="genre-tile" data-q="kaguya-sama OR horimiya OR fruits basket OR spy x family" data-type="manga" data-heading="Romance &amp; Slice of Life Manga">
+            <div class="genre-tile-tag">Manga</div>
+            <div class="genre-tile-title">Romance &amp; Slice of Life</div>
+            <div class="genre-tile-sub">Spy x Family, Horimiya &amp; Kaguya-sama</div>
+          </div>
+          <div class="genre-tile" data-q="mushoku tensei OR re:zero OR slime tensei OR overlord" data-type="manga" data-heading="Isekai Fantasy Worlds">
+            <div class="genre-tile-tag">Manga</div>
+            <div class="genre-tile-title">Isekai Worlds</div>
+            <div class="genre-tile-sub">Re:Zero, Slime Tensei &amp; Overlord</div>
+          </div>
+          <div class="genre-tile subcat-tile-18plus" data-q="mature seinen OR ecchi OR gantz OR highschool of dead OR berserk uncensored" data-type="manga" data-heading="Adult &amp; Ecchi Manga (18+)" data-mature="true">
+            <div class="genre-tile-tag mature-tag">🔞 18+ Mature</div>
+            <div class="genre-tile-title">Adult &amp; Ecchi Manga</div>
+            <div class="genre-tile-sub">Mature Seinen, Gantz &amp; Uncensored Editions</div>
+          </div>
+
+          <!-- E-BOOKS SUBCATEGORIES -->
+          <div class="genre-tile" data-q="bestseller fiction OR contemporary literature OR thriller novel" data-type="ebook" data-heading="Fiction &amp; Bestsellers">
+            <div class="genre-tile-tag">Books</div>
+            <div class="genre-tile-title">Fiction &amp; Bestsellers</div>
+            <div class="genre-tile-sub">Top Ranked Contemporary &amp; Classics</div>
+          </div>
+          <div class="genre-tile" data-q="dune OR tolkien OR asimov OR cyberpunk OR foundation" data-type="ebook" data-heading="Sci-Fi &amp; Cyberpunk Worlds">
+            <div class="genre-tile-tag">Books</div>
+            <div class="genre-tile-title">Sci-Fi &amp; Cyberpunk</div>
+            <div class="genre-tile-sub">Dune, Foundation, Asimov &amp; Gibson</div>
+          </div>
+          <div class="genre-tile" data-q="sherlock holmes OR agatha christie OR thriller crime OR stephen king" data-type="ebook" data-heading="Mystery &amp; Crime Thrillers">
+            <div class="genre-tile-tag">Books</div>
+            <div class="genre-tile-title">Mystery &amp; Crime</div>
+            <div class="genre-tile-sub">Agatha Christie, Sherlock &amp; King</div>
+          </div>
+          <div class="genre-tile" data-q="python programming OR machine learning algorithms OR deep learning" data-type="ebook" data-heading="Computer Science &amp; AI">
+            <div class="genre-tile-tag">Books</div>
+            <div class="genre-tile-title">Computer Science &amp; AI</div>
+            <div class="genre-tile-sub">Python, Deep Learning &amp; Algorithms</div>
+          </div>
+          <div class="genre-tile" data-q="physics calculus OR biology medicine OR chemistry mathematics" data-type="ebook" data-heading="University &amp; STEM Textbooks">
+            <div class="genre-tile-tag">Books</div>
+            <div class="genre-tile-title">STEM Textbooks</div>
+            <div class="genre-tile-sub">Physics, Calculus, Biology &amp; Medicine</div>
+          </div>
+          <div class="genre-tile" data-q="psychology mindset OR economics finance OR atomic habits OR philosophy" data-type="ebook" data-heading="Psychology &amp; Finance">
+            <div class="genre-tile-tag">Books</div>
+            <div class="genre-tile-title">Psychology &amp; Finance</div>
+            <div class="genre-tile-sub">Mindset, Wealth &amp; Practical Philosophy</div>
+          </div>
+          <div class="genre-tile subcat-tile-18plus" data-q="dark romance novel OR adult fiction mature OR fifty shades" data-type="ebook" data-heading="Adult &amp; Dark Romance (18+)" data-mature="true">
+            <div class="genre-tile-tag mature-tag">🔞 18+ Mature</div>
+            <div class="genre-tile-title">Adult &amp; Dark Romance</div>
+            <div class="genre-tile-sub">Mature Fiction, Dark Romance &amp; Seduction</div>
+          </div>
+
+          <!-- AUDIOBOOKS SUBCATEGORIES -->
+          <div class="genre-tile" data-q="adventures of sherlock holmes OR dracula stoker OR pride and prejudice" data-type="audiobook" data-heading="Literary Classics Audiobooks">
+            <div class="genre-tile-tag">Audio</div>
+            <div class="genre-tile-title">Literary Classics</div>
+            <div class="genre-tile-sub">Sherlock Holmes, Dracula &amp; Austen</div>
+          </div>
+          <div class="genre-tile" data-q="dune frank herbert OR percy jackson OR lovecraft audio" data-type="audiobook" data-heading="Sci-Fi &amp; Epic Fantasy Audio">
+            <div class="genre-tile-tag">Audio</div>
+            <div class="genre-tile-title">Sci-Fi &amp; Fantasy Audio</div>
+            <div class="genre-tile-sub">Dune, Epic Quests &amp; Cosmic Lore</div>
+          </div>
+          <div class="genre-tile" data-q="edgar allan poe audio OR agatha christie audio OR horror mystery" data-type="audiobook" data-heading="Thriller &amp; Mystery Audio">
+            <div class="genre-tile-tag">Audio</div>
+            <div class="genre-tile-title">Thriller &amp; Mystery Audio</div>
+            <div class="genre-tile-sub">Poe, Christie &amp; Spine-Chillers</div>
+          </div>
+          <div class="genre-tile" data-q="the art of war sun tzu OR meditations marcus aurelius OR tao te ching" data-type="audiobook" data-heading="Philosophy &amp; Strategy Audio">
+            <div class="genre-tile-tag">Audio</div>
+            <div class="genre-tile-title">Philosophy &amp; Strategy</div>
+            <div class="genre-tile-sub">Meditations, Sun Tzu &amp; Eastern Wisdom</div>
+          </div>
+          <div class="genre-tile subcat-tile-18plus" data-q="dark gothic horror unabridged OR mature audio thriller" data-type="audiobook" data-heading="Mature &amp; Gothic Audio (18+)" data-mature="true">
+            <div class="genre-tile-tag mature-tag">🔞 18+ Mature</div>
+            <div class="genre-tile-title">Mature Audio Studio</div>
+            <div class="genre-tile-sub">Unabridged Dark Thrillers &amp; Gothic Audio</div>
           </div>
         </div>
 
@@ -1837,6 +1948,208 @@
     </div>
   </div>
 
-  <script src="/app.js?v=35"></script>
+  <!-- ========================================================================
+       AUTH MODAL (LOGIN & SIGN UP — 100% ANONYMOUS & PRIVACY-FIRST)
+  ========================================================================= -->
+  <div class="modal-overlay hidden" id="authModal" role="dialog" aria-modal="true" aria-labelledby="authModalHeading">
+    <div class="liquid-clay-dialog max-w-460 auth-dialog">
+      <div class="dialog-header">
+        <div class="dialog-title-lockup">
+          <div class="dialog-icon-bubble auth-icon-bubble">
+            <span id="authHeaderAvatar">🦊</span>
+          </div>
+          <div>
+            <h3 class="dialog-title" id="authModalHeading">BookFlix Vault</h3>
+            <span class="dialog-subtitle" id="authModalSub">100% Anonymous • Zero Personal Data</span>
+          </div>
+        </div>
+        <button type="button" class="btn-close" id="closeAuthModalBtn" title="Close" aria-label="Close">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+
+      <!-- Auth Tabs: Sign In / Create Account -->
+      <div class="auth-tabs" role="tablist">
+        <button type="button" class="auth-tab active" id="tabSignInBtn" role="tab">Sign In</button>
+        <button type="button" class="auth-tab" id="tabSignUpBtn" role="tab">Create Account</button>
+      </div>
+
+      <div class="dialog-body auth-body">
+        <!-- Sign In Form -->
+        <form id="signInForm" class="auth-form" autocomplete="off">
+          <div class="form-group">
+            <label for="signInUsername" class="form-label">Username</label>
+            <div class="input-wrap">
+              <input type="text" id="signInUsername" class="dialog-input" placeholder="Enter your username" required autocomplete="username" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="signInPassword" class="form-label">Password</label>
+            <div class="input-wrap password-wrap">
+              <input type="password" id="signInPassword" class="dialog-input" placeholder="••••••••" required autocomplete="current-password" />
+              <button type="button" class="toggle-password-btn" data-target="signInPassword" title="Show/Hide Password">👁️</button>
+            </div>
+          </div>
+          <div class="auth-error-msg hidden" id="signInError"></div>
+          <button type="submit" class="btn btn-primary auth-submit-btn" id="signInSubmitBtn">Sign In to Library</button>
+          <div class="auth-divider"><span>OR</span></div>
+          <button type="button" class="btn btn-secondary auth-guest-btn" id="guestContinueBtn">Continue as Guest Reader</button>
+        </form>
+
+        <!-- Create Account Form -->
+        <form id="signUpForm" class="auth-form hidden" autocomplete="off">
+          <div class="avatar-picker-label">Choose Your Reader Avatar</div>
+          <div class="avatar-picker-grid" id="avatarPickerGrid">
+            <button type="button" class="avatar-choice active" data-avatar="🦊" title="Cyber Fox">🦊</button>
+            <button type="button" class="avatar-choice" data-avatar="🥷" title="Shadow Shinobi">🥷</button>
+            <button type="button" class="avatar-choice" data-avatar="🧙" title="Arcane Wizard">🧙</button>
+            <button type="button" class="avatar-choice" data-avatar="🤖" title="Cyber Bot">🤖</button>
+            <button type="button" class="avatar-choice" data-avatar="🛡️" title="Iron Titan">🛡️</button>
+            <button type="button" class="avatar-choice" data-avatar="🦉" title="Night Owl">🦉</button>
+          </div>
+          <div class="form-group">
+            <label for="signUpUsername" class="form-label">Username (Pseudonym)</label>
+            <div class="input-wrap">
+              <input type="text" id="signUpUsername" class="dialog-input" placeholder="e.g. MangaSage or CosmicReader" required minlength="3" maxlength="24" autocomplete="off" />
+            </div>
+            <span class="form-hint">Choose any pseudonym. No email, real name, or phone number required.</span>
+          </div>
+          <div class="form-group">
+            <label for="signUpPassword" class="form-label">Password</label>
+            <div class="input-wrap password-wrap">
+              <input type="password" id="signUpPassword" class="dialog-input" placeholder="At least 6 characters" required minlength="6" autocomplete="new-password" />
+              <button type="button" class="toggle-password-btn" data-target="signUpPassword" title="Show/Hide Password">👁️</button>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="signUpNickname" class="form-label">Display Nickname (Optional)</label>
+            <div class="input-wrap">
+              <input type="text" id="signUpNickname" class="dialog-input" placeholder="Optional handle" maxlength="24" autocomplete="off" />
+            </div>
+          </div>
+          <div class="auth-error-msg hidden" id="signUpError"></div>
+          <button type="submit" class="btn btn-primary auth-submit-btn" id="signUpSubmitBtn">Create Anonymous Account</button>
+          <div class="privacy-guarantee-note">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+            <span>Strict Privacy: Stored locally in your browser's cryptographic vault. Zero tracking.</span>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       USER PROFILE & PREFERENCES MODAL
+  ========================================================================= -->
+  <div class="modal-overlay hidden" id="userProfileModal" role="dialog" aria-modal="true" aria-labelledby="profileModalHeading">
+    <div class="liquid-clay-dialog max-w-560 profile-dialog">
+      <div class="dialog-header">
+        <div class="dialog-title-lockup">
+          <div class="dialog-icon-bubble user-profile-avatar" id="profileLargeAvatar">🦊</div>
+          <div>
+            <h3 class="dialog-title" id="profileModalHeading">Reader Profile</h3>
+            <span class="dialog-subtitle" id="profileMemberSince">Active Member</span>
+          </div>
+        </div>
+        <button type="button" class="btn-close" id="closeProfileModalBtn" title="Close" aria-label="Close">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+
+      <div class="dialog-body">
+        <!-- Stats Row -->
+        <div class="profile-stats-grid">
+          <div class="profile-stat-card">
+            <div class="stat-number" id="profileStatRead">0</div>
+            <div class="stat-label">Titles Read</div>
+          </div>
+          <div class="profile-stat-card">
+            <div class="stat-number" id="profileStatSaved">0</div>
+            <div class="stat-label">Saved in Space</div>
+          </div>
+          <div class="profile-stat-card">
+            <div class="stat-number" id="profileStatStreak">🔥 1</div>
+            <div class="stat-label">Day Streak</div>
+          </div>
+        </div>
+
+        <!-- Privacy & Content Preferences -->
+        <div class="profile-section">
+          <h4 class="profile-section-title">Content &amp; SafeSearch Preferences</h4>
+          <div class="pref-row">
+            <div class="pref-info">
+              <strong>18+ Adult &amp; Mature Content</strong>
+              <span>Unlock mature comics, dark romance, ecchi manga, and adult audio</span>
+            </div>
+            <label class="clay-switch">
+              <input type="checkbox" id="profileMatureToggle" />
+              <span class="clay-slider"></span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Reader Theme Settings -->
+        <div class="profile-section">
+          <h4 class="profile-section-title">Reader Display Theme</h4>
+          <div class="profile-theme-grid">
+            <button type="button" class="profile-theme-btn active" data-apptheme="liquid">Liquid Dark</button>
+            <button type="button" class="profile-theme-btn" data-apptheme="amoled">Pure AMOLED</button>
+            <button type="button" class="profile-theme-btn" data-apptheme="sepia">Warm Sepia</button>
+          </div>
+        </div>
+
+        <!-- Account Actions -->
+        <div class="profile-actions-row">
+          <button type="button" class="btn btn-secondary btn-sm" id="profileExportBtn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            <span>Export Profile JSON</span>
+          </button>
+          <button type="button" class="btn btn-secondary btn-sm" id="profileSignOutBtn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+            <span>Sign Out</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       18+ AGE GATE VERIFICATION MODAL
+  ========================================================================= -->
+  <div class="modal-overlay hidden" id="ageGateModal" role="dialog" aria-modal="true" aria-labelledby="ageGateTitle">
+    <div class="liquid-clay-dialog max-w-460 age-gate-dialog">
+      <div class="dialog-header">
+        <div class="dialog-title-lockup">
+          <div class="dialog-icon-bubble age-gate-icon">🔞</div>
+          <div>
+            <h3 class="dialog-title" id="ageGateTitle">18+ Age Verification</h3>
+            <span class="dialog-subtitle">Mature Content Access</span>
+          </div>
+        </div>
+        <button type="button" class="btn-close" id="closeAgeGateBtn" title="Close" aria-label="Close">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+
+      <div class="dialog-body">
+        <p class="age-gate-text">
+          This subcategory contains graphic novels, dark romance, ecchi manga, or mature audiobooks intended exclusively for readers aged <strong>18 and older</strong>.
+        </p>
+        <p class="age-gate-question">
+          Are you 18 years of age or older?
+        </p>
+        <div class="age-gate-actions">
+          <button type="button" class="btn btn-primary age-confirm-btn" id="confirm18PlusBtn">
+            I am 18 or Older (Enter)
+          </button>
+          <button type="button" class="btn btn-secondary age-cancel-btn" id="cancel18PlusBtn">
+            Cancel (Safe Mode)
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/app.js?v=36"></script>
 </body>
 </html>
