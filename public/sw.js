@@ -1,11 +1,11 @@
-// BookFlix PWA Service Worker (v40 - Dedicated Sign-In Required Gateway)
-const CACHE_NAME = 'bookflix-cache-v40';
+// BookFlix PWA Service Worker (v41 - Production Polish & Checklist Removal)
+const CACHE_NAME = 'bookflix-cache-v41';
 const PRECACHE_ASSETS = [
   '/',
-  '/index.html?v=40',
-  '/styles.css?v=40',
-  '/app.js?v=40',
-  '/manifest.json?v=40',
+  '/index.html?v=41',
+  '/styles.css?v=41',
+  '/app.js?v=41',
+  '/manifest.json?v=41',
   '/logo.svg?v=20',
   '/favicon.ico?v=20',
   '/favicon.svg?v=20',

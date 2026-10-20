@@ -3677,98 +3677,12 @@ document.getElementById('importBackupInput')?.addEventListener('change', (e) => 
   reader.readAsText(file);
 });
 
-// ============================================================================
-// 15. LAUNCH POLL • GO / NO-GO DASHBOARD (IMAGE 1 & 2)
-// ============================================================================
-function openLaunchPollModal() {
-  document.getElementById('launchPollModal')?.classList.remove('hidden');
-}
-
-document.getElementById('topLaunchPollBtn')?.addEventListener('click', openLaunchPollModal);
-document.getElementById('railLaunchBtn')?.addEventListener('click', openLaunchPollModal);
-
-document.getElementById('closeLaunchPollBtn')?.addEventListener('click', () => {
-  document.getElementById('launchPollModal')?.classList.add('hidden');
-});
-
-document.getElementById('closeLaunchPollTrafficBtn')?.addEventListener('click', () => {
-  document.getElementById('launchPollModal')?.classList.add('hidden');
-});
-
-// Interactive Launch Cards
-document.getElementById('launchCardContact')?.addEventListener('click', () => {
-  document.getElementById('launchPollModal')?.classList.add('hidden');
-  openFeedbackModal();
-});
-
-document.getElementById('launchCardWhatsapp')?.addEventListener('click', () => {
-  document.getElementById('launchPollModal')?.classList.add('hidden');
-  openShareModal();
-});
-
-document.getElementById('launchCardDomainEmail')?.addEventListener('click', () => {
-  document.getElementById('launchPollModal')?.classList.add('hidden');
-  openFeedbackModal();
-});
-
-document.getElementById('launchCardGoogleIndex')?.addEventListener('click', () => {
-  window.open('/sitemap.xml', '_blank');
-});
-
-document.getElementById('launchCardLinkPreview')?.addEventListener('click', () => {
-  window.open('/og-preview.svg', '_blank');
-});
-
-document.getElementById('launchCardBackups')?.addEventListener('click', () => {
-  document.getElementById('launchPollModal')?.classList.add('hidden');
-  document.getElementById('exportBackupBtn')?.click();
-});
-
-document.getElementById('launchCardPayments')?.addEventListener('click', () => {
-  document.getElementById('launchPollModal')?.classList.add('hidden');
-  openSupportModal();
-});
-
-document.getElementById('launchCardMobile')?.addEventListener('click', () => {
-  document.getElementById('launchPollModal')?.classList.add('hidden');
-  openLanHostModal();
-});
-
-document.getElementById('launchCardLinks')?.addEventListener('click', () => {
-  showAppToast('Verified: 28 integrated catalogs are active & responding!');
-});
-
-document.getElementById('launchCardSpeed')?.addEventListener('click', () => {
-  showAppToast('Direct in-memory streaming: Load time < 500ms!');
-});
-
-document.getElementById('launchCardHttps')?.addEventListener('click', () => {
-  showAppToast('HTTPS Secured with TLS 1.3 encryption on Vercel.');
-});
-
-document.getElementById('launchCardBrowsers')?.addEventListener('click', () => {
-  showAppToast('Cross-browser verified: Chrome, Safari, iOS & Android.');
-});
-
-document.getElementById('launchCardTypos')?.addEventListener('click', () => {
-  showAppToast('Copy & schemas verified: Zero typos.');
-});
-
-document.getElementById('launchCardAnalytics')?.addEventListener('click', () => {
-  showAppToast('Privacy-first: Zero tracking cookies or invasive trackers.');
-});
-
-document.getElementById('launchCardImages')?.addEventListener('click', () => {
-  showAppToast('All covers use WebP, lazy loading & automatic fallbacks.');
-});
-
 // Global Modal Backdrop and Escape Key Handlers
 const ALL_APP_MODAL_IDS = [
   'feedbackModal',
   'privacyModal',
   'shareModal',
   'supportModal',
-  'launchPollModal',
   'authModal',
   'userProfileModal',
   'ageGateModal',
