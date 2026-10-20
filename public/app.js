@@ -306,6 +306,7 @@ state.heroIndex = 0;
 // ============================================================================
 
 document.addEventListener('DOMContentLoaded', () => {
+  initAppTheme();
   initMultiDeviceOptimization();
   initLiquidGlassSelects();
   updateMyListCount();
@@ -4219,10 +4220,10 @@ function updateAuthUI() {
   if (user) {
     const streak = user.streak || 1;
     const name = user.nickname || user.username || 'Reader';
-    const shortName = name.length > 9 ? name.slice(0, 8) + '…' : name;
-    if (topAuthLabel) topAuthLabel.textContent = `${shortName} • ${streak}d`;
+    const displayTopName = name.length > 14 ? name.split(' ')[0] : name;
+    if (topAuthLabel) topAuthLabel.textContent = `${displayTopName} • ${streak}d`;
     if (topUserAvatar) topUserAvatar.innerHTML = renderAvatarSvg(user.avatar || 'scholar', 18);
-    if (railAuthLabel) railAuthLabel.textContent = shortName;
+    if (railAuthLabel) railAuthLabel.textContent = 'Account';
     if (railUserAvatar) railUserAvatar.innerHTML = renderAvatarSvg(user.avatar || 'scholar', 20);
   } else {
     if (topAuthLabel) topAuthLabel.textContent = 'Sign In';
@@ -4337,7 +4338,13 @@ function populateProfileFields(user) {
 
   const displayName = user.nickname || user.username || 'Reader';
   if (profileDisplayName) profileDisplayName.textContent = displayName;
-  if (profileEmail) profileEmail.textContent = user.email || `${user.username || 'reader'}@bookflix.local`;
+  if (profileEmail) {
+    if (user.email && !user.email.endsWith('@bookflix.stream') && !user.email.endsWith('@bookflix.local')) {
+      profileEmail.textContent = user.email;
+    } else {
+      profileEmail.textContent = 'Verified Reader Account';
+    }
+  }
 
   if (profileAuthBadgeText) {
     if (user.provider === 'google') {
@@ -4345,13 +4352,13 @@ function populateProfileFields(user) {
     } else if (user.provider === 'email') {
       profileAuthBadgeText.textContent = 'Email & Password';
     } else {
-      profileAuthBadgeText.textContent = 'Local Reader Vault';
+      profileAuthBadgeText.textContent = 'Reader Account';
     }
   }
 
   if (profileMemberSince) {
     const dateStr = user.createdAt ? new Date(user.createdAt).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' }) : 'Active Member';
-    profileMemberSince.textContent = `Member since ${dateStr} • Vault Active`;
+    profileMemberSince.textContent = `Member since ${dateStr}`;
   }
 
   if (profileStatRead) profileStatRead.textContent = String(state.history?.length || user.titlesRead || 0);
@@ -5184,17 +5191,8 @@ function initAuthSystem() {
   // Theme selection in Profile
   document.querySelectorAll('.profile-theme-btn').forEach((btn) => {
     btn.addEventListener('click', () => {
-      document.querySelectorAll('.profile-theme-btn').forEach((b) => b.classList.remove('active'));
-      btn.classList.add('active');
-      const theme = btn.getAttribute('data-apptheme');
-      if (theme === 'amoled') {
-        document.body.style.background = '#000000';
-      } else if (theme === 'sepia') {
-        document.body.style.background = '#181512';
-      } else {
-        document.body.style.background = '';
-      }
-      showAppToast(`Theme set to ${btn.textContent}`);
+      const theme = btn.getAttribute('data-apptheme') || 'liquid';
+      applyAppTheme(theme, true);
     });
   });
 
@@ -5237,6 +5235,27 @@ function initAuthSystem() {
     updateAuthUI();
     showAppToast('Signed out. Welcome back to the starting page.');
   });
+}
+
+function initAppTheme() {
+  const savedTheme = localStorage.getItem('bookflix_theme') || 'liquid';
+  applyAppTheme(savedTheme, false);
+}
+
+function applyAppTheme(theme, showToast = true) {
+  const targetTheme = theme || 'liquid';
+  state.theme = targetTheme;
+  try {
+    localStorage.setItem('bookflix_theme', targetTheme);
+  } catch {}
+  document.documentElement.setAttribute('data-theme', targetTheme);
+  document.querySelectorAll('.profile-theme-btn').forEach((btn) => {
+    btn.classList.toggle('active', btn.getAttribute('data-apptheme') === targetTheme);
+  });
+  if (showToast) {
+    const label = targetTheme === 'amoled' ? 'Pure AMOLED' : targetTheme === 'sepia' ? 'Warm Sepia' : 'Liquid Dark';
+    showAppToast(`Theme set to ${label}`);
+  }
 }
 
 

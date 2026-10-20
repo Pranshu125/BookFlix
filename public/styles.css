@@ -471,13 +471,13 @@ select {
 .rail-item.active::before {
   content: '';
   position: absolute;
-  left: 0;
-  top: 11px;
-  bottom: 11px;
+  left: 5px;
+  top: 13px;
+  bottom: 13px;
   width: 3.5px;
-  border-radius: 0 4px 4px 0;
-  background: #ffffff;
-  box-shadow: 0 0 12px rgba(255, 255, 255, 0.9);
+  border-radius: 999px;
+  background: var(--accent-sky, #38bdf8);
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.85);
 }
 
 /* ============================================================================
@@ -7085,31 +7085,173 @@ html[data-device="tv"] .results-grid {
 
 .profile-theme-grid {
   display: flex;
-  gap: 8px;
+  gap: 10px;
 }
 
 .profile-theme-btn {
   flex: 1;
-  padding: 8px 12px;
+  padding: 10px 14px;
   border-radius: 14px;
   border: 1px solid rgba(255, 255, 255, 0.12);
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.04);
   color: var(--text-secondary);
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   font-weight: 700;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.25s var(--spring);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
 }
 
-.profile-theme-btn:hover {
-  background: rgba(255, 255, 255, 0.1);
+.profile-theme-btn[data-apptheme="liquid"]:hover {
+  border-color: rgba(56, 189, 248, 0.4);
   color: #ffffff;
 }
 
-.profile-theme-btn.active {
-  background: linear-gradient(135deg, rgba(56, 189, 248, 0.3), rgba(99, 102, 241, 0.3));
+.profile-theme-btn[data-apptheme="liquid"].active {
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.32), rgba(99, 102, 241, 0.32));
   border-color: #38bdf8;
   color: #ffffff;
+  box-shadow: 0 0 16px rgba(56, 189, 248, 0.35);
+}
+
+.profile-theme-btn[data-apptheme="amoled"]:hover {
+  border-color: rgba(255, 255, 255, 0.5);
+  color: #ffffff;
+}
+
+.profile-theme-btn[data-apptheme="amoled"].active {
+  background: #000000;
+  border-color: #ffffff;
+  color: #ffffff;
+  box-shadow: 0 0 16px rgba(255, 255, 255, 0.35);
+}
+
+.profile-theme-btn[data-apptheme="sepia"]:hover {
+  border-color: rgba(245, 158, 11, 0.5);
+  color: #fef3c7;
+}
+
+.profile-theme-btn[data-apptheme="sepia"].active {
+  background: linear-gradient(135deg, rgba(217, 119, 6, 0.38), rgba(180, 83, 9, 0.45));
+  border-color: #f59e0b;
+  color: #fef3c7;
+  box-shadow: 0 0 16px rgba(245, 158, 11, 0.35);
+}
+
+/* ============================================================================
+   APP DISPLAY THEMES (Liquid Dark, Pure AMOLED, Warm Sepia)
+   ============================================================================ */
+
+/* 1. Liquid Dark (Default) */
+html[data-theme="liquid"] {
+  --bg-canvas: #07080d;
+  --bg-matte-deep: #050609;
+  --text-primary: rgba(255, 255, 255, 0.98);
+  --text-secondary: rgba(226, 232, 240, 0.74);
+  --accent-sky: #38bdf8;
+}
+
+/* 2. Pure AMOLED (True Pitch Black for OLED displays) */
+html[data-theme="amoled"] {
+  --bg-canvas: #000000 !important;
+  --bg-matte-deep: #000000 !important;
+  --bg-matte-elevated: #050505 !important;
+  --glass-modal: #000000 !important;
+  --glass-surface: #070707 !important;
+  --glass-surface-hover: #111111 !important;
+  --glass-border: rgba(255, 255, 255, 0.2) !important;
+  --glass-border-bright: rgba(255, 255, 255, 0.4) !important;
+  --text-primary: #ffffff !important;
+  --text-secondary: #cbd5e1 !important;
+  --accent-sky: #ffffff !important;
+  --accent-cyan: #ffffff !important;
+  --accent-glow: #ffffff !important;
+  --liquid-clay-card: #080808 !important;
+}
+
+html[data-theme="amoled"] body,
+html[data-theme="amoled"] .ambient-canvas,
+html[data-theme="amoled"] .hotstar-rail,
+html[data-theme="amoled"] .top-search-strip,
+html[data-theme="amoled"] .account-glass-card,
+html[data-theme="amoled"] .modal-window,
+html[data-theme="amoled"] .site-footer {
+  background: #000000 !important;
+  border-color: rgba(255, 255, 255, 0.18) !important;
+}
+
+html[data-theme="amoled"] .ambient-orb {
+  display: none !important;
+}
+
+html[data-theme="amoled"] .book-card {
+  background: #060606 !important;
+  border-color: rgba(255, 255, 255, 0.18) !important;
+}
+
+html[data-theme="amoled"] .rail-item.active::before {
+  background: #ffffff !important;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.9) !important;
+}
+
+/* 3. Warm Sepia (Parchment & Warm Amber Tone) */
+html[data-theme="sepia"] {
+  --bg-canvas: #14100c !important;
+  --bg-matte-deep: #0f0c08 !important;
+  --bg-matte-elevated: #1a1510 !important;
+  --glass-modal: #17130e !important;
+  --glass-surface: #1e1913 !important;
+  --glass-surface-hover: #292119 !important;
+  --glass-border: rgba(245, 158, 11, 0.22) !important;
+  --glass-border-bright: rgba(245, 158, 11, 0.44) !important;
+  --text-primary: #fef3c7 !important;
+  --text-secondary: #d4b996 !important;
+  --text-tertiary: #a88d6b !important;
+  --accent-sky: #f59e0b !important;
+  --accent-cyan: #d97706 !important;
+  --accent-glow: #f59e0b !important;
+  --liquid-clay-card: #1c1610 !important;
+}
+
+html[data-theme="sepia"] body {
+  background: #14100c !important;
+}
+
+html[data-theme="sepia"] .ambient-canvas {
+  background: radial-gradient(125% 95% at 50% 0%, #221a12 0%, #16120d 55%, #0f0c08 100%) !important;
+}
+
+html[data-theme="sepia"] .ambient-orb {
+  background: rgba(245, 158, 11, 0.12) !important;
+}
+
+html[data-theme="sepia"] .hotstar-rail,
+html[data-theme="sepia"] .top-search-strip,
+html[data-theme="sepia"] .account-glass-card,
+html[data-theme="sepia"] .modal-window,
+html[data-theme="sepia"] .site-footer {
+  background: #17130e !important;
+  border-color: rgba(245, 158, 11, 0.2) !important;
+}
+
+html[data-theme="sepia"] .book-card {
+  background: #1c1610 !important;
+  border-color: rgba(245, 158, 11, 0.2) !important;
+}
+
+html[data-theme="sepia"] .card-title,
+html[data-theme="sepia"] .account-name-heading,
+html[data-theme="sepia"] .account-page-title,
+html[data-theme="sepia"] .stat-value {
+  color: #fef3c7 !important;
+}
+
+html[data-theme="sepia"] .rail-item.active::before {
+  background: #f59e0b !important;
+  box-shadow: 0 0 10px rgba(245, 158, 11, 0.85) !important;
 }
 
 .profile-actions-row {
