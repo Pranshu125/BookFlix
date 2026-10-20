@@ -1,12 +1,12 @@
-// BookFlix PWA Service Worker (v56 - INP Card Click & Modal Optimization)
-const CACHE_NAME = 'bookflix-cache-v56';
+// BookFlix PWA Service Worker (v57 - Hide Footer Contact Support & SEO Links)
+const CACHE_NAME = 'bookflix-cache-v57';
 const PRECACHE_ASSETS = [
   '/',
-  '/index.html?v=56',
-  '/styles.css?v=56',
-  '/app.js?v=56',
-  '/firebase-config.js?v=56',
-  '/manifest.json?v=56',
+  '/index.html?v=57',
+  '/styles.css?v=57',
+  '/app.js?v=57',
+  '/firebase-config.js?v=57',
+  '/manifest.json?v=57',
   '/logo.svg?v=20',
   '/favicon.ico?v=20',
   '/favicon.svg?v=20',
