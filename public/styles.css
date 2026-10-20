@@ -7801,6 +7801,40 @@ html[data-device="tv"] .results-grid {
   }
 }
 
+/* ==========================================================================
+   SIGN-IN REQUIRED APP GATEWAY (Site Opens with Sign-In Page)
+   ========================================================================== */
+html.auth-required-gateway #authModal {
+  display: flex !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+  background: rgba(3, 5, 11, 0.92) !important;
+  backdrop-filter: blur(28px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(28px) saturate(180%) !important;
+  z-index: 100000 !important;
+}
+
+html.auth-required-gateway #authModal.hidden {
+  display: flex !important;
+}
+
+html.auth-required-gateway #authModal .auth-dialog {
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(255, 255, 255, 0.16), 0 0 50px rgba(56, 189, 248, 0.15) !important;
+  animation: authGatewayEntrance 0.32s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes authGatewayEntrance {
+  0% {
+    opacity: 0;
+    transform: scale(0.95) translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
 
 
 

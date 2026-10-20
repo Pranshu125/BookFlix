@@ -1,11 +1,11 @@
-// BookFlix PWA Service Worker (v39 - Auth, Google Login, Firebase & Zero Emojis)
-const CACHE_NAME = 'bookflix-cache-v39';
+// BookFlix PWA Service Worker (v40 - Dedicated Sign-In Required Gateway)
+const CACHE_NAME = 'bookflix-cache-v40';
 const PRECACHE_ASSETS = [
   '/',
-  '/index.html?v=39',
-  '/styles.css?v=39',
-  '/app.js?v=39',
-  '/manifest.json?v=39',
+  '/index.html?v=40',
+  '/styles.css?v=40',
+  '/app.js?v=40',
+  '/manifest.json?v=40',
   '/logo.svg?v=20',
   '/favicon.ico?v=20',
   '/favicon.svg?v=20',

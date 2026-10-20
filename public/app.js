@@ -3779,6 +3779,10 @@ ALL_APP_MODAL_IDS.forEach((modalId) => {
   if (!el) return;
   el.addEventListener('click', (e) => {
     if (e.target.id === modalId) {
+      if (modalId === 'authModal' && !getActiveUser()) {
+        // Sign-in required: Do not dismiss backdrop if unauthenticated
+        return;
+      }
       el.classList.add('hidden');
     }
   });
@@ -3787,6 +3791,10 @@ ALL_APP_MODAL_IDS.forEach((modalId) => {
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
     ALL_APP_MODAL_IDS.forEach((id) => {
+      if (id === 'authModal' && !getActiveUser()) {
+        // Sign-in required: Do not dismiss with Escape key if unauthenticated
+        return;
+      }
       document.getElementById(id)?.classList.add('hidden');
     });
   }
@@ -4114,6 +4122,16 @@ function updateAuthUI() {
   }
 }
 
+function completeAuthentication(user, welcomeMsg) {
+  saveActiveUser(user);
+  syncProfileToCloud(user);
+  document.documentElement.classList.remove('auth-required-gateway');
+  document.getElementById('authModal')?.classList.add('hidden');
+  const closeBtn = document.getElementById('closeAuthModalBtn');
+  if (closeBtn) closeBtn.classList.remove('hidden');
+  if (welcomeMsg) showAppToast(welcomeMsg);
+}
+
 function openAuthOrProfileModal() {
   const user = getActiveUser();
   if (user) {
@@ -4126,7 +4144,19 @@ function openAuthOrProfileModal() {
 function openAuthModal(mode = 'signin') {
   const authModal = document.getElementById('authModal');
   if (!authModal) return;
+  const user = getActiveUser();
+  const closeBtn = document.getElementById('closeAuthModalBtn');
+  if (closeBtn) {
+    if (!user) {
+      closeBtn.classList.add('hidden');
+    } else {
+      closeBtn.classList.remove('hidden');
+    }
+  }
   authModal.classList.remove('hidden');
+  if (!user) {
+    document.documentElement.classList.add('auth-required-gateway');
+  }
   switchAuthTab(mode);
 }
 
@@ -4138,7 +4168,7 @@ function switchAuthTab(mode) {
   const forgotForm = document.getElementById('forgotPasswordForm');
   const signInError = document.getElementById('signInError');
   const signUpError = document.getElementById('signUpError');
-  const forgotMessage = document.getElementById('forgotMessage');
+  const forgotMessage = document.getElementById('forgotMessage') || document.getElementById('forgotPasswordStatus');
 
   if (signInError) signInError.classList.add('hidden');
   if (signUpError) signUpError.classList.add('hidden');
@@ -4171,9 +4201,9 @@ function switchAuthTab(mode) {
     signUpForm?.classList.add('hidden');
     signInForm?.classList.remove('hidden');
     const heading = document.getElementById('authModalHeading');
-    if (heading) heading.textContent = 'Welcome Back';
+    if (heading) heading.textContent = 'Sign In to BookFlix';
     const sub = document.getElementById('authModalSub');
-    if (sub) sub.textContent = 'Sign in to access your saved library and reading progress';
+    if (sub) sub.textContent = 'Universal Streaming Reader & Cloud Sync';
   }
 }
 
@@ -4249,10 +4279,7 @@ async function handleGoogleSignIn() {
           matureEnabled: localStorage.getItem('bookflix_age_verified') === 'true',
           titlesRead: state.history?.length || 0,
         };
-        saveActiveUser(profile);
-        await syncProfileToCloud(profile);
-        document.getElementById('authModal')?.classList.add('hidden');
-        showAppToast(`Welcome, ${profile.nickname}! Signed in with Google.`);
+        completeAuthentication(profile, `Welcome, ${profile.nickname}! Signed in with Google.`);
         return;
       }
     } catch (popupErr) {
@@ -4279,15 +4306,20 @@ async function handleGoogleSignIn() {
     matureEnabled: localStorage.getItem('bookflix_age_verified') === 'true',
     titlesRead: state.history?.length || 0,
   };
-  saveActiveUser(simulatedGoogleUser);
-  await syncProfileToCloud(simulatedGoogleUser);
-  document.getElementById('authModal')?.classList.add('hidden');
-  showAppToast(`Welcome, ${simulatedGoogleUser.nickname}! Google Account connected.`);
+  completeAuthentication(simulatedGoogleUser, `Welcome, ${simulatedGoogleUser.nickname}! Google Account connected.`);
 }
 
 function initAuthSystem() {
   initFirebaseService();
   updateAuthUI();
+
+  // If no user is logged in, immediately open the Sign In page as the app entrance!
+  const currentUser = getActiveUser();
+  if (!currentUser) {
+    openAuthModal('signin');
+  } else {
+    document.documentElement.classList.remove('auth-required-gateway');
+  }
 
   // Top and Rail Buttons
   document.getElementById('topAuthBtn')?.addEventListener('click', openAuthOrProfileModal);
@@ -4306,6 +4338,12 @@ function initAuthSystem() {
 
   // Close Buttons
   document.getElementById('closeAuthModalBtn')?.addEventListener('click', () => {
+    const user = getActiveUser();
+    if (!user) {
+      showAppToast('Please sign in or select Continue as Guest to enter BookFlix.');
+      return;
+    }
+    document.documentElement.classList.remove('auth-required-gateway');
     document.getElementById('authModal')?.classList.add('hidden');
   });
   document.getElementById('closeProfileModalBtn')?.addEventListener('click', () => {
@@ -4314,8 +4352,20 @@ function initAuthSystem() {
 
   // Guest Continue
   document.getElementById('guestContinueBtn')?.addEventListener('click', () => {
-    document.getElementById('authModal')?.classList.add('hidden');
-    showAppToast('Browsing as Guest Reader. All reading features unlocked!');
+    const guestUser = {
+      uid: 'guest_' + Date.now(),
+      email: 'guest@bookflix.local',
+      username: 'guest',
+      nickname: 'Guest Reader',
+      avatar: 'scholar',
+      provider: 'guest',
+      streak: 1,
+      createdAt: new Date().toISOString(),
+      lastLoginDate: new Date().toISOString(),
+      matureEnabled: localStorage.getItem('bookflix_age_verified') === 'true',
+      titlesRead: state.history?.length || 0,
+    };
+    completeAuthentication(guestUser, 'Welcome, Guest Reader! All library streaming features unlocked.');
   });
 
   // Avatar Picker
@@ -4385,11 +4435,8 @@ function initAuthSystem() {
             matureEnabled: localStorage.getItem('bookflix_age_verified') === 'true',
             titlesRead: state.history?.length || 0,
           };
-          saveActiveUser(profile);
-          await syncProfileToCloud(profile);
-          document.getElementById('authModal')?.classList.add('hidden');
           signInForm.reset();
-          showAppToast(`Welcome back, ${profile.nickname}! Streak: ${profile.streak} Days.`);
+          completeAuthentication(profile, `Welcome back, ${profile.nickname}! Streak: ${profile.streak} Days.`);
           return;
         }
       } catch (fbErr) {
@@ -4426,11 +4473,8 @@ function initAuthSystem() {
     }
     user.lastLoginDate = now.toISOString();
 
-    saveActiveUser(user);
-    await syncProfileToCloud(user);
-    document.getElementById('authModal')?.classList.add('hidden');
     signInForm.reset();
-    showAppToast(`Welcome back, ${user.nickname || user.username}! Streak: ${user.streak || 1} Days.`);
+    completeAuthentication(user, `Welcome back, ${user.nickname || user.username}! Streak: ${user.streak || 1} Days.`);
   });
 
   // Sign Up Form Submit
@@ -4440,7 +4484,7 @@ function initAuthSystem() {
     e.preventDefault();
     signUpError?.classList.add('hidden');
 
-    const nickname = document.getElementById('signUpNickname')?.value.trim();
+    const nickname = (document.getElementById('signUpNickname') || document.getElementById('signUpUsername'))?.value.trim();
     const email = document.getElementById('signUpEmail')?.value.trim();
     const password = document.getElementById('signUpPassword')?.value;
 
@@ -4487,11 +4531,8 @@ function initAuthSystem() {
             matureEnabled: localStorage.getItem('bookflix_age_verified') === 'true',
             titlesRead: state.history?.length || 0,
           };
-          saveActiveUser(profile);
-          await syncProfileToCloud(profile);
-          document.getElementById('authModal')?.classList.add('hidden');
           signUpForm.reset();
-          showAppToast(`Account created! Welcome to BookFlix, ${nickname}!`);
+          completeAuthentication(profile, `Account created! Welcome to BookFlix, ${nickname}!`);
           return;
         }
       } catch (fbErr) {
@@ -4524,21 +4565,18 @@ function initAuthSystem() {
       titlesRead: state.history?.length || 0,
     };
 
-    saveActiveUser(newUser);
-    await syncProfileToCloud(newUser);
-    document.getElementById('authModal')?.classList.add('hidden');
     signUpForm.reset();
-    showAppToast(`Account created! Welcome to BookFlix, ${newUser.nickname}!`);
+    completeAuthentication(newUser, `Account created! Welcome to BookFlix, ${newUser.nickname}!`);
   });
 
   // Forgot Password Form Submit
   const forgotForm = document.getElementById('forgotPasswordForm');
-  const forgotMessage = document.getElementById('forgotMessage');
+  const forgotMessage = document.getElementById('forgotMessage') || document.getElementById('forgotPasswordStatus');
   forgotForm?.addEventListener('submit', async (e) => {
     e.preventDefault();
     if (forgotMessage) forgotMessage.classList.add('hidden');
 
-    const email = document.getElementById('forgotEmail')?.value.trim();
+    const email = (document.getElementById('forgotEmail') || document.getElementById('forgotPasswordEmail'))?.value.trim();
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       if (forgotMessage) {
         forgotMessage.textContent = 'Please enter a valid email address.';
@@ -4659,7 +4697,9 @@ function initAuthSystem() {
     }
     saveActiveUser(null);
     document.getElementById('userProfileModal')?.classList.add('hidden');
-    showAppToast('Signed out. Switched back to Guest Mode.');
+    // In a sign-in required app, signing out returns directly to the sign-in page!
+    openAuthModal('signin');
+    showAppToast('Signed out. Please sign in to access BookFlix.');
   });
 }
 

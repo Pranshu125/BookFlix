@@ -39,7 +39,7 @@
   <meta name="apple-mobile-web-app-title" content="BookFlix" />
   <meta name="mobile-web-app-capable" content="yes" />
 
-  <link rel="manifest" href="/manifest.json?v=39" />
+  <link rel="manifest" href="/manifest.json?v=40" />
   <link rel="icon" type="image/svg+xml" href="/logo.svg?v=20" />
   <link rel="icon" type="image/x-icon" href="/favicon.ico?v=20" />
   <link rel="shortcut icon" href="/favicon.ico?v=20" />
@@ -56,7 +56,7 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js" defer></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js" defer></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js" defer></script>
-  <link rel="stylesheet" href="/styles.css?v=39" />
+  <link rel="stylesheet" href="/styles.css?v=40" />
 
   <!-- Structured Data (JSON-LD): Organization, WebSite (SearchAction), WebApplication -->
   <script type="application/ld+json">
@@ -105,6 +105,14 @@
       }
     ]
   }
+  </script>
+  <script>
+    // Instant splash / auth gateway check
+    try {
+      if (!localStorage.getItem('bookflix_active_user')) {
+        document.documentElement.classList.add('auth-required-gateway');
+      }
+    } catch (e) {}
   </script>
 </head>
 <body>
@@ -2025,8 +2033,8 @@
             </span>
           </div>
           <div>
-            <h3 class="dialog-title" id="authModalHeading">BookFlix Account</h3>
-            <span class="dialog-subtitle" id="authModalSub">Universal Library &amp; Cloud Sync</span>
+            <h3 class="dialog-title" id="authModalHeading">Sign In to BookFlix</h3>
+            <span class="dialog-subtitle" id="authModalSub">Universal Streaming Reader &amp; Cloud Sync</span>
           </div>
         </div>
         <button type="button" class="btn-close" id="closeAuthModalBtn" title="Close" aria-label="Close">
@@ -2146,6 +2154,7 @@
               <input type="email" id="forgotPasswordEmail" class="dialog-input" placeholder="your-email@domain.com" required autocomplete="email" />
             </div>
           </div>
+          <div class="auth-status-msg auth-msg-box hidden" id="forgotMessage"></div>
           <div class="auth-status-msg hidden" id="forgotPasswordStatus"></div>
           <button type="submit" class="btn btn-primary auth-submit-btn" id="forgotPasswordSubmitBtn">Send Password Reset Link</button>
           <button type="button" class="btn-link back-to-signin-btn" id="backToSignInBtn">
@@ -2338,6 +2347,6 @@
     </div>
   </div>
 
-  <script src="/app.js?v=39"></script>
+  <script src="/app.js?v=40"></script>
 </body>
 </html>
