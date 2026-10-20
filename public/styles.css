@@ -7592,7 +7592,7 @@ html.auth-required-gateway .dedicated-starting-page {
   position: fixed;
   inset: 0;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   background: radial-gradient(130% 120% at 50% 0%, #0c1228 0%, #060814 50%, #020409 100%);
   color: #f8fafc;
   font-family: var(--font-sans);
@@ -7667,77 +7667,76 @@ html.auth-required-gateway .dedicated-starting-page {
   100% { transform: translate(-30px, 20px) scale(0.9); }
 }
 
-/* Seamless Blended Header */
-.start-page-header {
-  position: relative;
-  z-index: 10;
-  display: flex;
+/* Prominent Centered Hero Brand Lockup (Liquid Glass & Bigger in Form) */
+.start-hero-brand {
+  display: inline-flex;
   align-items: center;
-  justify-content: flex-start;
-  max-width: 1240px;
-  width: 100%;
-  margin: 0 auto;
-  padding: 20px 36px 0;
-  background: transparent;
-  border: none;
-  box-shadow: none;
-}
-
-.start-page-brand {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+  justify-content: center;
+  gap: 16px;
+  margin: 0 auto 16px auto;
+  align-self: center;
   text-decoration: none;
   background: transparent;
   border: none;
+  width: fit-content;
+  user-select: none;
 }
 
-.start-logo-mark {
-  width: 40px;
-  height: 40px;
+.start-hero-logo-mark {
+  width: 62px;
+  height: 62px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: transparent;
-  border: none;
-  box-shadow: none;
+  flex-shrink: 0;
+  border-radius: 18px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.03) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45), 0 0 35px rgba(99, 102, 241, 0.35), inset 1px 1px 1.5px rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: 6px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.start-logo-mark .brand-logo-svg {
-  width: 40px;
-  height: 40px;
-  border-radius: 11px;
-  filter: drop-shadow(0 6px 18px rgba(99, 102, 241, 0.45));
-  transition: transform 0.25s ease, filter 0.25s ease;
+.start-hero-brand:hover .start-hero-logo-mark {
+  transform: translateY(-2px) scale(1.05);
+  border-color: rgba(56, 189, 248, 0.55);
+  box-shadow: 0 14px 40px rgba(56, 189, 248, 0.4), 0 0 45px rgba(99, 102, 241, 0.5), inset 1px 1px 2px rgba(255, 255, 255, 0.5);
 }
 
-.start-page-brand:hover .brand-logo-svg {
-  transform: translateY(-1px) scale(1.04);
-  filter: drop-shadow(0 8px 22px rgba(56, 189, 248, 0.6));
+.hero-brand-logo-svg {
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.35));
+  display: block;
 }
 
-.start-brand-lockup {
+.start-hero-brand-lockup {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  text-align: left;
 }
 
-.start-brand-title {
+.start-hero-brand-title {
   font-family: var(--font-display);
-  font-size: 1.38rem;
+  font-size: 2.25rem;
   font-weight: 900;
-  letter-spacing: 1.5px;
-  line-height: 1.1;
-  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.7);
+  letter-spacing: 2px;
+  line-height: 1.05;
+  text-shadow: 0 4px 24px rgba(0, 0, 0, 0.85), 0 0 30px rgba(99, 102, 241, 0.4);
 }
 
-.start-brand-sub {
-  font-size: 0.62rem;
+.start-hero-brand-sub {
+  font-size: 0.72rem;
   font-weight: 800;
-  letter-spacing: 2px;
-  color: rgba(255, 255, 255, 0.55);
+  letter-spacing: 2.8px;
+  color: rgba(255, 255, 255, 0.65);
   text-transform: uppercase;
-  margin-top: 2px;
-  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.7);
+  margin-top: 4px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
 }
 
 .start-page-actions {
@@ -7785,7 +7784,8 @@ html.auth-required-gateway .dedicated-starting-page {
   font-weight: 800;
   letter-spacing: 1.2px;
   width: fit-content;
-  margin-bottom: 12px;
+  margin: 0 auto 12px auto;
+  align-self: center;
   box-shadow: 0 4px 16px rgba(56, 189, 248, 0.16), inset 0 1px 1px rgba(255, 255, 255, 0.25);
   backdrop-filter: blur(12px);
 }
@@ -8376,18 +8376,26 @@ html.auth-required-gateway .dedicated-starting-page {
     display: none;
   }
 
-  .start-page-header {
-    padding: 18px 20px 0;
-    justify-content: center;
+  .start-hero-brand {
+    margin: 0 auto 14px auto;
+  }
+
+  .start-hero-logo-mark {
+    width: 52px;
+    height: 52px;
+  }
+
+  .start-hero-brand-title {
+    font-size: 1.85rem;
+  }
+
+  .start-hero-brand-sub {
+    font-size: 0.65rem;
+    letter-spacing: 2.2px;
   }
 }
 
 @media (max-width: 640px) {
-  .start-page-header {
-    padding: 14px 16px 0;
-    justify-content: center;
-  }
-
   .start-page-main {
     padding: 10px 16px 20px;
   }
@@ -8397,8 +8405,25 @@ html.auth-required-gateway .dedicated-starting-page {
     border-radius: 20px;
   }
 
-  .start-brand-sub {
-    display: none;
+  .start-hero-brand {
+    gap: 12px;
+    margin: 0 auto 12px auto;
+  }
+
+  .start-hero-logo-mark {
+    width: 46px;
+    height: 46px;
+    border-radius: 14px;
+  }
+
+  .start-hero-brand-title {
+    font-size: 1.6rem;
+    letter-spacing: 1.5px;
+  }
+
+  .start-hero-brand-sub {
+    font-size: 0.58rem;
+    letter-spacing: 2px;
   }
 }
 

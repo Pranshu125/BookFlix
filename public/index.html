@@ -39,7 +39,7 @@
   <meta name="apple-mobile-web-app-title" content="BookFlix" />
   <meta name="mobile-web-app-capable" content="yes" />
 
-  <link rel="manifest" href="/manifest.json?v=49" />
+  <link rel="manifest" href="/manifest.json?v=50" />
   <link rel="icon" type="image/svg+xml" href="/logo.svg?v=20" />
   <link rel="icon" type="image/x-icon" href="/favicon.ico?v=20" />
   <link rel="shortcut icon" href="/favicon.ico?v=20" />
@@ -57,8 +57,8 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js" defer></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js" defer></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js" defer></script>
-  <script src="/firebase-config.js?v=49" defer></script>
-  <link rel="stylesheet" href="/styles.css?v=49" />
+  <script src="/firebase-config.js?v=50" defer></script>
+  <link rel="stylesheet" href="/styles.css?v=50" />
 
   <!-- Structured Data (JSON-LD): Organization, WebSite (SearchAction), WebApplication -->
   <script type="application/ld+json">
@@ -137,24 +137,22 @@
       <div class="start-glass-mesh"></div>
     </div>
 
-    <!-- Starting Page Header -->
-    <header class="start-page-header">
-      <div class="start-page-brand">
-        <div class="start-logo-mark">
-          <img src="/logo.svg?v=20" alt="BookFlix" class="brand-logo-svg" />
-        </div>
-        <div class="start-brand-lockup">
-          <span class="start-brand-title"><span class="brand-word-book">BOOK</span><span class="brand-word-flix">FLIX</span></span>
-          <span class="start-brand-sub">DIGITAL STREAMING LIBRARY</span>
-        </div>
-      </div>
-    </header>
-
     <!-- Starting Page Main Hero & Gateway Grid -->
     <main class="start-page-main">
       <div class="start-page-container">
         <!-- Left Showcase Column -->
         <div class="start-hero-col">
+          <!-- Prominent Centered Brand Lockup (Moved from header, bigger in form) -->
+          <div class="start-hero-brand">
+            <div class="start-hero-logo-mark">
+              <img src="/logo.svg?v=20" alt="BookFlix" class="hero-brand-logo-svg" />
+            </div>
+            <div class="start-hero-brand-lockup">
+              <span class="start-hero-brand-title"><span class="brand-word-book">BOOK</span><span class="brand-word-flix">FLIX</span></span>
+              <span class="start-hero-brand-sub">DIGITAL STREAMING LIBRARY</span>
+            </div>
+          </div>
+
           <div class="start-badge-pill">
             <span class="pulse-indicator"></span>
             <span>NEXT-GEN STREAMING ARCHITECTURE</span>
@@ -2373,6 +2371,6 @@
     </div>
   </div>
 
-  <script src="/app.js?v=49"></script>
+  <script src="/app.js?v=50"></script>
 </body>
 </html>

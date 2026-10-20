@@ -1,12 +1,12 @@
-// BookFlix PWA Service Worker (v49 - Liquid Glass Single-Page Gateway Redesign)
-const CACHE_NAME = 'bookflix-cache-v49';
+// BookFlix PWA Service Worker (v50 - Centered Prominent Liquid Glass Hero Lockup)
+const CACHE_NAME = 'bookflix-cache-v50';
 const PRECACHE_ASSETS = [
   '/',
-  '/index.html?v=49',
-  '/styles.css?v=49',
-  '/app.js?v=49',
-  '/firebase-config.js?v=49',
-  '/manifest.json?v=49',
+  '/index.html?v=50',
+  '/styles.css?v=50',
+  '/app.js?v=50',
+  '/firebase-config.js?v=50',
+  '/manifest.json?v=50',
   '/logo.svg?v=20',
   '/favicon.ico?v=20',
   '/favicon.svg?v=20',
