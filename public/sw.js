@@ -1,12 +1,12 @@
-// BookFlix PWA Service Worker (v47 - Blended Seamless Brand Header & No Guest Option)
-const CACHE_NAME = 'bookflix-cache-v47';
+// BookFlix PWA Service Worker (v48 - Realtime Database & Cloud Sync Integration)
+const CACHE_NAME = 'bookflix-cache-v48';
 const PRECACHE_ASSETS = [
   '/',
-  '/index.html?v=47',
-  '/styles.css?v=47',
-  '/app.js?v=47',
-  '/firebase-config.js?v=47',
-  '/manifest.json?v=47',
+  '/index.html?v=48',
+  '/styles.css?v=48',
+  '/app.js?v=48',
+  '/firebase-config.js?v=48',
+  '/manifest.json?v=48',
   '/logo.svg?v=20',
   '/favicon.ico?v=20',
   '/favicon.svg?v=20',

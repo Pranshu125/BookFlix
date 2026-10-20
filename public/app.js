@@ -3881,6 +3881,7 @@ const SVG_EYE_OFF = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none"
 
 let fbAuthInstance = null;
 let fbStoreInstance = null;
+let fbDbInstance = null;
 let isFirebaseConnected = false;
 
 function getStoredFirebaseConfig() {
@@ -3915,7 +3916,12 @@ function initFirebaseService() {
         window.firebase.initializeApp(cfg);
       }
       fbAuthInstance = window.firebase.auth();
-      fbStoreInstance = window.firebase.firestore();
+      if (typeof window.firebase.firestore === 'function') {
+        try { fbStoreInstance = window.firebase.firestore(); } catch (e) {}
+      }
+      if (typeof window.firebase.database === 'function') {
+        try { fbDbInstance = window.firebase.database(); } catch (e) {}
+      }
       isFirebaseConnected = true;
       updateFirestoreUIStatus(true, cfg.projectId, cfg.authDomain);
 
@@ -3939,6 +3945,23 @@ function initFirebaseService() {
           };
           saveActiveUser(profile);
           syncProfileToCloud(profile);
+
+          // Restore library bookmarks and reading history from Realtime Database
+          if (fbDbInstance && fbUser.uid) {
+            fbDbInstance.ref('readers/' + fbUser.uid).once('value').then((snap) => {
+              const cloudData = snap.val();
+              if (cloudData) {
+                if (cloudData.myList && Array.isArray(cloudData.myList) && cloudData.myList.length > 0) {
+                  state.myList = cloudData.myList;
+                  saveMyList();
+                }
+                if (cloudData.history && Array.isArray(cloudData.history) && cloudData.history.length > 0) {
+                  state.history = cloudData.history;
+                  saveHistory();
+                }
+              }
+            }).catch(() => {});
+          }
         }
       });
       return;
@@ -4003,29 +4026,45 @@ function openFirestoreConfigModal() {
 
 async function syncProfileToCloud(user) {
   if (!user) return false;
-  try {
-    if (isFirebaseConnected && fbStoreInstance && user.email) {
-      const docId = user.email.replace(/[.#$[\]]/g, '_');
-      await fbStoreInstance.collection('readers').doc(docId).set({
-        email: user.email,
-        nickname: user.nickname || user.username,
-        avatar: user.avatar || 'scholar',
-        provider: user.provider || 'email',
-        streak: user.streak || 1,
-        lastSync: new Date().toISOString(),
-        myListCount: state.myList?.length || 0,
-        historyCount: state.history?.length || 0,
-        myList: (state.myList || []).slice(0, 50),
-        history: (state.history || []).slice(0, 50),
-      }, { merge: true });
-      updateCloudSyncStatus(true);
-      return true;
+  let synced = false;
+  const payload = {
+    uid: user.uid || '',
+    email: user.email || '',
+    nickname: user.nickname || user.username || 'Reader',
+    avatar: user.avatar || 'scholar',
+    provider: user.provider || 'email',
+    streak: user.streak || 1,
+    lastSync: new Date().toISOString(),
+    myListCount: state.myList?.length || 0,
+    historyCount: state.history?.length || 0,
+    myList: (state.myList || []).slice(0, 50),
+    history: (state.history || []).slice(0, 50),
+  };
+
+  // 1. Sync to Firebase Realtime Database
+  if (fbDbInstance && (user.uid || user.email)) {
+    try {
+      const dbKey = user.uid || (user.email ? user.email.replace(/[.#$[\]]/g, '_') : 'reader');
+      await fbDbInstance.ref('readers/' + dbKey).update(payload);
+      synced = true;
+    } catch (dbErr) {
+      console.info('Realtime DB sync notice:', dbErr?.message);
     }
-  } catch (err) {
-    console.info('Cloud sync notice (persisting in local encrypted vault):', err?.message);
   }
-  updateCloudSyncStatus(false);
-  return false;
+
+  // 2. Sync to Cloud Firestore (if enabled)
+  if (fbStoreInstance && user.email) {
+    try {
+      const docId = user.email.replace(/[.#$[\]]/g, '_');
+      await fbStoreInstance.collection('readers').doc(docId).set(payload, { merge: true });
+      synced = true;
+    } catch (fsErr) {
+      console.info('Cloud Firestore sync notice:', fsErr?.message);
+    }
+  }
+
+  updateCloudSyncStatus(synced);
+  return synced;
 }
 
 function updateCloudSyncStatus(isCloud) {
