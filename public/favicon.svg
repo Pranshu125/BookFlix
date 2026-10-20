@@ -1,58 +1,53 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
   <defs>
-    <linearGradient id="bgSquircle" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#161b2e" />
-      <stop offset="50%" stop-color="#0a0d18" />
-      <stop offset="100%" stop-color="#05070c" />
+    <linearGradient id="bgObsidian" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#121524" />
+      <stop offset="50%" stop-color="#080a12" />
+      <stop offset="100%" stop-color="#040508" />
     </linearGradient>
-    <radialGradient id="auroraGlow1" cx="24%" cy="20%" r="68%">
-      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.78" />
-      <stop offset="50%" stop-color="#4f46e5" stop-opacity="0.32" />
-      <stop offset="100%" stop-color="#0a0d18" stop-opacity="0" />
+
+    <radialGradient id="auroraGlow" cx="50%" cy="46%" r="62%">
+      <stop offset="0%" stop-color="#6366f1" stop-opacity="0.45" />
+      <stop offset="45%" stop-color="#06b6d4" stop-opacity="0.25" />
+      <stop offset="100%" stop-color="#040508" stop-opacity="0" />
     </radialGradient>
-    <radialGradient id="auroraGlow2" cx="80%" cy="82%" r="68%">
-      <stop offset="0%" stop-color="#f43f5e" stop-opacity="0.68" />
-      <stop offset="52%" stop-color="#9333ea" stop-opacity="0.32" />
-      <stop offset="100%" stop-color="#05070c" stop-opacity="0" />
-    </radialGradient>
-    <linearGradient id="liquidGlassFill" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.32" />
-      <stop offset="45%" stop-color="#ffffff" stop-opacity="0.10" />
-      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.03" />
+
+    <linearGradient id="rimStroke" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.42" />
+      <stop offset="50%" stop-color="#6366f1" stop-opacity="0.25" />
+      <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.08" />
     </linearGradient>
-    <linearGradient id="rimHighlight" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.82" />
-      <stop offset="42%" stop-color="#ffffff" stop-opacity="0.24" />
-      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.08" />
+
+    <linearGradient id="leftPageGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="55%" stop-color="#6366f1" />
+      <stop offset="100%" stop-color="#4f46e5" />
     </linearGradient>
-    <linearGradient id="leftBookWing" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#ffffff" />
-      <stop offset="65%" stop-color="#e0f2fe" />
-      <stop offset="100%" stop-color="#93c5fd" />
-    </linearGradient>
-    <linearGradient id="rightBookWing" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#7dd3fc" />
-      <stop offset="52%" stop-color="#818cf8" />
+
+    <linearGradient id="rightPageGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#818cf8" />
+      <stop offset="48%" stop-color="#c084fc" />
       <stop offset="100%" stop-color="#f43f5e" />
     </linearGradient>
-    <linearGradient id="playGem" x1="0%" y1="0%" x2="100%" y2="100%">
+
+    <linearGradient id="playArrowGrad" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#ffffff" />
-      <stop offset="100%" stop-color="#dbeafe" />
+      <stop offset="100%" stop-color="#e0e7ff" />
     </linearGradient>
-    <linearGradient id="topSheen" x1="50%" y1="0%" x2="50%" y2="100%">
-      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.44" />
-      <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
-    </linearGradient>
+
+    <filter id="glyphShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#000000" flood-opacity="0.75" />
+      <feDropShadow dx="0" dy="3" stdDeviation="6" flood-color="#6366f1" flood-opacity="0.4" />
+    </filter>
   </defs>
-  <rect x="24" y="24" width="464" height="464" rx="108" fill="url(#bgSquircle)" />
-  <rect x="24" y="24" width="464" height="464" rx="108" fill="url(#auroraGlow1)" />
-  <rect x="24" y="24" width="464" height="464" rx="108" fill="url(#auroraGlow2)" />
-  <rect x="25.5" y="25.5" width="461" height="461" rx="106.5" fill="none" stroke="url(#rimHighlight)" stroke-width="3" />
-  <path d="M 132 26 L 380 26 C 438 26 484 72 486 130 C 370 175 142 175 26 130 C 28 72 74 26 132 26 Z" fill="url(#topSheen)" opacity="0.55" />
-  <circle cx="256" cy="256" r="152" fill="url(#liquidGlassFill)" stroke="url(#rimHighlight)" stroke-width="2.5" />
-  <circle cx="256" cy="256" r="128" fill="none" stroke="#ffffff" stroke-opacity="0.13" stroke-width="1.5" />
-  <path d="M 250 176 C 218 156 174 150 138 160 C 129 162 124 170 124 180 L 124 316 C 124 326 132 333 142 331 C 178 322 218 328 250 348 Z" fill="url(#leftBookWing)" />
-  <path d="M 262 176 C 294 156 338 150 374 160 C 383 162 388 170 388 180 L 388 316 C 388 326 380 333 370 331 C 334 322 294 328 262 348 Z" fill="url(#rightBookWing)" />
-  <circle cx="256" cy="256" r="46" fill="#090c16" fill-opacity="0.88" stroke="url(#rimHighlight)" stroke-width="2.2" />
-  <path d="M 243 233 C 239 230 234 233 234 238 L 234 274 C 234 279 239 282 243 279 L 275 261 C 279 259 279 253 275 251 Z" fill="url(#playGem)" />
+
+  <rect x="28" y="28" width="456" height="456" rx="114" fill="url(#bgObsidian)" />
+  <rect x="28" y="28" width="456" height="456" rx="114" fill="url(#auroraGlow)" />
+  <rect x="29" y="29" width="454" height="454" rx="113" fill="none" stroke="url(#rimStroke)" stroke-width="2.2" />
+
+  <g filter="url(#glyphShadow)">
+    <path d="M 238 152 C 182 134 130 144 104 158 C 96 162 92 170 92 179 L 92 318 C 92 331 104 340 116 335 C 142 324 186 318 238 340 Z" fill="url(#leftPageGrad)" />
+    <path d="M 274 152 C 330 134 382 144 408 158 C 416 162 420 170 420 179 L 420 318 C 420 331 408 340 396 335 C 370 324 326 318 274 340 Z" fill="url(#rightPageGrad)" />
+    <path d="M 238 214 C 238 205 248 200 255 204 L 305 239 C 312 244 312 254 305 259 L 255 294 C 248 298 238 293 238 284 Z" fill="url(#playArrowGrad)" />
+  </g>
 </svg>

@@ -2,28 +2,34 @@
   "name": "BookFlix — Digital Library",
   "short_name": "BookFlix",
   "description": "All-in-One E-Book, Manga, Comic & Audiobook Digital Library with Liquid Glass & Claymorphism UI",
-  "start_url": "/?pwa=1&v=35",
+  "start_url": "/?pwa=1&v=37",
   "scope": "/",
   "display": "standalone",
   "orientation": "any",
-  "background_color": "#08090c",
-  "theme_color": "#08090c",
+  "background_color": "#07080d",
+  "theme_color": "#07080d",
   "categories": ["books", "entertainment", "music", "comics"],
   "icons": [
     {
-      "src": "/logo.svg?v=18",
+      "src": "/logo.svg?v=20",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any"
     },
     {
-      "src": "/logo.svg?v=18",
+      "src": "/logo.svg?v=20",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "maskable"
     },
     {
-      "src": "/favicon.ico?v=18",
+      "src": "/logo.png?v=20",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon.ico?v=20",
       "sizes": "256x256 64x64 48x48 32x32 16x16",
       "type": "image/x-icon"
     }

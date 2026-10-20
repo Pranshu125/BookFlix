@@ -3,27 +3,27 @@
     <!-- Background Gradient -->
     <radialGradient id="bgGrad" cx="50%" cy="30%" r="80%">
       <stop offset="0%" stop-color="#141824" />
-      <stop offset="50%" stop-color="#0b0c10" />
-      <stop offset="100%" stop-color="#060709" />
+      <stop offset="50%" stop-color="#07080d" />
+      <stop offset="100%" stop-color="#040508" />
     </radialGradient>
 
     <!-- Glowing Orbs -->
     <radialGradient id="cyanOrb" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.38" />
+      <stop offset="0%" stop-color="#06b6d4" stop-opacity="0.38" />
       <stop offset="60%" stop-color="#0284c7" stop-opacity="0.12" />
-      <stop offset="100%" stop-color="#0b0c10" stop-opacity="0" />
+      <stop offset="100%" stop-color="#07080d" stop-opacity="0" />
     </radialGradient>
 
     <radialGradient id="purpleOrb" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#a855f7" stop-opacity="0.32" />
-      <stop offset="60%" stop-color="#7e22ce" stop-opacity="0.1" />
-      <stop offset="100%" stop-color="#0b0c10" stop-opacity="0" />
+      <stop offset="0%" stop-color="#6366f1" stop-opacity="0.35" />
+      <stop offset="60%" stop-color="#4f46e5" stop-opacity="0.1" />
+      <stop offset="100%" stop-color="#07080d" stop-opacity="0" />
     </radialGradient>
 
     <!-- Glass Surface -->
     <linearGradient id="glassLinear" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.18" />
-      <stop offset="50%" stop-color="#ffffff" stop-opacity="0.06" />
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.16" />
+      <stop offset="50%" stop-color="#ffffff" stop-opacity="0.05" />
       <stop offset="100%" stop-color="#ffffff" stop-opacity="0.02" />
     </linearGradient>
 
@@ -34,9 +34,10 @@
       <stop offset="100%" stop-color="#38bdf8" />
     </linearGradient>
 
-    <linearGradient id="redFlix" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#ff3344" />
-      <stop offset="100%" stop-color="#e50914" />
+    <linearGradient id="flixGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#06b6d4" />
+      <stop offset="48%" stop-color="#6366f1" />
+      <stop offset="100%" stop-color="#f43f5e" />
     </linearGradient>
 
     <filter id="glassShadow" x="-20%" y="-20%" width="140%" height="140%">
@@ -68,18 +69,21 @@
   <!-- Center Glass Card -->
   <rect x="120" y="75" width="960" height="480" rx="36" fill="url(#glassLinear)" stroke="rgba(255,255,255,0.2)" stroke-width="1.5" filter="url(#glassShadow)" />
 
-  <!-- App Logo Emblem -->
+  <!-- App Logo Emblem with New Minimalist Glyph -->
   <g transform="translate(190, 140)">
-    <rect width="84" height="84" rx="22" fill="#0c1017" stroke="rgba(56,189,248,0.5)" stroke-width="2" />
-    <path d="M22 28 C28 24, 38 24, 42 27 C46 24, 56 24, 62 28 L62 58 C56 55, 46 55, 42 58 C38 55, 28 55, 22 58 Z" fill="none" stroke="#38bdf8" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-    <line x1="42" y1="27" x2="42" y2="58" stroke="#38bdf8" stroke-width="3" stroke-linecap="round"/>
+    <rect width="84" height="84" rx="22" fill="#090b14" stroke="rgba(99,102,241,0.5)" stroke-width="2" />
+    <g transform="translate(42, 42) scale(0.125) translate(-256, -256)">
+      <path d="M 238 152 C 182 134 130 144 104 158 C 96 162 92 170 92 179 L 92 318 C 92 331 104 340 116 335 C 142 324 186 318 238 340 Z" fill="#38bdf8" />
+      <path d="M 274 152 C 330 134 382 144 408 158 C 416 162 420 170 420 179 L 420 318 C 420 331 408 340 396 335 C 370 324 326 318 274 340 Z" fill="#f43f5e" />
+      <path d="M 238 214 C 238 205 248 200 255 204 L 305 239 C 312 244 312 254 305 259 L 255 294 C 248 298 238 293 238 284 Z" fill="#ffffff" />
+    </g>
   </g>
 
   <!-- Brand Title -->
   <text x="295" y="195" font-family="-apple-system, BlinkMacSystemFont, 'Outfit', 'Plus Jakarta Sans', sans-serif" font-weight="900" font-size="52" letter-spacing="-1">
-    <tspan fill="#ffffff">BOOK</tspan><tspan fill="url(#redFlix)">FLIX</tspan>
+    <tspan fill="#ffffff">BOOK</tspan><tspan fill="url(#flixGrad)">FLIX</tspan>
   </text>
-  <text x="540" y="180" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-weight="700" font-size="14" fill="#38bdf8" letter-spacing="3">DIGITAL LIBRARY &amp; PWA</text>
+  <text x="540" y="180" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-weight="700" font-size="14" fill="#06b6d4" letter-spacing="3">DIGITAL LIBRARY &amp; PWA</text>
 
   <!-- Main Value Proposition Heading -->
   <text x="190" y="285" font-family="-apple-system, BlinkMacSystemFont, 'Outfit', sans-serif" font-weight="800" font-size="44" fill="url(#textGrad)" letter-spacing="-0.5">
@@ -109,11 +113,7 @@
     <text x="367" y="26" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-weight="600" font-size="15" fill="#ffffff" text-anchor="middle">⚡ Comics</text>
 
     <!-- Pill 4: Audiobooks -->
-    <rect x="450" y="0" width="155" height="42" rx="21" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.18)" stroke-width="1.2" />
-    <text x="527" y="26" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-weight="600" font-size="15" fill="#ffffff" text-anchor="middle">🎧 Audiobooks</text>
-
-    <!-- Pill 5: Offline PWA -->
-    <rect x="620" y="0" width="165" height="42" rx="21" fill="rgba(56,189,248,0.16)" stroke="rgba(56,189,248,0.4)" stroke-width="1.2" />
-    <text x="702" y="26" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-weight="700" font-size="15" fill="#38bdf8" text-anchor="middle">✨ Offline PWA</text>
+    <rect x="450" y="0" width="150" height="42" rx="21" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.18)" stroke-width="1.2" />
+    <text x="525" y="26" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-weight="600" font-size="15" fill="#ffffff" text-anchor="middle">🎧 Audiobooks</text>
   </g>
 </svg>
