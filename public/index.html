@@ -39,7 +39,7 @@
   <meta name="apple-mobile-web-app-title" content="BookFlix" />
   <meta name="mobile-web-app-capable" content="yes" />
 
-  <link rel="manifest" href="/manifest.json?v=46" />
+  <link rel="manifest" href="/manifest.json?v=47" />
   <link rel="icon" type="image/svg+xml" href="/logo.svg?v=20" />
   <link rel="icon" type="image/x-icon" href="/favicon.ico?v=20" />
   <link rel="shortcut icon" href="/favicon.ico?v=20" />
@@ -56,8 +56,8 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js" defer></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js" defer></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js" defer></script>
-  <script src="/firebase-config.js?v=46" defer></script>
-  <link rel="stylesheet" href="/styles.css?v=46" />
+  <script src="/firebase-config.js?v=47" defer></script>
+  <link rel="stylesheet" href="/styles.css?v=47" />
 
   <!-- Structured Data (JSON-LD): Organization, WebSite (SearchAction), WebApplication -->
   <script type="application/ld+json">
@@ -144,13 +144,6 @@
           <span class="start-brand-title"><span class="brand-word-book">BOOK</span><span class="brand-word-flix">FLIX</span></span>
           <span class="start-brand-sub">DIGITAL STREAMING LIBRARY</span>
         </div>
-      </div>
-
-      <div class="start-page-actions">
-        <!-- Guest Pass Quick Action -->
-        <button type="button" class="start-pill-btn start-guest-pill" id="startPageGuestTopBtn">
-          <span>Explore as Guest</span>
-        </button>
       </div>
     </header>
 
@@ -288,15 +281,6 @@
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
               </button>
             </form>
-
-            <!-- Divider: Guest Access -->
-            <div class="start-guest-divider">
-              <span>EXPLORE WITHOUT LOGIN</span>
-            </div>
-
-            <button type="button" class="start-guest-btn" id="startContinueGuestBtn">
-              <span>Continue as Guest Reader</span>
-            </button>
 
             <!-- Card Footer: Security & Sync -->
             <div class="start-card-footer">
@@ -2029,8 +2013,6 @@
           </div>
           <div class="auth-error-msg hidden" id="signInError"></div>
           <button type="submit" class="btn btn-primary auth-submit-btn" id="signInSubmitBtn">Sign In to BookFlix</button>
-          <div class="auth-divider"><span>EXPLORE WITHOUT LOGIN</span></div>
-          <button type="button" class="btn btn-secondary auth-guest-btn" id="guestContinueBtn">Continue as Guest Reader</button>
         </form>
 
         <!-- 2. Create Account Form -->
@@ -2141,10 +2123,10 @@
                 <strong class="account-display-name" id="profileDisplayName">Reader</strong>
                 <span class="account-provider-tag" id="profileAuthBadge">
                   <span class="provider-dot"></span>
-                  <span id="profileAuthBadgeText">Guest Session</span>
+                  <span id="profileAuthBadgeText">Reader Session</span>
                 </span>
               </div>
-              <div class="account-email" id="profileEmail">guest@bookflix.local</div>
+              <div class="account-email" id="profileEmail">reader@bookflix.local</div>
             </div>
           </div>
           <div class="account-sync-row">
@@ -2388,6 +2370,6 @@
     </div>
   </div>
 
-  <script src="/app.js?v=46"></script>
+  <script src="/app.js?v=47"></script>
 </body>
 </html>

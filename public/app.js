@@ -4235,7 +4235,7 @@ function openProfileModal(user) {
     } else if (user.provider === 'email') {
       profileAuthBadgeText.textContent = 'Email & Password';
     } else {
-      profileAuthBadgeText.textContent = 'Guest Session';
+      profileAuthBadgeText.textContent = 'Local Reader Vault';
     }
   }
 
@@ -4362,31 +4362,6 @@ function setupStartingPageAuth() {
 
   // Google Sign-In button on starting page
   document.getElementById('startGoogleSignInBtn')?.addEventListener('click', handleGoogleSignIn);
-
-  // Guest buttons
-  const guestHandler = () => {
-    const ageConfirmed = Boolean(document.getElementById('startAgeConfirmCheck')?.checked);
-    if (ageConfirmed) {
-      localStorage.setItem('bookflix_age_verified', 'true');
-    }
-    const guestUser = {
-      uid: 'guest_' + Date.now(),
-      email: 'guest@bookflix.local',
-      username: 'guest',
-      nickname: 'Guest Reader',
-      avatar: 'scholar',
-      provider: 'guest',
-      streak: 1,
-      createdAt: new Date().toISOString(),
-      lastLoginDate: new Date().toISOString(),
-      matureEnabled: ageConfirmed || localStorage.getItem('bookflix_age_verified') === 'true',
-      titlesRead: 0,
-    };
-    completeAuthentication(guestUser, 'Welcome to BookFlix! Enjoy open streaming.');
-  };
-
-  document.getElementById('startContinueGuestBtn')?.addEventListener('click', guestHandler);
-  document.getElementById('startPageGuestTopBtn')?.addEventListener('click', guestHandler);
 
   // Forgot password on starting page
   document.getElementById('startForgotPwdBtn')?.addEventListener('click', () => {
@@ -4758,7 +4733,7 @@ function initAuthSystem() {
   document.getElementById('closeAuthModalBtn')?.addEventListener('click', () => {
     const user = getActiveUser();
     if (!user) {
-      showAppToast('Please sign in or select Continue as Guest to enter BookFlix.');
+      showAppToast('Please sign in or create an account to enter BookFlix.');
       return;
     }
     document.documentElement.classList.remove('auth-required-gateway');
@@ -4766,24 +4741,6 @@ function initAuthSystem() {
   });
   document.getElementById('closeProfileModalBtn')?.addEventListener('click', () => {
     document.getElementById('userProfileModal')?.classList.add('hidden');
-  });
-
-  // Guest Continue
-  document.getElementById('guestContinueBtn')?.addEventListener('click', () => {
-    const guestUser = {
-      uid: 'guest_' + Date.now(),
-      email: 'guest@bookflix.local',
-      username: 'guest',
-      nickname: 'Guest Reader',
-      avatar: 'scholar',
-      provider: 'guest',
-      streak: 1,
-      createdAt: new Date().toISOString(),
-      lastLoginDate: new Date().toISOString(),
-      matureEnabled: localStorage.getItem('bookflix_age_verified') === 'true',
-      titlesRead: state.history?.length || 0,
-    };
-    completeAuthentication(guestUser, 'Welcome, Guest Reader! All library streaming features unlocked.');
   });
 
   // Avatar Picker
