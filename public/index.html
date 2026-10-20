@@ -39,7 +39,7 @@
   <meta name="apple-mobile-web-app-title" content="BookFlix" />
   <meta name="mobile-web-app-capable" content="yes" />
 
-  <link rel="manifest" href="/manifest.json?v=41" />
+  <link rel="manifest" href="/manifest.json?v=42" />
   <link rel="icon" type="image/svg+xml" href="/logo.svg?v=20" />
   <link rel="icon" type="image/x-icon" href="/favicon.ico?v=20" />
   <link rel="shortcut icon" href="/favicon.ico?v=20" />
@@ -56,7 +56,8 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js" defer></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js" defer></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js" defer></script>
-  <link rel="stylesheet" href="/styles.css?v=41" />
+  <script src="/firebase-config.js?v=42" defer></script>
+  <link rel="stylesheet" href="/styles.css?v=42" />
 
   <!-- Structured Data (JSON-LD): Organization, WebSite (SearchAction), WebApplication -->
   <script type="application/ld+json">
@@ -121,6 +122,191 @@
     <div class="ambient-orb orb-1"></div>
     <div class="ambient-orb orb-2"></div>
     <div class="ambient-orb orb-3"></div>
+  </div>
+
+  <!-- ========================================================================
+       DEDICATED FULL-SCREEN STARTING GATEWAY PAGE (REPLACES POPUP DIALOG)
+  ========================================================================= -->
+  <div id="dedicatedStartingPage" class="dedicated-starting-page" role="region" aria-label="Welcome and Sign In">
+    <!-- Ambient Matte Background Glow -->
+    <div class="start-page-ambient" aria-hidden="true">
+      <div class="start-orb start-orb-1"></div>
+      <div class="start-orb start-orb-2"></div>
+    </div>
+
+    <!-- Starting Page Header -->
+    <header class="start-page-header">
+      <div class="start-page-brand">
+        <div class="start-logo-mark">
+          <img src="/logo.svg?v=20" alt="BookFlix" class="brand-logo-svg" />
+        </div>
+        <div class="start-brand-lockup">
+          <span class="start-brand-title"><span class="brand-word-book">BOOK</span><span class="brand-word-flix">FLIX</span></span>
+          <span class="start-brand-sub">DIGITAL STREAMING LIBRARY</span>
+        </div>
+      </div>
+
+      <div class="start-page-actions">
+        <!-- Firestore Connection Pill Button -->
+        <button type="button" class="start-pill-btn start-firestore-pill" id="startPageFirestoreBtn" title="Connect or inspect Google Cloud Firestore &amp; Firebase">
+          <span class="start-pill-status-dot" id="startFirestoreDot"></span>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/><path d="M12 12v6"/><path d="m15 15-3-3-3 3"/></svg>
+          <span id="startFirestorePillLabel">Cloud Firestore: Connect Project</span>
+        </button>
+
+        <!-- Guest Pass Quick Action -->
+        <button type="button" class="start-pill-btn start-guest-pill" id="startPageGuestTopBtn">
+          <span>Explore as Guest</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Starting Page Main Hero & Gateway Grid -->
+    <main class="start-page-main">
+      <div class="start-page-container">
+        <!-- Left Showcase Column -->
+        <div class="start-hero-col">
+          <div class="start-badge-pill">
+            <span class="pulse-indicator"></span>
+            <span>NEXT-GEN STREAMING ARCHITECTURE</span>
+          </div>
+
+          <h1 class="start-hero-headline">
+            Unlimited Comics, Manga, and Books.
+          </h1>
+
+          <p class="start-hero-desc">
+            Stream over 50,000+ open-access and public domain titles across 28 curated catalogs with instant full-screen reading, zero ads, offline PWA caching, and real-time Cloud Firestore synchronization.
+          </p>
+
+          <!-- 3 Value Pillars (Zero Emojis, Clean SVG Icons) -->
+          <div class="start-features-grid">
+            <div class="start-feature-card">
+              <div class="start-feat-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+              </div>
+              <div class="start-feat-text">
+                <span class="start-feat-title">28 Curated Catalogs</span>
+                <span class="start-feat-desc">Marvel, DC, Shonen Manga, Classic Literature, Tech &amp; Adult 18+</span>
+              </div>
+            </div>
+
+            <div class="start-feature-card">
+              <div class="start-feat-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+              </div>
+              <div class="start-feat-text">
+                <span class="start-feat-title">Full-Screen Reader</span>
+                <span class="start-feat-desc">Continuous vertical scroll, two-page spread &amp; immersive controls</span>
+              </div>
+            </div>
+
+            <div class="start-feature-card">
+              <div class="start-feat-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/><path d="M12 12v6"/><path d="m15 15-3-3-3 3"/></svg>
+              </div>
+              <div class="start-feat-text">
+                <span class="start-feat-title">Firestore Cloud Sync</span>
+                <span class="start-feat-desc">Sync bookmarks, history, and reading streaks across all your devices</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Dedicated Auth Card -->
+        <div class="start-auth-col">
+          <div class="start-auth-card">
+            <div class="start-card-header">
+              <div class="start-card-avatar">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+              </div>
+              <div class="start-card-title-group">
+                <h2 class="start-card-title" id="startCardTitle">Sign In to BookFlix</h2>
+                <span class="start-card-subtitle" id="startCardSubtitle">Universal Streaming Reader &amp; Cloud Sync</span>
+              </div>
+            </div>
+
+            <!-- Google Sign-In Action -->
+            <button type="button" class="start-google-btn" id="startGoogleSignInBtn">
+              <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#EA4335" d="M12 5c1.6 0 3 .6 4.1 1.7l3.1-3.1C17.3 1.8 14.8 1 12 1 7.5 1 3.7 3.6 1.9 7.3l3.7 2.9C6.5 7.4 9 5 12 5z"/><path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.7-.2-2.3H12v4.6h6.5c-.3 1.5-1.1 2.8-2.4 3.7l3.7 2.9c2.2-2 3.7-5 3.7-8.9z"/><path fill="#FBBC05" d="M5.6 14.8c-.2-.7-.4-1.5-.4-2.3s.2-1.6.4-2.3L1.9 7.3C.7 9.7 0 12.3 0 15.2s.7 5.5 1.9 7.9l3.7-2.9z"/><path fill="#34A853" d="M12 23.5c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3 0-5.5-2-6.4-4.8L1.9 16.9C3.7 20.6 7.5 23.5 12 23.5z"/></svg>
+              <span>Continue with Google</span>
+            </button>
+
+            <!-- Divider -->
+            <div class="start-auth-divider">
+              <span>OR CONTINUE WITH EMAIL</span>
+            </div>
+
+            <!-- Mode Tabs: Sign In / Create Account -->
+            <div class="start-mode-tabs" role="tablist">
+              <button type="button" class="start-mode-tab active" id="startTabSignIn">Sign In</button>
+              <button type="button" class="start-mode-tab" id="startTabSignUp">Create Account</button>
+            </div>
+
+            <!-- Feedback Alert -->
+            <div class="form-feedback hidden" id="startAuthFeedback"></div>
+
+            <!-- Auth Form -->
+            <form id="startAuthForm" autocomplete="on">
+              <!-- Nickname for Sign Up -->
+              <div class="start-field-group hidden" id="startNameGroup">
+                <label for="startNameInput" class="start-field-label">YOUR NICKNAME</label>
+                <div class="start-input-wrap">
+                  <svg class="start-input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                  <input type="text" id="startNameInput" class="start-input" placeholder="e.g. Neo Reader" />
+                </div>
+              </div>
+
+              <!-- Email or Username -->
+              <div class="start-field-group">
+                <label for="startEmailInput" class="start-field-label">EMAIL OR USERNAME</label>
+                <div class="start-input-wrap">
+                  <svg class="start-input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                  <input type="text" id="startEmailInput" class="start-input" placeholder="reader@domain.com or username" required />
+                </div>
+              </div>
+
+              <!-- Password -->
+              <div class="start-field-group">
+                <div class="start-label-row">
+                  <label for="startPasswordInput" class="start-field-label">PASSWORD</label>
+                  <button type="button" class="start-forgot-link" id="startForgotPwdBtn">Forgot password?</button>
+                </div>
+                <div class="start-input-wrap">
+                  <svg class="start-input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                  <input type="password" id="startPasswordInput" class="start-input" placeholder="Enter password" required />
+                  <button type="button" class="start-pwd-toggle-btn" id="startPwdToggleBtn" title="Toggle password visibility">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Submit Button -->
+              <button type="submit" class="start-submit-btn" id="startSubmitBtn">
+                <span id="startSubmitText">Sign In to BookFlix</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </button>
+            </form>
+
+            <!-- Divider: Guest Access -->
+            <div class="start-guest-divider">
+              <span>EXPLORE WITHOUT LOGIN</span>
+            </div>
+
+            <button type="button" class="start-guest-btn" id="startContinueGuestBtn">
+              <span>Continue as Guest Reader</span>
+            </button>
+
+            <!-- Card Footer: Firestore link -->
+            <div class="start-card-footer">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>
+              <span>Cloud Sync: Stored in Firebase &amp; Local Vault.</span>
+              <button type="button" class="start-config-link" id="startOpenFirestoreConfigBtn">Connect Firestore</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
   </div>
 
   <!-- ========================================================================
@@ -1972,6 +2158,10 @@
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
               <span>Sync Cloud</span>
             </button>
+            <button type="button" class="btn btn-secondary btn-xs" id="profileFirestoreSettingsBtn" title="Configure Cloud Firestore">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/><path d="M12 12v6"/><path d="m15 15-3-3-3 3"/></svg>
+              <span>Configure Firestore</span>
+            </button>
           </div>
         </div>
 
@@ -2047,8 +2237,121 @@
   </div>
 
   <!-- ========================================================================
-       18+ AGE GATE VERIFICATION MODAL
+       FIRESTORE & FIREBASE CLOUD SYNC CONFIGURATION MODAL
   ========================================================================= -->
+  <div class="modal-overlay hidden" id="firestoreConfigModal" role="dialog" aria-modal="true" aria-labelledby="firestoreModalHeading">
+    <div class="liquid-clay-dialog max-w-560 firestore-dialog">
+      <div class="dialog-header">
+        <div class="dialog-title-lockup">
+          <div class="dialog-icon-bubble firestore-icon-bubble">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/>
+              <path d="M12 12v6"/>
+              <path d="m15 15-3-3-3 3"/>
+            </svg>
+          </div>
+          <div>
+            <h3 class="dialog-title" id="firestoreModalHeading">Firebase &amp; Cloud Firestore</h3>
+            <span class="dialog-subtitle">Live Cloud Database &amp; Auth Configuration</span>
+          </div>
+        </div>
+        <button type="button" class="btn-close" id="closeFirestoreModalBtn" title="Close" aria-label="Close">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+
+      <div class="dialog-body">
+        <!-- Live Connection Status Lockup -->
+        <div class="firestore-status-card" id="firestoreStatusCard">
+          <div class="firestore-status-top">
+            <div class="status-indicator-pill">
+              <span class="status-dot-circle" id="firestoreStatusDot"></span>
+              <span class="status-label-text" id="firestoreStatusLabel">Status: Checking...</span>
+            </div>
+            <span class="firestore-sdk-badge">Firebase Web v10 SDK</span>
+          </div>
+          <div class="firestore-status-details">
+            <div class="detail-row">
+              <span class="detail-name">Project ID:</span>
+              <strong class="detail-value" id="firestoreProjectIdVal">Not Connected</strong>
+            </div>
+            <div class="detail-row">
+              <span class="detail-name">Auth Domain:</span>
+              <span class="detail-value" id="firestoreAuthDomainVal">-</span>
+            </div>
+            <div class="detail-row">
+              <span class="detail-name">Firestore Collections:</span>
+              <span class="detail-value">readers, bookmarks, reading_history</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick 1-Click Template for Exammind / BookFlix -->
+        <div class="firestore-presets-banner">
+          <div class="preset-label-text">
+            <span>Detected Firebase project from your console: <strong>exammind-074518</strong></span>
+          </div>
+          <button type="button" class="btn btn-secondary btn-xs" id="fillExammindPresetBtn" title="Auto-fill with your Exammind project">
+            <span>Use Exammind Template</span>
+          </button>
+        </div>
+
+        <!-- Paste Web Config Area -->
+        <div class="firestore-form-group">
+          <label for="firestoreConfigInput" class="dialog-label">
+            PASTE FIREBASE WEB APP CONFIG
+          </label>
+          <span class="dialog-hint">
+            From Firebase Console &gt; Project Settings &gt; General &gt; Your apps &gt; Web app config:
+          </span>
+          <textarea id="firestoreConfigInput" class="dialog-textarea firestore-textarea" rows="6" placeholder='const firebaseConfig = {
+  apiKey: "AIzaSy...",
+  authDomain: "your-project.firebaseapp.com",
+  projectId: "your-project-id",
+  storageBucket: "your-project.appspot.com",
+  messagingSenderId: "...",
+  appId: "..."
+};'></textarea>
+        </div>
+
+        <!-- Live Validation Alert -->
+        <div class="form-feedback hidden" id="firestoreConfigFeedback"></div>
+
+        <!-- Buttons Row -->
+        <div class="dialog-action-buttons">
+          <button type="button" class="btn btn-primary" id="saveFirestoreConfigBtn">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+            <span>Save &amp; Connect Firestore</span>
+          </button>
+
+          <button type="button" class="btn btn-secondary" id="testFirestoreBtn">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            <span>Test Read / Write</span>
+          </button>
+
+          <button type="button" class="btn btn-outline" id="instantDemoGoogleBtn" title="Instant Google Demo Reader pass">
+            <svg width="15" height="15" viewBox="0 0 24 24"><path fill="#EA4335" d="M12 5c1.6 0 3 .6 4.1 1.7l3.1-3.1C17.3 1.8 14.8 1 12 1 7.5 1 3.7 3.6 1.9 7.3l3.7 2.9C6.5 7.4 9 5 12 5z"/><path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.7-.2-2.3H12v4.6h6.5c-.3 1.5-1.1 2.8-2.4 3.7l3.7 2.9c2.2-2 3.7-5 3.7-8.9z"/><path fill="#FBBC05" d="M5.6 14.8c-.2-.7-.4-1.5-.4-2.3s.2-1.6.4-2.3L1.9 7.3C.7 9.7 0 12.3 0 15.2s.7 5.5 1.9 7.9l3.7-2.9z"/><path fill="#34A853" d="M12 23.5c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3 0-5.5-2-6.4-4.8L1.9 16.9C3.7 20.6 7.5 23.5 12 23.5z"/></svg>
+            <span>Instant Google Demo Pass</span>
+          </button>
+        </div>
+
+        <!-- 5-Step Instructions Accordion / Guide -->
+        <div class="firestore-guide-box">
+          <div class="guide-title-row">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+            <strong>How to get your config in 60 seconds:</strong>
+          </div>
+          <ol class="firestore-steps-list">
+            <li>Open <a href="https://console.firebase.google.com/" target="_blank" rel="noopener noreferrer">console.firebase.google.com</a> and click your project (<strong>Exammind</strong> or create <strong>BookFlix</strong>).</li>
+            <li>Click <strong>Project Settings</strong> (gear icon) &gt; <strong>General</strong> &gt; scroll down to <strong>Your apps</strong> and click the Web <strong>&lt;/&gt;</strong> icon.</li>
+            <li>Copy the <code>firebaseConfig</code> code snippet and paste it into the box above.</li>
+            <li>Under <strong>Authentication</strong> &gt; <strong>Sign-in method</strong>, enable <strong>Google</strong> and <strong>Email/Password</strong>.</li>
+            <li>Under <strong>Firestore Database</strong>, click <strong>Create database</strong> (choose Test mode for immediate access).</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="modal-overlay hidden" id="ageGateModal" role="dialog" aria-modal="true" aria-labelledby="ageGateTitle">
     <div class="liquid-clay-dialog max-w-460 age-gate-dialog">
       <div class="dialog-header">
@@ -2104,6 +2407,6 @@
     </div>
   </div>
 
-  <script src="/app.js?v=41"></script>
+  <script src="/app.js?v=42"></script>
 </body>
 </html>

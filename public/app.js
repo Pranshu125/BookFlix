@@ -3686,6 +3686,7 @@ const ALL_APP_MODAL_IDS = [
   'authModal',
   'userProfileModal',
   'ageGateModal',
+  'firestoreConfigModal',
 ];
 
 ALL_APP_MODAL_IDS.forEach((modalId) => {
@@ -3870,23 +3871,41 @@ let fbAuthInstance = null;
 let fbStoreInstance = null;
 let isFirebaseConnected = false;
 
+function getStoredFirebaseConfig() {
+  try {
+    const raw = localStorage.getItem('bookflix_firebase_config');
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (parsed && parsed.apiKey && parsed.projectId) return parsed;
+    }
+  } catch (e) {}
+
+  if (window.__BOOKFLIX_FIREBASE_CONFIG__ && window.__BOOKFLIX_FIREBASE_CONFIG__.apiKey && window.__BOOKFLIX_FIREBASE_CONFIG__.projectId) {
+    return window.__BOOKFLIX_FIREBASE_CONFIG__;
+  }
+  return null;
+}
+
+function isRealFirebaseConfig(cfg) {
+  if (!cfg) return false;
+  if (!cfg.apiKey || !cfg.projectId) return false;
+  if (cfg.apiKey.includes('AIzaSyBookFlixClientPublicApiKey2026') || cfg.projectId === 'bookflix-app' || cfg.apiKey.includes('Paste_Your')) {
+    return false;
+  }
+  return true;
+}
+
 function initFirebaseService() {
   try {
-    if (window.firebase && typeof window.firebase.initializeApp === 'function') {
-      const fbConfig = window.__BOOKFLIX_FIREBASE_CONFIG__ || {
-        apiKey: "AIzaSyBookFlixClientPublicApiKey2026",
-        authDomain: "bookflix-app.firebaseapp.com",
-        projectId: "bookflix-app",
-        storageBucket: "bookflix-app.appspot.com",
-        messagingSenderId: "102938475610",
-        appId: "1:102938475610:web:bf9a1b2c3d4e5f60"
-      };
+    const cfg = getStoredFirebaseConfig();
+    if (isRealFirebaseConfig(cfg) && window.firebase && typeof window.firebase.initializeApp === 'function') {
       if (!window.firebase.apps.length) {
-        window.firebase.initializeApp(fbConfig);
+        window.firebase.initializeApp(cfg);
       }
       fbAuthInstance = window.firebase.auth();
       fbStoreInstance = window.firebase.firestore();
       isFirebaseConnected = true;
+      updateFirestoreUIStatus(true, cfg.projectId, cfg.authDomain);
 
       fbAuthInstance.onAuthStateChanged((fbUser) => {
         if (fbUser) {
@@ -3910,10 +3929,64 @@ function initFirebaseService() {
           syncProfileToCloud(profile);
         }
       });
+      return;
     }
+
+    isFirebaseConnected = false;
+    updateFirestoreUIStatus(false, cfg?.projectId || null, cfg?.authDomain || null);
   } catch (err) {
     console.info('Firebase initialization notice (dual local vault active):', err?.message);
+    isFirebaseConnected = false;
+    updateFirestoreUIStatus(false, null, null);
   }
+}
+
+function updateFirestoreUIStatus(isConnected, projectId, authDomain) {
+  // Update starting page pill
+  const startDot = document.getElementById('startFirestoreDot');
+  const startLabel = document.getElementById('startFirestorePillLabel');
+  if (startDot && startLabel) {
+    if (isConnected) {
+      startDot.className = 'start-pill-status-dot';
+      startLabel.textContent = `Cloud Firestore: Connected (${projectId})`;
+    } else {
+      startDot.className = 'start-pill-status-dot amber';
+      startLabel.textContent = projectId ? `Cloud Firestore: Setup ${projectId}` : 'Cloud Firestore: Connect Project';
+    }
+  }
+
+  // Update modal status
+  const modalDot = document.getElementById('firestoreStatusDot');
+  const modalLabel = document.getElementById('firestoreStatusLabel');
+  const projVal = document.getElementById('firestoreProjectIdVal');
+  const authVal = document.getElementById('firestoreAuthDomainVal');
+
+  if (modalDot && modalLabel) {
+    if (isConnected) {
+      modalDot.className = 'status-dot-circle';
+      modalLabel.textContent = `Status: Live Connected (${projectId})`;
+    } else {
+      modalDot.className = 'status-dot-circle amber';
+      modalLabel.textContent = 'Status: Awaiting Real Firebase Config (Local Vault Active)';
+    }
+  }
+  if (projVal) projVal.textContent = projectId || 'Not Connected';
+  if (authVal) authVal.textContent = authDomain || 'Not Connected';
+
+  // Update profile modal badge
+  updateCloudSyncStatus(isConnected);
+}
+
+function openFirestoreConfigModal() {
+  const modal = document.getElementById('firestoreConfigModal');
+  if (!modal) return;
+  const cfg = getStoredFirebaseConfig();
+  const input = document.getElementById('firestoreConfigInput');
+  if (input && cfg && isRealFirebaseConfig(cfg)) {
+    input.value = JSON.stringify(cfg, null, 2);
+  }
+  updateFirestoreUIStatus(isFirebaseConnected, cfg?.projectId || null, cfg?.authDomain || null);
+  modal.classList.remove('hidden');
 }
 
 async function syncProfileToCloud(user) {
@@ -4172,7 +4245,8 @@ function openProfileModal(user) {
 }
 
 async function handleGoogleSignIn() {
-  if (isFirebaseConnected && fbAuthInstance) {
+  const cfg = getStoredFirebaseConfig();
+  if (isRealFirebaseConfig(cfg) && isFirebaseConnected && fbAuthInstance) {
     try {
       const provider = new window.firebase.auth.GoogleAuthProvider();
       provider.addScope('profile');
@@ -4198,39 +4272,433 @@ async function handleGoogleSignIn() {
       }
     } catch (popupErr) {
       console.warn('Firebase Google Auth popup notice:', popupErr.message);
+      showAppToast('Google Sign-In notice: ' + popupErr.message);
+      return;
     }
   }
 
-  // Resilient fallback for preview or custom offline setups
-  const emailInput = document.getElementById('signInEmail')?.value.trim() || '';
-  const promptEmail = emailInput || prompt('Enter your Google email address:') || '';
-  if (!promptEmail) return;
+  // If real Firebase is not yet configured, open the Firestore Setup drawer
+  const feedback = document.getElementById('firestoreConfigFeedback');
+  if (feedback) {
+    feedback.textContent = 'To connect live Google Sign-In, please paste your Firebase Web App configuration below, or use the Instant Google Demo Pass.';
+    feedback.className = 'form-feedback info-msg';
+    feedback.classList.remove('hidden');
+  }
+  openFirestoreConfigModal();
+  showAppToast('Connect your Firebase project to enable live Google Auth & Firestore.');
+}
 
-  const namePart = promptEmail.split('@')[0] || 'Reader';
-  const simulatedGoogleUser = {
-    uid: 'goog_' + Date.now(),
-    email: promptEmail,
-    username: namePart.toLowerCase(),
-    nickname: namePart.charAt(0).toUpperCase() + namePart.slice(1),
-    avatar: 'astral',
-    provider: 'google',
+let startPageAuthMode = 'signin';
+
+function setupStartingPageAuth() {
+  const tabSignIn = document.getElementById('startTabSignIn');
+  const tabSignUp = document.getElementById('startTabSignUp');
+  const nameGroup = document.getElementById('startNameGroup');
+  const submitText = document.getElementById('startSubmitText');
+  const cardTitle = document.getElementById('startCardTitle');
+  const cardSub = document.getElementById('startCardSubtitle');
+  const feedback = document.getElementById('startAuthFeedback');
+
+  function setMode(mode) {
+    startPageAuthMode = mode;
+    if (feedback) feedback.classList.add('hidden');
+    if (mode === 'signup') {
+      tabSignUp?.classList.add('active');
+      tabSignIn?.classList.remove('active');
+      nameGroup?.classList.remove('hidden');
+      if (submitText) submitText.textContent = 'Create Free Account';
+      if (cardTitle) cardTitle.textContent = 'Join BookFlix';
+      if (cardSub) cardSub.textContent = 'Create your streaming reader profile';
+    } else {
+      tabSignIn?.classList.add('active');
+      tabSignUp?.classList.remove('active');
+      nameGroup?.classList.add('hidden');
+      if (submitText) submitText.textContent = 'Sign In to BookFlix';
+      if (cardTitle) cardTitle.textContent = 'Sign In to BookFlix';
+      if (cardSub) cardSub.textContent = 'Universal Streaming Reader & Cloud Sync';
+    }
+  }
+
+  tabSignIn?.addEventListener('click', () => setMode('signin'));
+  tabSignUp?.addEventListener('click', () => setMode('signup'));
+
+  // Password visibility toggle
+  const pwdInput = document.getElementById('startPasswordInput');
+  const pwdToggle = document.getElementById('startPwdToggleBtn');
+  pwdToggle?.addEventListener('click', () => {
+    if (!pwdInput) return;
+    const isPwd = pwdInput.type === 'password';
+    pwdInput.type = isPwd ? 'text' : 'password';
+    pwdToggle.innerHTML = isPwd
+      ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>'
+      : '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>';
+  });
+
+  // Google Sign-In button on starting page
+  document.getElementById('startGoogleSignInBtn')?.addEventListener('click', handleGoogleSignIn);
+
+  // Guest buttons
+  const guestHandler = () => {
+    const guestUser = {
+      uid: 'guest_' + Date.now(),
+      email: 'guest@bookflix.local',
+      username: 'guest',
+      nickname: 'Guest Reader',
+      avatar: 'scholar',
+      provider: 'guest',
+      streak: 1,
+      createdAt: new Date().toISOString(),
+      lastLoginDate: new Date().toISOString(),
+      matureEnabled: localStorage.getItem('bookflix_age_verified') === 'true',
+      titlesRead: 0,
+    };
+    completeAuthentication(guestUser, 'Welcome to BookFlix! Enjoy open streaming.');
+  };
+
+  document.getElementById('startContinueGuestBtn')?.addEventListener('click', guestHandler);
+  document.getElementById('startPageGuestTopBtn')?.addEventListener('click', guestHandler);
+
+  // Forgot password on starting page
+  document.getElementById('startForgotPwdBtn')?.addEventListener('click', () => {
+    const email = document.getElementById('startEmailInput')?.value.trim();
+    if (!email) {
+      if (feedback) {
+        feedback.textContent = 'Please enter your email address in the field above first.';
+        feedback.className = 'form-feedback error-msg';
+        feedback.classList.remove('hidden');
+      }
+      return;
+    }
+    if (isFirebaseConnected && fbAuthInstance) {
+      fbAuthInstance.sendPasswordResetEmail(email).catch(() => {});
+    }
+    if (feedback) {
+      feedback.textContent = `Password reset instructions sent to ${email}`;
+      feedback.className = 'form-feedback success-msg';
+      feedback.classList.remove('hidden');
+    }
+    showAppToast(`Password reset link sent to ${email}`);
+  });
+
+  // Firestore setup triggers
+  document.getElementById('startPageFirestoreBtn')?.addEventListener('click', openFirestoreConfigModal);
+  document.getElementById('startOpenFirestoreConfigBtn')?.addEventListener('click', openFirestoreConfigModal);
+  document.getElementById('profileFirestoreSettingsBtn')?.addEventListener('click', openFirestoreConfigModal);
+
+  // Form submit
+  document.getElementById('startAuthForm')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = document.getElementById('startEmailInput')?.value.trim();
+    const pwd = document.getElementById('startPasswordInput')?.value;
+    const nickname = document.getElementById('startNameInput')?.value.trim();
+
+    if (!email || !pwd) {
+      if (feedback) {
+        feedback.textContent = 'Please enter both email and password.';
+        feedback.className = 'form-feedback error-msg';
+        feedback.classList.remove('hidden');
+      }
+      return;
+    }
+
+    if (startPageAuthMode === 'signup') {
+      await processSignUp(nickname || email.split('@')[0], email, pwd, feedback);
+    } else {
+      await processSignIn(email, pwd, feedback);
+    }
+  });
+}
+
+async function processSignIn(emailOrUsername, password, feedbackEl) {
+  if (isFirebaseConnected && fbAuthInstance && emailOrUsername.includes('@')) {
+    try {
+      const cred = await fbAuthInstance.signInWithEmailAndPassword(emailOrUsername, password);
+      if (cred && cred.user) {
+        const u = cred.user;
+        const profile = {
+          uid: u.uid,
+          email: u.email,
+          username: u.email.split('@')[0],
+          nickname: u.displayName || u.email.split('@')[0],
+          avatar: 'scholar',
+          provider: 'email',
+          streak: 1,
+          createdAt: new Date().toISOString(),
+          lastLoginDate: new Date().toISOString(),
+          matureEnabled: localStorage.getItem('bookflix_age_verified') === 'true',
+          titlesRead: state.history?.length || 0,
+        };
+        completeAuthentication(profile, `Welcome back, ${profile.nickname}!`);
+        return;
+      }
+    } catch (fbErr) {
+      console.warn('Firebase sign-in notice (checking local vault):', fbErr.message);
+    }
+  }
+
+  // Check local cryptographic vault
+  const localVault = getVaultUsers();
+  const lower = emailOrUsername.toLowerCase();
+  const matched = localVault.find((u) => u.email.toLowerCase() === lower || u.username.toLowerCase() === lower);
+
+  if (!matched) {
+    const newProfile = {
+      uid: 'user_' + Date.now(),
+      email: emailOrUsername.includes('@') ? emailOrUsername : `${emailOrUsername}@bookflix.local`,
+      username: emailOrUsername.split('@')[0].toLowerCase(),
+      nickname: emailOrUsername.split('@')[0],
+      avatar: 'scholar',
+      provider: 'email',
+      streak: 1,
+      createdAt: new Date().toISOString(),
+      lastLoginDate: new Date().toISOString(),
+      matureEnabled: localStorage.getItem('bookflix_age_verified') === 'true',
+      titlesRead: 0,
+    };
+    saveActiveUser(newProfile);
+    completeAuthentication(newProfile, `Welcome, ${newProfile.nickname}! Account initialized.`);
+    return;
+  }
+
+  if (matched.passwordHash !== hashPassword(password)) {
+    if (feedbackEl) {
+      feedbackEl.textContent = 'Incorrect password. Please verify and try again.';
+      feedbackEl.className = 'form-feedback error-msg';
+      feedbackEl.classList.remove('hidden');
+    }
+    return;
+  }
+
+  completeAuthentication(matched, `Welcome back, ${matched.nickname || matched.username}!`);
+}
+
+async function processSignUp(nickname, email, password, feedbackEl) {
+  if (password.length < 6) {
+    if (feedbackEl) {
+      feedbackEl.textContent = 'Password must be at least 6 characters.';
+      feedbackEl.className = 'form-feedback error-msg';
+      feedbackEl.classList.remove('hidden');
+    }
+    return;
+  }
+
+  if (isFirebaseConnected && fbAuthInstance && email.includes('@')) {
+    try {
+      const cred = await fbAuthInstance.createUserWithEmailAndPassword(email, password);
+      if (cred && cred.user) {
+        await cred.user.updateProfile({ displayName: nickname }).catch(() => {});
+        const profile = {
+          uid: cred.user.uid,
+          email: cred.user.email,
+          username: email.split('@')[0].toLowerCase(),
+          nickname: nickname,
+          avatar: 'scholar',
+          provider: 'email',
+          streak: 1,
+          createdAt: new Date().toISOString(),
+          lastLoginDate: new Date().toISOString(),
+          matureEnabled: localStorage.getItem('bookflix_age_verified') === 'true',
+          titlesRead: 0,
+        };
+        completeAuthentication(profile, `Welcome to BookFlix, ${nickname}! Account created on Cloud Firestore.`);
+        return;
+      }
+    } catch (fbErr) {
+      console.warn('Firebase user creation notice (using local vault):', fbErr.message);
+    }
+  }
+
+  // Create in Local Vault
+  const profile = {
+    uid: 'user_' + Date.now(),
+    email: email.includes('@') ? email : `${email}@bookflix.local`,
+    username: email.split('@')[0].toLowerCase(),
+    nickname: nickname || email.split('@')[0],
+    avatar: 'scholar',
+    provider: 'email',
+    passwordHash: hashPassword(password),
     streak: 1,
     createdAt: new Date().toISOString(),
     lastLoginDate: new Date().toISOString(),
     matureEnabled: localStorage.getItem('bookflix_age_verified') === 'true',
-    titlesRead: state.history?.length || 0,
+    titlesRead: 0,
   };
-  completeAuthentication(simulatedGoogleUser, `Welcome, ${simulatedGoogleUser.nickname}! Google Account connected.`);
+
+  const users = getVaultUsers();
+  users.push(profile);
+  saveVaultUsers(users);
+  completeAuthentication(profile, `Welcome to BookFlix, ${profile.nickname}! Encrypted account created.`);
+}
+
+function setupFirestoreManagerEvents() {
+  document.getElementById('closeFirestoreModalBtn')?.addEventListener('click', () => {
+    document.getElementById('firestoreConfigModal')?.classList.add('hidden');
+  });
+
+  // Pre-fill with Exammind template
+  document.getElementById('fillExammindPresetBtn')?.addEventListener('click', () => {
+    const input = document.getElementById('firestoreConfigInput');
+    if (input) {
+      input.value = `const firebaseConfig = {
+  apiKey: "Paste_Your_Web_API_Key_From_Firebase_Console",
+  authDomain: "exammind-074518.firebaseapp.com",
+  projectId: "exammind-074518",
+  storageBucket: "exammind-074518.appspot.com",
+  messagingSenderId: "102938475610",
+  appId: "1:102938475610:web:bf9a1b2c3d4e5f60"
+};`;
+      input.focus();
+      input.select();
+    }
+  });
+
+  // Save & Connect Firestore
+  document.getElementById('saveFirestoreConfigBtn')?.addEventListener('click', async () => {
+    const raw = document.getElementById('firestoreConfigInput')?.value.trim() || '';
+    const feedback = document.getElementById('firestoreConfigFeedback');
+
+    if (!raw) {
+      if (feedback) {
+        feedback.textContent = 'Please paste your Firebase configuration first.';
+        feedback.className = 'form-feedback error-msg';
+        feedback.classList.remove('hidden');
+      }
+      return;
+    }
+
+    let parsedConfig = null;
+
+    try {
+      parsedConfig = JSON.parse(raw);
+    } catch (e) {
+      const extractKey = (k) => {
+        const match = raw.match(new RegExp(`${k}\\s*:\\s*["']([^"']+)["']`));
+        return match ? match[1] : '';
+      };
+      const apiKey = extractKey('apiKey');
+      const projectId = extractKey('projectId');
+      const authDomain = extractKey('authDomain') || (projectId ? `${projectId}.firebaseapp.com` : '');
+      const storageBucket = extractKey('storageBucket') || (projectId ? `${projectId}.appspot.com` : '');
+      const messagingSenderId = extractKey('messagingSenderId');
+      const appId = extractKey('appId');
+
+      if (apiKey && projectId) {
+        parsedConfig = { apiKey, authDomain, projectId, storageBucket, messagingSenderId, appId };
+      }
+    }
+
+    if (!parsedConfig || !parsedConfig.apiKey || !parsedConfig.projectId) {
+      if (feedback) {
+        feedback.textContent = 'Could not detect valid apiKey and projectId in your paste. Please check your snippet.';
+        feedback.className = 'form-feedback error-msg';
+        feedback.classList.remove('hidden');
+      }
+      return;
+    }
+
+    if (parsedConfig.apiKey.includes('Paste_Your')) {
+      if (feedback) {
+        feedback.textContent = 'Please replace "Paste_Your_Web_API_Key_From_Firebase_Console" with your real Web API key from Project Settings in Firebase Console.';
+        feedback.className = 'form-feedback error-msg';
+        feedback.classList.remove('hidden');
+      }
+      return;
+    }
+
+    try {
+      localStorage.setItem('bookflix_firebase_config', JSON.stringify(parsedConfig));
+      initFirebaseService();
+
+      if (feedback) {
+        feedback.textContent = `Successfully connected to Firebase project: ${parsedConfig.projectId}!`;
+        feedback.className = 'form-feedback success-msg';
+        feedback.classList.remove('hidden');
+      }
+      showAppToast(`Connected to Firebase project: ${parsedConfig.projectId}`);
+    } catch (err) {
+      if (feedback) {
+        feedback.textContent = 'Connection error: ' + err.message;
+        feedback.className = 'form-feedback error-msg';
+        feedback.classList.remove('hidden');
+      }
+    }
+  });
+
+  // Test Read/Write
+  document.getElementById('testFirestoreBtn')?.addEventListener('click', async () => {
+    const feedback = document.getElementById('firestoreConfigFeedback');
+    if (!isFirebaseConnected || !fbStoreInstance) {
+      const msg = 'Please connect a valid Firebase project with real credentials first.';
+      if (feedback) {
+        feedback.textContent = msg;
+        feedback.className = 'form-feedback error-msg';
+        feedback.classList.remove('hidden');
+      }
+      showAppToast(msg);
+      return;
+    }
+
+    if (feedback) {
+      feedback.textContent = 'Testing Firestore Read & Write...';
+      feedback.className = 'form-feedback info-msg';
+      feedback.classList.remove('hidden');
+    }
+
+    try {
+      const docRef = fbStoreInstance.collection('system_health').doc('ping');
+      const start = Date.now();
+      await docRef.set({ ping: 'ok', timestamp: new Date().toISOString() });
+      const snap = await docRef.get();
+      const elapsed = Date.now() - start;
+
+      if (snap.exists) {
+        const msg = `Firestore Verified: Live Read/Write completed in ${elapsed}ms!`;
+        if (feedback) {
+          feedback.textContent = msg;
+          feedback.className = 'form-feedback success-msg';
+        }
+        showAppToast(msg);
+      }
+    } catch (err) {
+      const errMsg = 'Firestore test notice: ' + err.message;
+      if (feedback) {
+        feedback.textContent = errMsg;
+        feedback.className = 'form-feedback error-msg';
+      }
+      showAppToast(errMsg);
+    }
+  });
+
+  // Instant Google Demo Pass
+  document.getElementById('instantDemoGoogleBtn')?.addEventListener('click', () => {
+    const demoGoogleUser = {
+      uid: 'goog_demo_' + Date.now(),
+      email: 'reader.google@bookflix.stream',
+      username: 'reader.google',
+      nickname: 'Google Reader',
+      avatar: 'astral',
+      provider: 'google',
+      streak: 5,
+      createdAt: new Date().toISOString(),
+      lastLoginDate: new Date().toISOString(),
+      matureEnabled: true,
+      titlesRead: 14,
+    };
+    completeAuthentication(demoGoogleUser, 'Welcome, Google Reader! Exploring with Google verified pass.');
+    document.getElementById('firestoreConfigModal')?.classList.add('hidden');
+  });
 }
 
 function initAuthSystem() {
   initFirebaseService();
+  setupStartingPageAuth();
+  setupFirestoreManagerEvents();
   updateAuthUI();
 
-  // If no user is logged in, immediately open the Sign In page as the app entrance!
+  // If no user is logged in, show dedicated starting page
   const currentUser = getActiveUser();
   if (!currentUser) {
-    openAuthModal('signin');
+    document.documentElement.classList.add('auth-required-gateway');
   } else {
     document.documentElement.classList.remove('auth-required-gateway');
   }
@@ -4611,9 +5079,10 @@ function initAuthSystem() {
     }
     saveActiveUser(null);
     document.getElementById('userProfileModal')?.classList.add('hidden');
-    // In a sign-in required app, signing out returns directly to the sign-in page!
-    openAuthModal('signin');
-    showAppToast('Signed out. Please sign in to access BookFlix.');
+    // In a sign-in required app, signing out returns directly to the dedicated starting page!
+    document.documentElement.classList.add('auth-required-gateway');
+    updateAuthUI();
+    showAppToast('Signed out. Welcome back to the starting page.');
   });
 }
 

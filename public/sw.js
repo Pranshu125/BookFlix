@@ -1,11 +1,12 @@
-// BookFlix PWA Service Worker (v41 - Production Polish & Checklist Removal)
-const CACHE_NAME = 'bookflix-cache-v41';
+// BookFlix PWA Service Worker (v42 - Dedicated Starting Page & Firestore Hub)
+const CACHE_NAME = 'bookflix-cache-v42';
 const PRECACHE_ASSETS = [
   '/',
-  '/index.html?v=41',
-  '/styles.css?v=41',
-  '/app.js?v=41',
-  '/manifest.json?v=41',
+  '/index.html?v=42',
+  '/styles.css?v=42',
+  '/app.js?v=42',
+  '/firebase-config.js?v=42',
+  '/manifest.json?v=42',
   '/logo.svg?v=20',
   '/favicon.ico?v=20',
   '/favicon.svg?v=20',
