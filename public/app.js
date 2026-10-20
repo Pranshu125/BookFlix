@@ -1638,10 +1638,17 @@ function handleTabSwitch(tab) {
   categoriesSection.classList.add('hidden');
   catalogRowsContainer.classList.add('hidden');
   heroSection.classList.add('hidden');
+  document.getElementById('accountProfileSection')?.classList.add('hidden');
+
+  const subcatRibbon = document.getElementById('subcatRibbonContainer');
+  if (subcatRibbon) subcatRibbon.classList.remove('hidden');
 
   renderSubcategoryRibbon(tab);
 
-  if (tab === 'search') {
+  if (tab === 'account') {
+    if (subcatRibbon) subcatRibbon.classList.add('hidden');
+    showAccountProfilePage();
+  } else if (tab === 'search') {
     heroSection.classList.remove('hidden');
     catalogRowsContainer.classList.remove('hidden');
     searchInput.focus();
@@ -1675,6 +1682,7 @@ async function executeSearch(query, category = 'all', customHeading = null, subc
   catalogRowsContainer.classList.add('hidden');
   myListSection.classList.add('hidden');
   categoriesSection.classList.add('hidden');
+  document.getElementById('accountProfileSection')?.classList.add('hidden');
   searchResultsSection.classList.remove('hidden');
   topMatchSpotlight.classList.add('hidden');
 
@@ -4245,9 +4253,8 @@ function switchAuthTab(mode) {
   }
 }
 
-function openProfileModal(user) {
-  const modal = document.getElementById('userProfileModal');
-  if (!modal) return;
+function populateProfileFields(user) {
+  if (!user) return;
 
   const profileLargeAvatar = document.getElementById('profileLargeAvatar');
   const accountAvatarBadge = document.getElementById('accountAvatarBadge');
@@ -4262,7 +4269,7 @@ function openProfileModal(user) {
 
   const avatarKey = user.avatar || 'scholar';
   if (profileLargeAvatar) profileLargeAvatar.innerHTML = renderAvatarSvg(avatarKey, 24);
-  if (accountAvatarBadge) accountAvatarBadge.innerHTML = renderAvatarSvg(avatarKey, 28);
+  if (accountAvatarBadge) accountAvatarBadge.innerHTML = renderAvatarSvg(avatarKey, 38);
 
   const displayName = user.nickname || user.username || 'Reader';
   if (profileDisplayName) profileDisplayName.textContent = displayName;
@@ -4279,7 +4286,7 @@ function openProfileModal(user) {
   }
 
   if (profileMemberSince) {
-    const dateStr = user.createdAt ? new Date(user.createdAt).toLocaleDateString() : 'Active Member';
+    const dateStr = user.createdAt ? new Date(user.createdAt).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' }) : 'Active Member';
     profileMemberSince.textContent = `Member since ${dateStr} • Vault Active`;
   }
 
@@ -4292,7 +4299,45 @@ function openProfileModal(user) {
   }
 
   updateCloudSyncStatus(Boolean(user.provider && user.email));
-  modal.classList.remove('hidden');
+}
+
+function showAccountProfilePage(user) {
+  const activeUser = user || getActiveUser();
+  if (!activeUser) {
+    openAuthModal('signin');
+    return;
+  }
+
+  // Hide other stage views
+  searchResultsSection?.classList.add('hidden');
+  myListSection?.classList.add('hidden');
+  categoriesSection?.classList.add('hidden');
+  catalogRowsContainer?.classList.add('hidden');
+  heroSection?.classList.add('hidden');
+  const subcatRibbon = document.getElementById('subcatRibbonContainer');
+  if (subcatRibbon) subcatRibbon.classList.add('hidden');
+
+  // Show dedicated account page
+  const accountSection = document.getElementById('accountProfileSection');
+  if (accountSection) {
+    accountSection.classList.remove('hidden');
+  }
+
+  // Update navigation active states
+  updateBreadcrumb('Account & Profile');
+  document.querySelectorAll('.rail-item').forEach((b) => {
+    b.classList.toggle('active', b.getAttribute('data-tab') === 'account' || b.id === 'railAuthBtn');
+  });
+  document.querySelectorAll('.seg-pill').forEach((p) => p.classList.remove('active'));
+
+  // Populate data fields
+  populateProfileFields(activeUser);
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function openProfileModal(user) {
+  showAccountProfilePage(user);
 }
 
 async function handleGoogleSignIn() {
@@ -4780,6 +4825,17 @@ function initAuthSystem() {
   });
   document.getElementById('closeProfileModalBtn')?.addEventListener('click', () => {
     document.getElementById('userProfileModal')?.classList.add('hidden');
+    document.getElementById('accountProfileSection')?.classList.add('hidden');
+  });
+
+  // Dedicated Account & Profile page: Back to Library
+  document.getElementById('accountBackBtn')?.addEventListener('click', () => {
+    const homeBtn = document.querySelector('.rail-item[data-tab="home"]');
+    if (homeBtn) {
+      homeBtn.click();
+    } else {
+      handleTabSwitch('home');
+    }
   });
 
   // Avatar Picker
@@ -5111,6 +5167,7 @@ function initAuthSystem() {
     }
     saveActiveUser(null);
     document.getElementById('userProfileModal')?.classList.add('hidden');
+    document.getElementById('accountProfileSection')?.classList.add('hidden');
     // In a sign-in required app, signing out returns directly to the dedicated starting page!
     document.documentElement.classList.add('auth-required-gateway');
     updateAuthUI();
