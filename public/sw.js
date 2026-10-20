@@ -1,12 +1,12 @@
-// BookFlix PWA Service Worker (v48 - Realtime Database & Cloud Sync Integration)
-const CACHE_NAME = 'bookflix-cache-v48';
+// BookFlix PWA Service Worker (v49 - Liquid Glass Single-Page Gateway Redesign)
+const CACHE_NAME = 'bookflix-cache-v49';
 const PRECACHE_ASSETS = [
   '/',
-  '/index.html?v=48',
-  '/styles.css?v=48',
-  '/app.js?v=48',
-  '/firebase-config.js?v=48',
-  '/manifest.json?v=48',
+  '/index.html?v=49',
+  '/styles.css?v=49',
+  '/app.js?v=49',
+  '/firebase-config.js?v=49',
+  '/manifest.json?v=49',
   '/logo.svg?v=20',
   '/favicon.ico?v=20',
   '/favicon.svg?v=20',
