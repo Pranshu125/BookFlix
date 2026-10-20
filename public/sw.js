@@ -1,11 +1,11 @@
-// BookFlix PWA Service Worker (v38 - Comic Immersive Fullscreen Mode)
-const CACHE_NAME = 'bookflix-cache-v38';
+// BookFlix PWA Service Worker (v39 - Auth, Google Login, Firebase & Zero Emojis)
+const CACHE_NAME = 'bookflix-cache-v39';
 const PRECACHE_ASSETS = [
   '/',
-  '/index.html?v=38',
-  '/styles.css?v=38',
-  '/app.js?v=38',
-  '/manifest.json?v=38',
+  '/index.html?v=39',
+  '/styles.css?v=39',
+  '/app.js?v=39',
+  '/manifest.json?v=39',
   '/logo.svg?v=20',
   '/favicon.ico?v=20',
   '/favicon.svg?v=20',

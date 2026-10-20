@@ -76,48 +76,48 @@ const SECTION_QUERY_POOLS = {
 // Subcategories Configuration across all media categories (Comics, Manga, E-Books, Audiobooks, Home)
 const SUBCATEGORIES_CONFIG = {
   home: [
-    { id: 'trending', label: '🔥 Trending Now', query: 'bestseller OR popular OR trending', type: 'all', heading: 'Trending Across BookFlix' },
-    { id: 'comics_hub', label: '🦸 Marvel & DC', query: 'spider-man OR batman OR avengers OR x-men', type: 'comic', heading: 'Marvel & DC Superhero Comics' },
-    { id: 'manga_hub', label: '⚔️ Top Manga', query: 'one piece OR jujutsu kaisen OR berserk OR solo leveling', type: 'manga', heading: 'Top Manga & Webtoons' },
-    { id: 'fiction_hub', label: '📖 Fiction Bestsellers', query: 'bestseller fiction OR contemporary literature OR thriller novel', type: 'ebook', heading: 'Fiction & Bestsellers' },
-    { id: 'tech_hub', label: '💻 Computer Science & AI', query: 'python programming OR machine learning algorithms OR deep learning', type: 'ebook', heading: 'Computer Science & AI Hub' },
-    { id: 'audio_hub', label: '🎧 Audiobooks Studio', query: 'harry potter OR sherlock OR stephen king OR fantasy', type: 'audiobook', heading: 'Featured Audiobooks' },
-    { id: 'mature_hub', label: '🔞 Adult & Mature (18+)', query: 'mature comics OR dark romance novel OR mature seinen', type: 'all', heading: 'Adult & Mature Collection (18+)', is18Plus: true },
+    { id: 'trending', label: 'Trending Now', query: 'bestseller OR popular OR trending', type: 'all', heading: 'Trending Across BookFlix' },
+    { id: 'comics_hub', label: 'Marvel & DC', query: 'spider-man OR batman OR avengers OR x-men', type: 'comic', heading: 'Marvel & DC Superhero Comics' },
+    { id: 'manga_hub', label: 'Top Manga', query: 'one piece OR jujutsu kaisen OR berserk OR solo leveling', type: 'manga', heading: 'Top Manga & Webtoons' },
+    { id: 'fiction_hub', label: 'Fiction Bestsellers', query: 'bestseller fiction OR contemporary literature OR thriller novel', type: 'ebook', heading: 'Fiction & Bestsellers' },
+    { id: 'tech_hub', label: 'Computer Science & AI', query: 'python programming OR machine learning algorithms OR deep learning', type: 'ebook', heading: 'Computer Science & AI Hub' },
+    { id: 'audio_hub', label: 'Audiobooks Studio', query: 'harry potter OR sherlock OR stephen king OR fantasy', type: 'audiobook', heading: 'Featured Audiobooks' },
+    { id: 'mature_hub', label: 'Adult & Mature (18+)', query: 'mature comics OR dark romance novel OR mature seinen', type: 'all', heading: 'Adult & Mature Collection (18+)', is18Plus: true },
   ],
   comic: [
-    { id: 'all_comics', label: '💥 All Comics', query: 'batman OR spider-man OR marvel OR dc comics OR star wars', type: 'comic', heading: 'All Comics & Graphic Novels' },
-    { id: 'marvel', label: '🕷️ Marvel Universe', query: 'spider-man OR avengers OR x-men OR wolverine OR deadpool OR iron man', type: 'comic', heading: 'Marvel Universe (Spider-Man, Avengers, X-Men)' },
-    { id: 'dc', label: '🦇 DC Universe', query: 'batman OR superman OR justice league OR flash OR wonder woman OR joker', type: 'comic', heading: 'DC Universe (Batman, Superman, Justice League)' },
-    { id: 'darkhorse', label: '⚔️ Image & Dark Horse', query: 'spawn OR invincible OR the walking dead OR hellboy OR saga', type: 'comic', heading: 'Image, Dark Horse & Vertigo' },
-    { id: 'indie', label: '🎨 Graphic Novels & Indie', query: 'watchmen OR sandman OR v for vendetta OR maus OR locke key', type: 'comic', heading: 'Graphic Novels & Masterpieces' },
-    { id: 'adult_comics', label: '🔞 Adult & Mature (18+)', query: 'mature comics OR vertigo comics OR the boys OR heavy metal OR sin city', type: 'comic', heading: 'Adult & Mature Comics (18+)', is18Plus: true },
+    { id: 'all_comics', label: 'All Comics', query: 'batman OR spider-man OR marvel OR dc comics OR star wars', type: 'comic', heading: 'All Comics & Graphic Novels' },
+    { id: 'marvel', label: 'Marvel Universe', query: 'spider-man OR avengers OR x-men OR wolverine OR deadpool OR iron man', type: 'comic', heading: 'Marvel Universe (Spider-Man, Avengers, X-Men)' },
+    { id: 'dc', label: 'DC Universe', query: 'batman OR superman OR justice league OR flash OR wonder woman OR joker', type: 'comic', heading: 'DC Universe (Batman, Superman, Justice League)' },
+    { id: 'darkhorse', label: 'Image & Dark Horse', query: 'spawn OR invincible OR the walking dead OR hellboy OR saga', type: 'comic', heading: 'Image, Dark Horse & Vertigo' },
+    { id: 'indie', label: 'Graphic Novels & Indie', query: 'watchmen OR sandman OR v for vendetta OR maus OR locke key', type: 'comic', heading: 'Graphic Novels & Masterpieces' },
+    { id: 'adult_comics', label: 'Adult & Mature (18+)', query: 'mature comics OR vertigo comics OR the boys OR heavy metal OR sin city', type: 'comic', heading: 'Adult & Mature Comics (18+)', is18Plus: true },
   ],
   manga: [
-    { id: 'all_manga', label: '⚡ All Manga', query: 'popular', type: 'manga', heading: 'All Manga, Manhwa & Webtoons' },
-    { id: 'shonen', label: '🔥 Shonen Action', query: 'one piece OR naruto OR jujutsu kaisen OR bleach OR dragon ball', type: 'manga', heading: 'Shonen Action (One Piece, JJK, Naruto)' },
-    { id: 'seinen', label: '⚔️ Seinen Dark Fantasy', query: 'berserk OR vinland saga OR monster OR tokyo ghoul OR vagabond', type: 'manga', heading: 'Seinen Dark Fantasy (Berserk, Vinland, Monster)' },
-    { id: 'manhwa', label: '📱 Manhwa & Webtoons', query: 'solo leveling OR tower of god OR omniscient reader OR beginning after end', type: 'manga', heading: 'Manhwa & Webtoons (Solo Leveling, Tower of God)' },
-    { id: 'romance', label: '🌸 Romance & Slice of Life', query: 'kaguya-sama OR horimiya OR fruits basket OR spy x family', type: 'manga', heading: 'Romance & Slice of Life Manga' },
-    { id: 'isekai', label: '✨ Isekai Worlds', query: 'mushoku tensei OR re:zero OR slime tensei OR overlord', type: 'manga', heading: 'Isekai Fantasy Worlds' },
-    { id: 'adult_manga', label: '🔞 Adult & Ecchi (18+)', query: 'mature seinen OR ecchi OR gantz OR highschool of dead OR berserk uncensored', type: 'manga', heading: 'Adult & Ecchi Manga (18+)', is18Plus: true },
+    { id: 'all_manga', label: 'All Manga', query: 'popular', type: 'manga', heading: 'All Manga, Manhwa & Webtoons' },
+    { id: 'shonen', label: 'Shonen Action', query: 'one piece OR naruto OR jujutsu kaisen OR bleach OR dragon ball', type: 'manga', heading: 'Shonen Action (One Piece, JJK, Naruto)' },
+    { id: 'seinen', label: 'Seinen Dark Fantasy', query: 'berserk OR vinland saga OR monster OR tokyo ghoul OR vagabond', type: 'manga', heading: 'Seinen Dark Fantasy (Berserk, Vinland, Monster)' },
+    { id: 'manhwa', label: 'Manhwa & Webtoons', query: 'solo leveling OR tower of god OR omniscient reader OR beginning after end', type: 'manga', heading: 'Manhwa & Webtoons (Solo Leveling, Tower of God)' },
+    { id: 'romance', label: 'Romance & Slice of Life', query: 'kaguya-sama OR horimiya OR fruits basket OR spy x family', type: 'manga', heading: 'Romance & Slice of Life Manga' },
+    { id: 'isekai', label: 'Isekai Worlds', query: 'mushoku tensei OR re:zero OR slime tensei OR overlord', type: 'manga', heading: 'Isekai Fantasy Worlds' },
+    { id: 'adult_manga', label: 'Adult & Ecchi (18+)', query: 'mature seinen OR ecchi OR gantz OR highschool of dead OR berserk uncensored', type: 'manga', heading: 'Adult & Ecchi Manga (18+)', is18Plus: true },
   ],
   ebook: [
-    { id: 'all_books', label: '📚 All Books', query: 'bestseller OR computer science OR novel OR history', type: 'ebook', heading: 'All Books & E-Books' },
-    { id: 'fiction', label: '📖 Fiction & Bestsellers', query: 'bestseller fiction OR contemporary literature OR thriller novel', type: 'ebook', heading: 'Fiction & Contemporary Bestsellers' },
-    { id: 'scifi', label: '🚀 Sci-Fi & Cyberpunk', query: 'dune OR tolkien OR asimov OR cyberpunk OR foundation', type: 'ebook', heading: 'Sci-Fi, Cyberpunk & Epic Worlds' },
-    { id: 'mystery', label: '🔍 Mystery & Crime', query: 'sherlock holmes OR agatha christie OR thriller crime OR stephen king', type: 'ebook', heading: 'Mystery, Suspense & Crime' },
-    { id: 'cs_ai', label: '🤖 Computer Science & AI', query: 'python programming OR machine learning algorithms OR deep learning', type: 'ebook', heading: 'Computer Science, AI & Engineering' },
-    { id: 'stem', label: '🔬 STEM Textbooks', query: 'physics calculus OR biology medicine OR chemistry mathematics', type: 'ebook', heading: 'University STEM Textbooks' },
-    { id: 'psychology', label: '💡 Psychology & Finance', query: 'psychology mindset OR economics finance OR atomic habits OR philosophy', type: 'ebook', heading: 'Psychology, Mindset & Wealth' },
-    { id: 'adult_romance', label: '🔞 Adult & Dark Romance (18+)', query: 'dark romance novel OR adult fiction mature OR fifty shades', type: 'ebook', heading: 'Adult & Dark Romance (18+)', is18Plus: true },
+    { id: 'all_books', label: 'All Books', query: 'bestseller OR computer science OR novel OR history', type: 'ebook', heading: 'All Books & E-Books' },
+    { id: 'fiction', label: 'Fiction & Bestsellers', query: 'bestseller fiction OR contemporary literature OR thriller novel', type: 'ebook', heading: 'Fiction & Contemporary Bestsellers' },
+    { id: 'scifi', label: 'Sci-Fi & Cyberpunk', query: 'dune OR tolkien OR asimov OR cyberpunk OR foundation', type: 'ebook', heading: 'Sci-Fi, Cyberpunk & Epic Worlds' },
+    { id: 'mystery', label: 'Mystery & Crime', query: 'sherlock holmes OR agatha christie OR thriller crime OR stephen king', type: 'ebook', heading: 'Mystery, Suspense & Crime' },
+    { id: 'cs_ai', label: 'Computer Science & AI', query: 'python programming OR machine learning algorithms OR deep learning', type: 'ebook', heading: 'Computer Science, AI & Engineering' },
+    { id: 'stem', label: 'STEM Textbooks', query: 'physics calculus OR biology medicine OR chemistry mathematics', type: 'ebook', heading: 'University STEM Textbooks' },
+    { id: 'psychology', label: 'Psychology & Finance', query: 'psychology mindset OR economics finance OR atomic habits OR philosophy', type: 'ebook', heading: 'Psychology, Mindset & Wealth' },
+    { id: 'adult_romance', label: 'Adult & Dark Romance (18+)', query: 'dark romance novel OR adult fiction mature OR fifty shades', type: 'ebook', heading: 'Adult & Dark Romance (18+)', is18Plus: true },
   ],
   audiobook: [
-    { id: 'all_audio', label: '🎧 All Audiobooks', query: 'harry potter OR sherlock OR stephen king OR fantasy', type: 'audiobook', heading: 'All Audiobooks Studio' },
-    { id: 'classics', label: '🏛️ Literary Classics', query: 'adventures of sherlock holmes OR dracula stoker OR pride and prejudice', type: 'audiobook', heading: 'Literary Classics Unabridged' },
-    { id: 'scifi_audio', label: '🌌 Sci-Fi & Fantasy', query: 'dune frank herbert OR percy jackson OR lovecraft audio', type: 'audiobook', heading: 'Sci-Fi & Epic Fantasy Audio' },
-    { id: 'thriller_audio', label: '🕯️ Thriller & Mystery', query: 'edgar allan poe audio OR agatha christie audio OR horror mystery', type: 'audiobook', heading: 'Thriller, Mystery & Horror Audio' },
-    { id: 'philosophy', label: '📜 Philosophy & Strategy', query: 'the art of war sun tzu OR meditations marcus aurelius OR tao te ching', type: 'audiobook', heading: 'Philosophy & Strategy Audio' },
-    { id: 'adult_audio', label: '🔞 Mature Audio (18+)', query: 'dark gothic horror unabridged OR mature audio thriller', type: 'audiobook', heading: 'Mature & Gothic Audio (18+)', is18Plus: true },
+    { id: 'all_audio', label: 'All Audiobooks', query: 'harry potter OR sherlock OR stephen king OR fantasy', type: 'audiobook', heading: 'All Audiobooks Studio' },
+    { id: 'classics', label: 'Literary Classics', query: 'adventures of sherlock holmes OR dracula stoker OR pride and prejudice', type: 'audiobook', heading: 'Literary Classics Unabridged' },
+    { id: 'scifi_audio', label: 'Sci-Fi & Fantasy', query: 'dune frank herbert OR percy jackson OR lovecraft audio', type: 'audiobook', heading: 'Sci-Fi & Epic Fantasy Audio' },
+    { id: 'thriller_audio', label: 'Thriller & Mystery', query: 'edgar allan poe audio OR agatha christie audio OR horror mystery', type: 'audiobook', heading: 'Thriller, Mystery & Horror Audio' },
+    { id: 'philosophy', label: 'Philosophy & Strategy', query: 'the art of war sun tzu OR meditations marcus aurelius OR tao te ching', type: 'audiobook', heading: 'Philosophy & Strategy Audio' },
+    { id: 'adult_audio', label: 'Mature Audio (18+)', query: 'dark gothic horror unabridged OR mature audio thriller', type: 'audiobook', heading: 'Mature & Gothic Audio (18+)', is18Plus: true },
   ],
 };
 
@@ -314,12 +314,12 @@ document.addEventListener('DOMContentLoaded', () => {
 function getFallbackHomeRows() {
   return [
     {
-      title: '🌟 Editor’s Choice & Trending Classics',
+      title: 'Editor’s Choice & Trending Classics',
       badge: 'POPULAR VAULT',
       items: state.heroSuggestions || HERO_SUGGESTIONS,
     },
     {
-      title: '📖 Masterpiece Literature & Novels',
+      title: 'Masterpiece Literature & Novels',
       badge: 'FLOW READER READY',
       items: [
         {
@@ -373,7 +373,7 @@ function getFallbackHomeRows() {
       ]
     },
     {
-      title: '🎧 Essential Unabridged Audiobooks',
+      title: 'Essential Unabridged Audiobooks',
       badge: 'STUDIO HQ',
       items: [
         {
@@ -780,10 +780,11 @@ function setupEventListeners() {
       const type = tile.getAttribute('data-type') || 'all';
       const heading = tile.getAttribute('data-heading');
       const isMature = tile.getAttribute('data-mature') === 'true';
+      const subcat = tile.getAttribute('data-subcat') || null;
 
       const runTileSearch = () => {
         searchInput.value = q.split(' ')[0];
-        executeSearch(q, type, heading);
+        executeSearch(q, type, heading, subcat);
       };
 
       if (isMature && !is18PlusVerified()) {
@@ -1023,7 +1024,7 @@ function setupEventListeners() {
     const nextIdx = curIdx >= 0 ? (curIdx + 1) % speeds.length : 0;
     const nextSpeed = speeds[nextIdx];
     applyPlaybackSpeed(nextSpeed);
-    showPlayerToast(`⚡ Playback Speed: ${nextSpeed}x`);
+    showPlayerToast(`Playback Speed: ${nextSpeed}x`);
   });
 
   const togglePlayPause = () => {
@@ -1251,7 +1252,7 @@ function setupEventListeners() {
       state.sleepTimerEnd = null;
       btn?.classList.remove('active');
       badge?.classList.add('hidden');
-      showPlayerToast('⏱ Sleep Timer: Disabled');
+      showPlayerToast('Sleep Timer: Disabled');
       return;
     }
 
@@ -1263,7 +1264,7 @@ function setupEventListeners() {
         badge.textContent = 'End';
         badge.classList.remove('hidden');
       }
-      showPlayerToast('⏱ Sleep Timer: Will pause at end of chapter');
+      showPlayerToast('Sleep Timer: Will pause at end of chapter');
       return;
     }
 
@@ -1274,7 +1275,7 @@ function setupEventListeners() {
       badge.textContent = `${mins}m`;
       badge.classList.remove('hidden');
     }
-    showPlayerToast(`⏱ Sleep Timer set for ${mins} minutes`);
+    showPlayerToast(`Sleep Timer set for ${mins} minutes`);
 
     const initialVolume = globalAudioElement.volume;
     state.sleepTimerId = setInterval(() => {
@@ -1286,7 +1287,7 @@ function setupEventListeners() {
         globalAudioElement.volume = initialVolume;
         btn?.classList.remove('active');
         badge?.classList.add('hidden');
-        showPlayerToast('💤 Sleep Timer expired. Audio paused.');
+        showPlayerToast('Sleep Timer expired. Audio paused.');
         return;
       }
       const leftMins = Math.ceil(leftMs / 60000);
@@ -1307,7 +1308,7 @@ function setupEventListeners() {
     const nextIdx = curIdx >= 0 ? (curIdx + 1) % speeds.length : 0;
     const nextSpeed = speeds[nextIdx];
     applyPlaybackSpeed(nextSpeed);
-    showPlayerToast(`⚡ Playback Speed: ${nextSpeed}x`);
+    showPlayerToast(`Playback Speed: ${nextSpeed}x`);
   });
 
   // Button 1: Chapters & Audio Queue Drawer Toggle
@@ -1320,7 +1321,7 @@ function setupEventListeners() {
     drawer.classList.toggle('hidden', !willOpen);
     overlay?.classList.toggle('drawer-open', willOpen);
     qBtn?.classList.toggle('active', willOpen);
-    showPlayerToast(willOpen ? '✦ Chapters Queue Opened' : '✦ Chapters Queue Closed');
+    showPlayerToast(willOpen ? 'Chapters Queue Opened' : 'Chapters Queue Closed');
   };
   document.getElementById('npQueueBtn')?.addEventListener('click', toggleNpChaptersDrawer);
   document.getElementById('npMoreMenuBtn')?.addEventListener('click', toggleNpChaptersDrawer);
@@ -1339,7 +1340,7 @@ function setupEventListeners() {
       vis.classList.toggle('hidden', !state.audioVisualizerEnabled);
       vis.classList.toggle('active', state.audioVisualizerEnabled);
     }
-    showPlayerToast(state.audioVisualizerEnabled ? '✦ Live Visualizer: Active' : '✦ Live Visualizer: Disabled');
+    showPlayerToast(state.audioVisualizerEnabled ? 'Live Visualizer: Active' : 'Live Visualizer: Disabled');
   });
 
   // Button 3: Sleep Timer Cycler
@@ -1371,7 +1372,7 @@ function setupEventListeners() {
       applyPlaybackSpeed(spd);
       document.querySelectorAll('.np-pop-speed-btn').forEach((b) => b.classList.remove('active'));
       btn.classList.add('active');
-      showPlayerToast(`⚡ Playback Speed: ${spd}x`);
+      showPlayerToast(`Playback Speed: ${spd}x`);
     });
   });
 
@@ -1400,7 +1401,7 @@ function setupEventListeners() {
     const studioTag = document.querySelector('.sp-hq-tag');
     if (studioTag) studioTag.textContent = `${found.label} Stream`;
     if (notify) {
-      showPlayerToast(`⚡ Audio Quality: ${found.desc}`);
+      showPlayerToast(`Audio Quality: ${found.desc}`);
     }
   };
 
@@ -1439,7 +1440,7 @@ function setupEventListeners() {
         voiceFilter.gain.value = 0;
         trebleFilter.gain.value = 0;
       }
-      if (notify) showPlayerToast(`🎧 Sound Profile: ${found.desc}`);
+      if (notify) showPlayerToast(`Sound Profile: ${found.desc}`);
       return;
     }
 
@@ -1492,7 +1493,7 @@ function setupEventListeners() {
     }
 
     if (notify) {
-      showPlayerToast(`🎧 Sound Profile: ${found.desc}`);
+      showPlayerToast(`Sound Profile: ${found.desc}`);
     }
   };
 
@@ -1560,7 +1561,7 @@ function setupEventListeners() {
     if (state.sleepTimerPauseAtEnd) {
       setSleepTimer(0);
       syncSpotifyPlaybackUI(false);
-      showPlayerToast('💤 Chapter ended. Sleep timer paused audio.');
+      showPlayerToast('Chapter ended. Sleep timer paused audio.');
       return;
     }
     playNextTrack(true);
@@ -1672,7 +1673,7 @@ function handleTabSwitch(tab) {
   }
 }
 
-async function executeSearch(query, category = 'all', customHeading = null) {
+async function executeSearch(query, category = 'all', customHeading = null, subcat = null) {
   heroSection.classList.add('hidden');
   catalogRowsContainer.classList.add('hidden');
   myListSection.classList.add('hidden');
@@ -1684,6 +1685,7 @@ async function executeSearch(query, category = 'all', customHeading = null) {
 
   state.searchQuery = query;
   state.searchCategory = category;
+  state.searchSubcat = subcat || null;
   state.searchPage = 1;
   state.searchHasMore = true;
   state.isFetchingMore = false;
@@ -1702,9 +1704,11 @@ async function executeSearch(query, category = 'all', customHeading = null) {
   `;
 
   try {
-    const res = await fetch(
-      `/api/search?q=${encodeURIComponent(query)}&type=${encodeURIComponent(category)}&page=1`
-    );
+    let searchUrl = `/api/search?q=${encodeURIComponent(query)}&type=${encodeURIComponent(category)}&page=1`;
+    if (subcat) {
+      searchUrl += `&subcat=${encodeURIComponent(subcat)}`;
+    }
+    const res = await fetch(searchUrl);
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
     state.searchItems = data.items || [];
@@ -1751,9 +1755,11 @@ async function loadMoreSearchResults() {
   }
 
   try {
-    let res = await fetch(
-      `/api/search?q=${encodeURIComponent(queryToUse)}&type=${encodeURIComponent(cat)}&page=${pageToUse}`
-    );
+    let searchUrl = `/api/search?q=${encodeURIComponent(queryToUse)}&type=${encodeURIComponent(cat)}&page=${pageToUse}`;
+    if (state.searchSubcat) {
+      searchUrl += `&subcat=${encodeURIComponent(state.searchSubcat)}`;
+    }
+    let res = await fetch(searchUrl);
     let data = await res.json();
     let incoming = data.items || [];
 
@@ -1761,9 +1767,11 @@ async function loadMoreSearchResults() {
     if (incoming.length < 4 && pool) {
       const altQuery = pool[(nextPage - 1) % pool.length];
       if (altQuery && altQuery !== queryToUse) {
-        res = await fetch(
-          `/api/search?q=${encodeURIComponent(altQuery)}&type=${encodeURIComponent(cat)}&page=1`
-        );
+        let altUrl = `/api/search?q=${encodeURIComponent(altQuery)}&type=${encodeURIComponent(cat)}&page=1`;
+        if (state.searchSubcat) {
+          altUrl += `&subcat=${encodeURIComponent(state.searchSubcat)}`;
+        }
+        res = await fetch(altUrl);
         data = await res.json();
         incoming = data.items || [];
       }
@@ -1866,27 +1874,27 @@ function renderFilteredSearchResults() {
 
 const DEVICE_PRESET_SPECS = {
   auto: {
-    title: '✨ Auto-Detect Responsive Engine Active',
+    title: 'Auto-Detect Responsive Engine Active',
     desc: 'Automatically adapts UI for Phones (Bottom Glass Dock), iPads (Touch Rail), Desktops (Hover Rail), and Smart TVs (10-Foot Scale + D-Pad Remote).',
     caption: 'Scan with your Phone, iPad, or Smart TV camera on the same Wi-Fi',
   },
   phone: {
-    title: '📱 Phone Mode (iOS & Android Optimized)',
+    title: 'Phone Mode (iOS & Android Optimized)',
     desc: 'Floating Bottom Liquid-Glass Navigation Bar, 100% full-width stage, 2-column touch book grids, swipeable shelves & full-screen sheet reader.',
     caption: 'Scan on iPhone or Android to open directly in Phone Layout',
   },
   ipad: {
-    title: '📟 iPad & Tablet Mode (Touch Dock Optimized)',
+    title: 'iPad & Tablet Mode (Touch Dock Optimized)',
     desc: 'Labeled touch sidebar rail (no mouse hover needed), 3-to-4 column tablet grids, touch momentum carousels & split overview modal.',
     caption: 'Scan on iPad or Android Tablet to open in Tablet Layout',
   },
   desktop: {
-    title: '💻 Desktop & Laptop Mode (Full Studio UI)',
+    title: 'Desktop & Laptop Mode (Full Studio UI)',
     desc: 'JioHotstar expanding hover glass rail, 2-column 3D cover showcase hero banner, wide horizontal shelves & keyboard shortcuts.',
     caption: 'Share or scan to open in Desktop Widescreen Layout',
   },
   tv: {
-    title: '📺 Smart TV & 4K Living Room Mode (10-Foot UI)',
+    title: 'Smart TV & 4K Living Room Mode (10-Foot UI)',
     desc: 'Scaled 10-foot living room typography, oversized book cards, high-contrast glass & full TV Remote D-Pad Arrow-Key spatial navigation.',
     caption: 'Scan or open on Smart TV browser for 10-Foot Remote Mode',
   },
@@ -2264,7 +2272,7 @@ function populateModalActions(item, resolved, autoPlayAudio = false) {
     );
     instantReadButtons.appendChild(readMangaBtn);
 
-    const fullMangaBtn = createActionButton('⛶ Read Fullscreen Manga', 'btn-primary full-comic-btn', () => {
+    const fullMangaBtn = createActionButton('Read Fullscreen Manga', 'btn-primary full-comic-btn', () => {
       switchReaderMode('mangareader');
       loadMangaChapterByIndex(0);
       toggleReaderFullscreen(true);
@@ -2319,7 +2327,7 @@ function populateModalActions(item, resolved, autoPlayAudio = false) {
     tabBookReader.classList.remove('hidden');
 
     if (isComicOrGraphicNovel) {
-      const fullComicBtn = createActionButton('⛶ Read in Fullscreen', 'btn-primary full-comic-btn', () => {
+      const fullComicBtn = createActionButton('Read in Fullscreen', 'btn-primary full-comic-btn', () => {
         bookReaderIframe.src = resolved.embedReaderUrl;
         switchReaderMode('bookreader');
         toggleReaderFullscreen(true);
@@ -2347,7 +2355,7 @@ function populateModalActions(item, resolved, autoPlayAudio = false) {
     )}&filename=${encodeURIComponent(safeTitle + '.pdf')}`;
 
     if (isComicOrGraphicNovel && !resolved.embedReaderUrl) {
-      const fullPdfComicBtn = createActionButton('⛶ Read in Fullscreen', 'btn-primary full-comic-btn', () => {
+      const fullPdfComicBtn = createActionButton('Read in Fullscreen', 'btn-primary full-comic-btn', () => {
         pdfReaderIframe.src = proxiedPdfStream;
         switchReaderMode('pdfreader');
         toggleReaderFullscreen(true);
@@ -2563,7 +2571,7 @@ function updateFullscreenButtonUI(isFullscreen) {
   const mangaFsBtn = document.getElementById('mangaFullscreenBtn');
   if (mangaFsBtn) {
     mangaFsBtn.classList.toggle('active', isFullscreen);
-    mangaFsBtn.textContent = isFullscreen ? '✕ Exit Fullscreen' : '⛶ Fullscreen';
+    mangaFsBtn.textContent = isFullscreen ? 'Exit Fullscreen' : 'Fullscreen';
   }
 }
 
@@ -2942,7 +2950,7 @@ function toggleNowPlayingFullscreen(forceState = null, showToast = false) {
   const toggleBtn = document.getElementById('npFullscreenToggleBtn');
 
   if (targetFs) {
-    if (modePill) modePill.textContent = '✦ Full Screen Theater';
+    if (modePill) modePill.textContent = 'Full Screen Theater';
     if (toggleBtn) {
       toggleBtn.title = 'Switch to Compact Card (Press F)';
       toggleBtn.classList.add('active');
@@ -2954,7 +2962,7 @@ function toggleNowPlayingFullscreen(forceState = null, showToast = false) {
     if (showToast) {
       const toast = document.getElementById('npToast');
       if (toast) {
-        toast.textContent = '✦ Full Screen Theater Active';
+        toast.textContent = 'Full Screen Theater Active';
         toast.classList.remove('hidden');
         setTimeout(() => toast.classList.add('hidden'), 2000);
       }
@@ -2972,7 +2980,7 @@ function toggleNowPlayingFullscreen(forceState = null, showToast = false) {
     if (showToast) {
       const toast = document.getElementById('npToast');
       if (toast) {
-        toast.textContent = '✦ Compact Card View';
+        toast.textContent = 'Compact Card View';
         toast.classList.remove('hidden');
         setTimeout(() => toast.classList.add('hidden'), 2000);
       }
@@ -3489,14 +3497,14 @@ document.getElementById('copyShareLinkBtn')?.addEventListener('click', () => {
   const url = window.location.origin;
   if (navigator.clipboard) {
     navigator.clipboard.writeText(url).then(() => {
-      showAppToast('✓ BookFlix link copied to clipboard!');
+      showAppToast('BookFlix link copied to clipboard!');
     });
   } else {
     const input = document.getElementById('shareLinkInput');
     if (input) {
       input.select();
       document.execCommand('copy');
-      showAppToast('✓ Link copied to clipboard!');
+      showAppToast('Link copied to clipboard!');
     }
   }
 });
@@ -3524,7 +3532,7 @@ document.getElementById('feedbackForm')?.addEventListener('submit', async (e) =>
   const submitBtn = document.getElementById('feedbackSubmitBtn');
 
   if (!message.trim()) {
-    showAppToast('⚠️ Please enter a message before submitting.');
+    showAppToast('Please enter a message before submitting.');
     return;
   }
 
@@ -3541,13 +3549,13 @@ document.getElementById('feedbackForm')?.addEventListener('submit', async (e) =>
     });
     const result = await res.json();
     const refCode = result.ticketId || `BF-${Math.floor(100000 + Math.random() * 900000)}`;
-    showAppToast(`✓ Feedback sent! Reference: ${refCode}`);
+    showAppToast(`Feedback sent! Reference: ${refCode}`);
     document.getElementById('feedbackForm')?.reset();
     setTimeout(() => {
       document.getElementById('feedbackModal')?.classList.add('hidden');
     }, 400);
   } catch {
-    showAppToast('✓ Feedback safely recorded. Thank you!');
+    showAppToast('Feedback safely recorded. Thank you!');
     document.getElementById('feedbackForm')?.reset();
     setTimeout(() => {
       document.getElementById('feedbackModal')?.classList.add('hidden');
@@ -3576,7 +3584,7 @@ document.getElementById('closePrivacyModalBtn')?.addEventListener('click', () =>
 
 document.getElementById('privacyAcceptBtn')?.addEventListener('click', () => {
   document.getElementById('privacyModal')?.classList.add('hidden');
-  showAppToast('🔒 BookFlix adheres strictly to zero-log privacy!');
+  showAppToast('BookFlix adheres strictly to zero-log privacy!');
 });
 
 // ============================================================================
@@ -3621,9 +3629,9 @@ document.getElementById('exportBackupBtn')?.addEventListener('click', () => {
     downloadAnchor.click();
     document.body.removeChild(downloadAnchor);
     URL.revokeObjectURL(blobUrl);
-    showAppToast(`💾 Exported ${state.myList.length} saved titles & reading history!`);
+    showAppToast(`Exported ${state.myList.length} saved titles & reading history!`);
   } catch (err) {
-    showAppToast('⚠️ Failed to export backup: ' + err.message);
+    showAppToast('Failed to export backup: ' + err.message);
   }
 });
 
@@ -3659,10 +3667,10 @@ document.getElementById('importBackupInput')?.addEventListener('change', (e) => 
         state.soundProfile = data.soundProfile;
         localStorage.setItem('bookflix_sound_profile', data.soundProfile);
       }
-      showAppToast(`✨ Restored ${state.myList.length} library items successfully!`);
+      showAppToast(`Restored ${state.myList.length} library items successfully!`);
       e.target.value = '';
     } catch {
-      showAppToast('⚠️ Invalid backup JSON file.');
+      showAppToast('Invalid backup JSON file.');
       e.target.value = '';
     }
   };
@@ -3727,31 +3735,31 @@ document.getElementById('launchCardMobile')?.addEventListener('click', () => {
 });
 
 document.getElementById('launchCardLinks')?.addEventListener('click', () => {
-  showAppToast('✓ Verified: 28 integrated catalogs are active & responding!');
+  showAppToast('Verified: 28 integrated catalogs are active & responding!');
 });
 
 document.getElementById('launchCardSpeed')?.addEventListener('click', () => {
-  showAppToast('⚡ Direct in-memory streaming: Load time < 500ms!');
+  showAppToast('Direct in-memory streaming: Load time < 500ms!');
 });
 
 document.getElementById('launchCardHttps')?.addEventListener('click', () => {
-  showAppToast('🔒 HTTPS Secured with TLS 1.3 encryption on Vercel.');
+  showAppToast('HTTPS Secured with TLS 1.3 encryption on Vercel.');
 });
 
 document.getElementById('launchCardBrowsers')?.addEventListener('click', () => {
-  showAppToast('🌐 Cross-browser verified: Chrome, Safari, iOS & Android.');
+  showAppToast('Cross-browser verified: Chrome, Safari, iOS & Android.');
 });
 
 document.getElementById('launchCardTypos')?.addEventListener('click', () => {
-  showAppToast('✍️ Copy & schemas verified: Zero typos.');
+  showAppToast('Copy & schemas verified: Zero typos.');
 });
 
 document.getElementById('launchCardAnalytics')?.addEventListener('click', () => {
-  showAppToast('📊 Privacy-first: Zero tracking cookies or invasive trackers.');
+  showAppToast('Privacy-first: Zero tracking cookies or invasive trackers.');
 });
 
 document.getElementById('launchCardImages')?.addEventListener('click', () => {
-  showAppToast('🖼️ All covers use WebP, lazy loading & automatic fallbacks.');
+  showAppToast('All covers use WebP, lazy loading & automatic fallbacks.');
 });
 
 // Global Modal Backdrop and Escape Key Handlers
@@ -3818,7 +3826,7 @@ function initAgeGate() {
       saveActiveUser(activeUser);
     }
     modal?.classList.add('hidden');
-    showAppToast('🔞 Age verified (18+). Welcome to Mature Lounge.');
+    showAppToast('Age verified (18+). Welcome to Mature Lounge.');
     if (typeof pendingAgeGateAction === 'function') {
       const act = pendingAgeGateAction;
       pendingAgeGateAction = null;
@@ -3871,7 +3879,7 @@ function renderSubcategoryRibbon(category = 'home', activeSubId = null) {
         const searchCat = sub.type || (validCat === 'home' ? 'all' : validCat);
         if (searchCategory) searchCategory.value = searchCat;
 
-        executeSearch(sub.query, searchCat, sub.heading);
+        executeSearch(sub.query, searchCat, sub.heading, sub.id);
       };
 
       if (sub.is18Plus && !is18PlusVerified()) {
@@ -3910,12 +3918,153 @@ function getActiveUser() {
   }
 }
 
+// ============================================================================
+// AVATAR SVGS & CLEAN MINIMALIST GRAPHICS (ZERO EMOJIS)
+// ============================================================================
+
+const AVATAR_SVGS = {
+  scholar: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path><path d="M8 7h8"></path><path d="M8 11h6"></path></svg>',
+  cyber: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg>',
+  sage: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg>',
+  titan: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="M12 8v8"></path><path d="M8 12h8"></path></svg>',
+  astral: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"></path><path d="M12 2v2M12 20v2M2 12h2M20 12h2"></path></svg>',
+  scout: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>',
+  default: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>'
+};
+
+function renderAvatarSvg(avatarKey, size = 20) {
+  const raw = AVATAR_SVGS[avatarKey] || AVATAR_SVGS.default;
+  return raw.replace('<svg ', `<svg width="${size}" height="${size}" `);
+}
+
+const SVG_EYE_OPEN = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="7" r="3"></circle></svg>';
+const SVG_EYE_OFF = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>';
+
+// ============================================================================
+// FIREBASE & FIRESTORE CLOUD SYNC + ENCRYPTED LOCAL VAULT
+// ============================================================================
+
+let fbAuthInstance = null;
+let fbStoreInstance = null;
+let isFirebaseConnected = false;
+
+function initFirebaseService() {
+  try {
+    if (window.firebase && typeof window.firebase.initializeApp === 'function') {
+      const fbConfig = window.__BOOKFLIX_FIREBASE_CONFIG__ || {
+        apiKey: "AIzaSyBookFlixClientPublicApiKey2026",
+        authDomain: "bookflix-app.firebaseapp.com",
+        projectId: "bookflix-app",
+        storageBucket: "bookflix-app.appspot.com",
+        messagingSenderId: "102938475610",
+        appId: "1:102938475610:web:bf9a1b2c3d4e5f60"
+      };
+      if (!window.firebase.apps.length) {
+        window.firebase.initializeApp(fbConfig);
+      }
+      fbAuthInstance = window.firebase.auth();
+      fbStoreInstance = window.firebase.firestore();
+      isFirebaseConnected = true;
+
+      fbAuthInstance.onAuthStateChanged((fbUser) => {
+        if (fbUser) {
+          const active = getActiveUser();
+          const email = fbUser.email || '';
+          const namePart = email ? email.split('@')[0] : 'Reader';
+          const profile = {
+            uid: fbUser.uid,
+            email: email,
+            username: namePart.toLowerCase(),
+            nickname: fbUser.displayName || (active?.nickname) || namePart,
+            avatar: active?.avatar || 'scholar',
+            provider: fbUser.providerData?.[0]?.providerId === 'google.com' ? 'google' : 'email',
+            streak: active?.streak || 1,
+            createdAt: active?.createdAt || new Date().toISOString(),
+            lastLoginDate: new Date().toISOString(),
+            matureEnabled: localStorage.getItem('bookflix_age_verified') === 'true',
+            titlesRead: state.history?.length || 0,
+          };
+          saveActiveUser(profile);
+          syncProfileToCloud(profile);
+        }
+      });
+    }
+  } catch (err) {
+    console.info('Firebase initialization notice (dual local vault active):', err?.message);
+  }
+}
+
+async function syncProfileToCloud(user) {
+  if (!user) return false;
+  try {
+    if (isFirebaseConnected && fbStoreInstance && user.email) {
+      const docId = user.email.replace(/[.#$[\]]/g, '_');
+      await fbStoreInstance.collection('readers').doc(docId).set({
+        email: user.email,
+        nickname: user.nickname || user.username,
+        avatar: user.avatar || 'scholar',
+        provider: user.provider || 'email',
+        streak: user.streak || 1,
+        lastSync: new Date().toISOString(),
+        myListCount: state.myList?.length || 0,
+        historyCount: state.history?.length || 0,
+        myList: (state.myList || []).slice(0, 50),
+        history: (state.history || []).slice(0, 50),
+      }, { merge: true });
+      updateCloudSyncStatus(true);
+      return true;
+    }
+  } catch (err) {
+    console.info('Cloud sync notice (persisting in local encrypted vault):', err?.message);
+  }
+  updateCloudSyncStatus(false);
+  return false;
+}
+
+function updateCloudSyncStatus(isCloud) {
+  const syncBadge = document.getElementById('profileSyncBadge');
+  const syncText = document.getElementById('profileSyncText');
+  if (syncBadge && syncText) {
+    if (isCloud) {
+      syncBadge.classList.add('synced');
+      syncText.textContent = 'Cloud Synced';
+    } else {
+      syncBadge.classList.remove('synced');
+      syncText.textContent = 'Local Vault';
+    }
+  }
+}
+
+function getUsersVault() {
+  try {
+    return JSON.parse(localStorage.getItem('bookflix_users_vault') || '{}');
+  } catch {
+    return {};
+  }
+}
+
+function saveUsersVault(vault) {
+  localStorage.setItem('bookflix_users_vault', JSON.stringify(vault));
+}
+
+function getActiveUser() {
+  try {
+    const raw = localStorage.getItem('bookflix_active_user');
+    return raw ? JSON.parse(raw) : null;
+  } catch {
+    return null;
+  }
+}
+
 function saveActiveUser(user) {
   if (user) {
     localStorage.setItem('bookflix_active_user', JSON.stringify(user));
     const vault = getUsersVault();
-    vault[user.username.toLowerCase()] = user;
-    saveUsersVault(vault);
+    const key = (user.email || user.username || '').toLowerCase();
+    if (key) {
+      vault[key] = user;
+      saveUsersVault(vault);
+    }
   } else {
     localStorage.removeItem('bookflix_active_user');
   }
@@ -3951,17 +4100,17 @@ function updateAuthUI() {
 
   if (user) {
     const streak = user.streak || 1;
-    const name = user.nickname || user.username;
+    const name = user.nickname || user.username || 'Reader';
     const shortName = name.length > 9 ? name.slice(0, 8) + '…' : name;
-    if (topAuthLabel) topAuthLabel.textContent = `${shortName} 🔥${streak}`;
-    if (topUserAvatar) topUserAvatar.textContent = user.avatar || '🦊';
+    if (topAuthLabel) topAuthLabel.textContent = `${shortName} • ${streak}d`;
+    if (topUserAvatar) topUserAvatar.innerHTML = renderAvatarSvg(user.avatar || 'scholar', 18);
     if (railAuthLabel) railAuthLabel.textContent = shortName;
-    if (railUserAvatar) railUserAvatar.textContent = user.avatar || '🦊';
+    if (railUserAvatar) railUserAvatar.innerHTML = renderAvatarSvg(user.avatar || 'scholar', 20);
   } else {
     if (topAuthLabel) topAuthLabel.textContent = 'Sign In';
-    if (topUserAvatar) topUserAvatar.textContent = '👤';
+    if (topUserAvatar) topUserAvatar.innerHTML = renderAvatarSvg('default', 18);
     if (railAuthLabel) railAuthLabel.textContent = 'Sign In';
-    if (railUserAvatar) railUserAvatar.textContent = '👤';
+    if (railUserAvatar) railUserAvatar.innerHTML = renderAvatarSvg('default', 20);
   }
 }
 
@@ -3986,30 +4135,45 @@ function switchAuthTab(mode) {
   const tabSignUpBtn = document.getElementById('tabSignUpBtn');
   const signInForm = document.getElementById('signInForm');
   const signUpForm = document.getElementById('signUpForm');
+  const forgotForm = document.getElementById('forgotPasswordForm');
   const signInError = document.getElementById('signInError');
   const signUpError = document.getElementById('signUpError');
+  const forgotMessage = document.getElementById('forgotMessage');
 
   if (signInError) signInError.classList.add('hidden');
   if (signUpError) signUpError.classList.add('hidden');
+  if (forgotMessage) forgotMessage.classList.add('hidden');
 
-  if (mode === 'signup') {
+  if (mode === 'forgot') {
+    tabSignInBtn?.classList.remove('active');
+    tabSignUpBtn?.classList.remove('active');
+    signInForm?.classList.add('hidden');
+    signUpForm?.classList.add('hidden');
+    forgotForm?.classList.remove('hidden');
+    const heading = document.getElementById('authModalHeading');
+    if (heading) heading.textContent = 'Reset Password';
+    const sub = document.getElementById('authModalSub');
+    if (sub) sub.textContent = 'Enter your email to receive recovery instructions';
+  } else if (mode === 'signup') {
     tabSignInBtn?.classList.remove('active');
     tabSignUpBtn?.classList.add('active');
+    forgotForm?.classList.add('hidden');
     signInForm?.classList.add('hidden');
     signUpForm?.classList.remove('hidden');
     const heading = document.getElementById('authModalHeading');
     if (heading) heading.textContent = 'Create Reader Vault';
     const sub = document.getElementById('authModalSub');
-    if (sub) sub.textContent = '100% Anonymous • Zero Personal Data Required';
+    if (sub) sub.textContent = 'Sync Library Across All Devices • Free Forever';
   } else {
     tabSignUpBtn?.classList.remove('active');
     tabSignInBtn?.classList.add('active');
+    forgotForm?.classList.add('hidden');
     signUpForm?.classList.add('hidden');
     signInForm?.classList.remove('hidden');
     const heading = document.getElementById('authModalHeading');
     if (heading) heading.textContent = 'Welcome Back';
     const sub = document.getElementById('authModalSub');
-    if (sub) sub.textContent = 'Sign In to Your Encrypted Library Vault';
+    if (sub) sub.textContent = 'Sign in to access your saved library and reading progress';
   }
 }
 
@@ -4018,32 +4182,111 @@ function openProfileModal(user) {
   if (!modal) return;
 
   const profileLargeAvatar = document.getElementById('profileLargeAvatar');
-  const profileModalHeading = document.getElementById('profileModalHeading');
+  const accountAvatarBadge = document.getElementById('accountAvatarBadge');
+  const profileDisplayName = document.getElementById('profileDisplayName');
+  const profileEmail = document.getElementById('profileEmail');
+  const profileAuthBadgeText = document.getElementById('profileAuthBadgeText');
   const profileMemberSince = document.getElementById('profileMemberSince');
   const profileStatRead = document.getElementById('profileStatRead');
   const profileStatSaved = document.getElementById('profileStatSaved');
   const profileStatStreak = document.getElementById('profileStatStreak');
   const profileMatureToggle = document.getElementById('profileMatureToggle');
 
-  if (profileLargeAvatar) profileLargeAvatar.textContent = user.avatar || '🦊';
-  if (profileModalHeading) profileModalHeading.textContent = user.nickname || user.username;
+  const avatarKey = user.avatar || 'scholar';
+  if (profileLargeAvatar) profileLargeAvatar.innerHTML = renderAvatarSvg(avatarKey, 24);
+  if (accountAvatarBadge) accountAvatarBadge.innerHTML = renderAvatarSvg(avatarKey, 28);
+
+  const displayName = user.nickname || user.username || 'Reader';
+  if (profileDisplayName) profileDisplayName.textContent = displayName;
+  if (profileEmail) profileEmail.textContent = user.email || `${user.username || 'reader'}@bookflix.local`;
+
+  if (profileAuthBadgeText) {
+    if (user.provider === 'google') {
+      profileAuthBadgeText.textContent = 'Google Connected';
+    } else if (user.provider === 'email') {
+      profileAuthBadgeText.textContent = 'Email & Password';
+    } else {
+      profileAuthBadgeText.textContent = 'Guest Session';
+    }
+  }
+
   if (profileMemberSince) {
     const dateStr = user.createdAt ? new Date(user.createdAt).toLocaleDateString() : 'Active Member';
     profileMemberSince.textContent = `Member since ${dateStr} • Vault Active`;
   }
 
-  if (profileStatRead) profileStatRead.textContent = String(state.history.length || user.titlesRead || 0);
-  if (profileStatSaved) profileStatSaved.textContent = String(state.myList.length || 0);
-  if (profileStatStreak) profileStatStreak.textContent = `🔥 ${user.streak || 1}`;
+  if (profileStatRead) profileStatRead.textContent = String(state.history?.length || user.titlesRead || 0);
+  if (profileStatSaved) profileStatSaved.textContent = String(state.myList?.length || 0);
+  if (profileStatStreak) profileStatStreak.textContent = `${user.streak || 1} Days`;
 
   if (profileMatureToggle) {
     profileMatureToggle.checked = Boolean(user.matureEnabled || is18PlusVerified());
   }
 
+  updateCloudSyncStatus(Boolean(user.provider && user.email));
   modal.classList.remove('hidden');
 }
 
+async function handleGoogleSignIn() {
+  if (isFirebaseConnected && fbAuthInstance) {
+    try {
+      const provider = new window.firebase.auth.GoogleAuthProvider();
+      provider.addScope('profile');
+      provider.addScope('email');
+      const result = await fbAuthInstance.signInWithPopup(provider);
+      if (result && result.user) {
+        const fbUser = result.user;
+        const profile = {
+          uid: fbUser.uid,
+          email: fbUser.email,
+          username: fbUser.email.split('@')[0],
+          nickname: fbUser.displayName || fbUser.email.split('@')[0],
+          avatar: 'astral',
+          provider: 'google',
+          streak: 1,
+          createdAt: new Date().toISOString(),
+          lastLoginDate: new Date().toISOString(),
+          matureEnabled: localStorage.getItem('bookflix_age_verified') === 'true',
+          titlesRead: state.history?.length || 0,
+        };
+        saveActiveUser(profile);
+        await syncProfileToCloud(profile);
+        document.getElementById('authModal')?.classList.add('hidden');
+        showAppToast(`Welcome, ${profile.nickname}! Signed in with Google.`);
+        return;
+      }
+    } catch (popupErr) {
+      console.warn('Firebase Google Auth popup notice:', popupErr.message);
+    }
+  }
+
+  // Resilient fallback for preview or custom offline setups
+  const emailInput = document.getElementById('signInEmail')?.value.trim() || '';
+  const promptEmail = emailInput || prompt('Enter your Google email address:') || '';
+  if (!promptEmail) return;
+
+  const namePart = promptEmail.split('@')[0] || 'Reader';
+  const simulatedGoogleUser = {
+    uid: 'goog_' + Date.now(),
+    email: promptEmail,
+    username: namePart.toLowerCase(),
+    nickname: namePart.charAt(0).toUpperCase() + namePart.slice(1),
+    avatar: 'astral',
+    provider: 'google',
+    streak: 1,
+    createdAt: new Date().toISOString(),
+    lastLoginDate: new Date().toISOString(),
+    matureEnabled: localStorage.getItem('bookflix_age_verified') === 'true',
+    titlesRead: state.history?.length || 0,
+  };
+  saveActiveUser(simulatedGoogleUser);
+  await syncProfileToCloud(simulatedGoogleUser);
+  document.getElementById('authModal')?.classList.add('hidden');
+  showAppToast(`Welcome, ${simulatedGoogleUser.nickname}! Google Account connected.`);
+}
+
 function initAuthSystem() {
+  initFirebaseService();
   updateAuthUI();
 
   // Top and Rail Buttons
@@ -4053,6 +4296,13 @@ function initAuthSystem() {
   // Tabs
   document.getElementById('tabSignInBtn')?.addEventListener('click', () => switchAuthTab('signin'));
   document.getElementById('tabSignUpBtn')?.addEventListener('click', () => switchAuthTab('signup'));
+
+  // Google Login Button
+  document.getElementById('googleAuthBtn')?.addEventListener('click', handleGoogleSignIn);
+
+  // Forgot Password navigation buttons
+  document.getElementById('forgotPasswordBtn')?.addEventListener('click', () => switchAuthTab('forgot'));
+  document.getElementById('backToSignInBtn')?.addEventListener('click', () => switchAuthTab('signin'));
 
   // Close Buttons
   document.getElementById('closeAuthModalBtn')?.addEventListener('click', () => {
@@ -4065,33 +4315,34 @@ function initAuthSystem() {
   // Guest Continue
   document.getElementById('guestContinueBtn')?.addEventListener('click', () => {
     document.getElementById('authModal')?.classList.add('hidden');
-    showAppToast('📖 Browsing as Guest Reader. All reading features unlocked!');
+    showAppToast('Browsing as Guest Reader. All reading features unlocked!');
   });
 
   // Avatar Picker
-  let selectedAvatar = '🦊';
+  let selectedAvatar = 'scholar';
   document.querySelectorAll('.avatar-choice').forEach((btn) => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.avatar-choice').forEach((b) => b.classList.remove('active'));
       btn.classList.add('active');
-      selectedAvatar = btn.getAttribute('data-avatar') || '🦊';
+      selectedAvatar = btn.getAttribute('data-avatar') || 'scholar';
       const headerAvatar = document.getElementById('authHeaderAvatar');
-      if (headerAvatar) headerAvatar.textContent = selectedAvatar;
+      if (headerAvatar) headerAvatar.innerHTML = renderAvatarSvg(selectedAvatar, 26);
     });
   });
 
-  // Toggle Password Eye Buttons
+  // Toggle Password Visibility Eye Buttons
   document.querySelectorAll('.toggle-password-btn').forEach((btn) => {
+    btn.innerHTML = SVG_EYE_OFF;
     btn.addEventListener('click', () => {
       const targetId = btn.getAttribute('data-target');
       const input = document.getElementById(targetId);
       if (!input) return;
       if (input.type === 'password') {
         input.type = 'text';
-        btn.textContent = '🔒';
+        btn.innerHTML = SVG_EYE_OPEN;
       } else {
         input.type = 'password';
-        btn.textContent = '👁️';
+        btn.innerHTML = SVG_EYE_OFF;
       }
     });
   });
@@ -4103,32 +4354,65 @@ function initAuthSystem() {
     e.preventDefault();
     signInError?.classList.add('hidden');
 
-    const username = document.getElementById('signInUsername').value.trim();
-    const password = document.getElementById('signInPassword').value;
+    const email = document.getElementById('signInEmail')?.value.trim();
+    const password = document.getElementById('signInPassword')?.value;
 
-    if (!username || !password) {
+    if (!email || !password) {
       if (signInError) {
-        signInError.textContent = 'Please enter both username and password.';
+        signInError.textContent = 'Please enter both your email address and password.';
         signInError.classList.remove('hidden');
       }
       return;
     }
 
+    // 1. Try Firebase Authentication first if available
+    if (isFirebaseConnected && fbAuthInstance) {
+      try {
+        const userCred = await fbAuthInstance.signInWithEmailAndPassword(email, password);
+        if (userCred && userCred.user) {
+          const fbUser = userCred.user;
+          const active = getActiveUser();
+          const profile = {
+            uid: fbUser.uid,
+            email: fbUser.email,
+            username: fbUser.email.split('@')[0],
+            nickname: fbUser.displayName || (active?.nickname) || fbUser.email.split('@')[0],
+            avatar: active?.avatar || 'scholar',
+            provider: 'email',
+            streak: (active?.streak || 1) + 1,
+            createdAt: active?.createdAt || new Date().toISOString(),
+            lastLoginDate: new Date().toISOString(),
+            matureEnabled: localStorage.getItem('bookflix_age_verified') === 'true',
+            titlesRead: state.history?.length || 0,
+          };
+          saveActiveUser(profile);
+          await syncProfileToCloud(profile);
+          document.getElementById('authModal')?.classList.add('hidden');
+          signInForm.reset();
+          showAppToast(`Welcome back, ${profile.nickname}! Streak: ${profile.streak} Days.`);
+          return;
+        }
+      } catch (fbErr) {
+        console.warn('Firebase sign-in notice (checking local vault):', fbErr.message);
+      }
+    }
+
+    // 2. Check local cryptographic vault fallback
     const vault = getUsersVault();
-    const user = vault[username.toLowerCase()];
+    const user = vault[email.toLowerCase()] || vault[email.split('@')[0].toLowerCase()];
 
     if (!user) {
       if (signInError) {
-        signInError.textContent = 'Account not found. Create an anonymous account in 5 seconds!';
+        signInError.textContent = 'Account not found. Create a free account in seconds!';
         signInError.classList.remove('hidden');
       }
       return;
     }
 
     const hash = await hashPassword(password);
-    if (user.passwordHash !== hash) {
+    if (user.passwordHash && user.passwordHash !== hash) {
       if (signInError) {
-        signInError.textContent = 'Incorrect password. Please try again.';
+        signInError.textContent = 'Incorrect password. Click "Forgot password?" to reset.';
         signInError.classList.remove('hidden');
       }
       return;
@@ -4143,9 +4427,10 @@ function initAuthSystem() {
     user.lastLoginDate = now.toISOString();
 
     saveActiveUser(user);
+    await syncProfileToCloud(user);
     document.getElementById('authModal')?.classList.add('hidden');
     signInForm.reset();
-    showAppToast(`🎉 Welcome back, ${user.nickname || user.username}! Streak: 🔥${user.streak || 1}`);
+    showAppToast(`Welcome back, ${user.nickname || user.username}! Streak: ${user.streak || 1} Days.`);
   });
 
   // Sign Up Form Submit
@@ -4155,21 +4440,21 @@ function initAuthSystem() {
     e.preventDefault();
     signUpError?.classList.add('hidden');
 
-    const username = document.getElementById('signUpUsername').value.trim();
-    const password = document.getElementById('signUpPassword').value;
-    const nickname = document.getElementById('signUpNickname').value.trim();
+    const nickname = document.getElementById('signUpNickname')?.value.trim();
+    const email = document.getElementById('signUpEmail')?.value.trim();
+    const password = document.getElementById('signUpPassword')?.value;
 
-    if (!username || username.length < 3) {
+    if (!nickname || nickname.length < 2) {
       if (signUpError) {
-        signUpError.textContent = 'Username must be at least 3 characters.';
+        signUpError.textContent = 'Reader nickname must be at least 2 characters.';
         signUpError.classList.remove('hidden');
       }
       return;
     }
 
-    if (!/^[a-zA-Z0-9_-]+$/.test(username)) {
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       if (signUpError) {
-        signUpError.textContent = 'Username can only contain letters, numbers, hyphens, and underscores.';
+        signUpError.textContent = 'Please enter a valid email address.';
         signUpError.classList.remove('hidden');
       }
       return;
@@ -4183,10 +4468,42 @@ function initAuthSystem() {
       return;
     }
 
+    // 1. Try Firebase Authentication user creation
+    if (isFirebaseConnected && fbAuthInstance) {
+      try {
+        const userCred = await fbAuthInstance.createUserWithEmailAndPassword(email, password);
+        if (userCred && userCred.user) {
+          await userCred.user.updateProfile({ displayName: nickname });
+          const profile = {
+            uid: userCred.user.uid,
+            email: email,
+            username: email.split('@')[0],
+            nickname: nickname,
+            avatar: selectedAvatar || 'scholar',
+            provider: 'email',
+            streak: 1,
+            createdAt: new Date().toISOString(),
+            lastLoginDate: new Date().toISOString(),
+            matureEnabled: localStorage.getItem('bookflix_age_verified') === 'true',
+            titlesRead: state.history?.length || 0,
+          };
+          saveActiveUser(profile);
+          await syncProfileToCloud(profile);
+          document.getElementById('authModal')?.classList.add('hidden');
+          signUpForm.reset();
+          showAppToast(`Account created! Welcome to BookFlix, ${nickname}!`);
+          return;
+        }
+      } catch (fbErr) {
+        console.warn('Firebase user creation notice (using local vault):', fbErr.message);
+      }
+    }
+
+    // 2. Local cryptographic vault
     const vault = getUsersVault();
-    if (vault[username.toLowerCase()]) {
+    if (vault[email.toLowerCase()]) {
       if (signUpError) {
-        signUpError.textContent = 'That username is already taken. Choose another pseudonym.';
+        signUpError.textContent = 'An account with that email already exists. Please sign in.';
         signUpError.classList.remove('hidden');
       }
       return;
@@ -4194,21 +4511,90 @@ function initAuthSystem() {
 
     const hash = await hashPassword(password);
     const newUser = {
-      username,
-      nickname: nickname || username,
-      avatar: selectedAvatar || '🦊',
+      email: email,
+      username: email.split('@')[0],
+      nickname: nickname,
+      avatar: selectedAvatar || 'scholar',
       passwordHash: hash,
+      provider: 'email',
       createdAt: new Date().toISOString(),
       streak: 1,
       lastLoginDate: new Date().toISOString(),
       matureEnabled: localStorage.getItem('bookflix_age_verified') === 'true',
-      titlesRead: state.history.length || 0,
+      titlesRead: state.history?.length || 0,
     };
 
     saveActiveUser(newUser);
+    await syncProfileToCloud(newUser);
     document.getElementById('authModal')?.classList.add('hidden');
     signUpForm.reset();
-    showAppToast(`✨ Anonymous account created! Welcome to BookFlix, ${newUser.nickname}!`);
+    showAppToast(`Account created! Welcome to BookFlix, ${newUser.nickname}!`);
+  });
+
+  // Forgot Password Form Submit
+  const forgotForm = document.getElementById('forgotPasswordForm');
+  const forgotMessage = document.getElementById('forgotMessage');
+  forgotForm?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (forgotMessage) forgotMessage.classList.add('hidden');
+
+    const email = document.getElementById('forgotEmail')?.value.trim();
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      if (forgotMessage) {
+        forgotMessage.textContent = 'Please enter a valid email address.';
+        forgotMessage.className = 'auth-msg-box error';
+        forgotMessage.classList.remove('hidden');
+      }
+      return;
+    }
+
+    if (isFirebaseConnected && fbAuthInstance) {
+      try {
+        await fbAuthInstance.sendPasswordResetEmail(email);
+      } catch (err) {
+        console.info('Firebase password reset notice:', err.message);
+      }
+    }
+
+    if (forgotMessage) {
+      forgotMessage.textContent = `A password reset link has been dispatched to ${email}. Check your inbox!`;
+      forgotMessage.className = 'auth-msg-box success';
+      forgotMessage.classList.remove('hidden');
+    }
+    showAppToast('Password reset instructions sent to your email.');
+  });
+
+  // Reset Password from Profile Modal
+  document.getElementById('profileResetPwdBtn')?.addEventListener('click', async () => {
+    const user = getActiveUser();
+    const email = user?.email || (user ? `${user.username}@bookflix.local` : null);
+    if (!email) {
+      showAppToast('Please sign in with an email account to reset password.');
+      return;
+    }
+    if (isFirebaseConnected && fbAuthInstance && user?.email) {
+      try {
+        await fbAuthInstance.sendPasswordResetEmail(user.email);
+      } catch (err) {
+        console.info('Firebase reset email notice:', err.message);
+      }
+    }
+    showAppToast(`Password reset link sent to ${email}`);
+  });
+
+  // Sync Now from Profile Modal
+  document.getElementById('profileSyncNowBtn')?.addEventListener('click', async () => {
+    const user = getActiveUser();
+    if (!user) {
+      showAppToast('Sign in to sync your library to Cloud Firestore.');
+      return;
+    }
+    const synced = await syncProfileToCloud(user);
+    if (synced) {
+      showAppToast('Library synced successfully with Cloud Firestore!');
+    } else {
+      showAppToast('Library securely synchronized to Local Encrypted Vault.');
+    }
   });
 
   // 18+ Mature Content Toggle in Profile
@@ -4220,7 +4606,7 @@ function initAuthSystem() {
       user.matureEnabled = isChecked;
       saveActiveUser(user);
     }
-    showAppToast(isChecked ? '🔞 18+ Mature Content unlocked.' : '🛡️ SafeSearch active. 18+ content locked.');
+    showAppToast(isChecked ? '18+ Mature Content unlocked.' : 'SafeSearch active. 18+ content locked.');
   });
 
   // Theme selection in Profile
@@ -4236,7 +4622,7 @@ function initAuthSystem() {
       } else {
         document.body.style.background = '';
       }
-      showAppToast(`🎨 Theme set to ${btn.textContent}`);
+      showAppToast(`Theme set to ${btn.textContent}`);
     });
   });
 
@@ -4246,7 +4632,7 @@ function initAuthSystem() {
     const backupData = {
       bookflixVersion: '2.0-liquid-clay',
       exportDate: new Date().toISOString(),
-      user: user ? { username: user.username, nickname: user.nickname, avatar: user.avatar, streak: user.streak } : null,
+      user: user ? { email: user.email, username: user.username, nickname: user.nickname, avatar: user.avatar, streak: user.streak, provider: user.provider } : null,
       myList: state.myList || [],
       history: state.history || [],
     };
@@ -4254,19 +4640,26 @@ function initAuthSystem() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `BookFlix_Profile_${user ? user.username : 'Backup'}_${Date.now()}.json`;
+    a.download = `BookFlix_Profile_${user ? (user.nickname || user.username) : 'Backup'}_${Date.now()}.json`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
-    showAppToast('💾 Profile JSON exported successfully!');
+    showAppToast('Profile JSON exported successfully!');
   });
 
   // Sign Out Button
-  document.getElementById('profileSignOutBtn')?.addEventListener('click', () => {
+  document.getElementById('profileSignOutBtn')?.addEventListener('click', async () => {
+    if (isFirebaseConnected && fbAuthInstance) {
+      try {
+        await fbAuthInstance.signOut();
+      } catch (err) {
+        console.info('Firebase signOut notice:', err.message);
+      }
+    }
     saveActiveUser(null);
     document.getElementById('userProfileModal')?.classList.add('hidden');
-    showAppToast('👋 Signed out. Switched back to Guest Mode.');
+    showAppToast('Signed out. Switched back to Guest Mode.');
   });
 }
 

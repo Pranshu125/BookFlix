@@ -110,20 +110,86 @@ async function safeFetch(url, timeoutMs = 6500, extraHeaders = {}) {
 }
 
 // ============================================================================
-// 1. MULTI-SOURCE SEARCH CONNECTORS
+// 1. MULTI-SOURCE SEARCH CONNECTORS & CURATED SUBCATEGORY SEEDS
 // ============================================================================
+
+const SUBCAT_SEEDS = {
+  marvel: ['Spider-Man', 'Avengers', 'X-Men', 'Iron Man', 'Deadpool', 'Wolverine'],
+  dc: ['Batman', 'Superman', 'Justice League', 'The Flash', 'Wonder Woman', 'Joker'],
+  darkhorse: ['Spawn', 'Invincible', 'The Walking Dead', 'Hellboy', 'Saga'],
+  image: ['Spawn', 'Invincible', 'The Walking Dead', 'Hellboy', 'Saga'],
+  indie: ['Watchmen', 'The Sandman', 'V for Vendetta', 'Maus', 'Locke and Key'],
+  adult_comics: ['The Boys', 'Preacher', 'Sin City', 'Heavy Metal', 'Vertigo', 'Hellblazer'],
+  shonen: ['One Piece', 'Naruto', 'Jujutsu Kaisen', 'Bleach', 'Dragon Ball', 'Demon Slayer'],
+  seinen: ['Berserk', 'Vinland Saga', 'Monster', 'Tokyo Ghoul', 'Vagabond', 'Kingdom'],
+  manhwa: ['Solo Leveling', 'Tower of God', 'Omniscient Reader', 'The Beginning After the End'],
+  romance: ['Kaguya-sama', 'Horimiya', 'Fruits Basket', 'Spy x Family'],
+  isekai: ['Mushoku Tensei', 'Re:Zero', 'Slime Tensei', 'Overlord'],
+  adult_manga: ['Berserk', 'Gantz', 'Highschool of the Dead', 'Prison School'],
+  fiction: ['1984 George Orwell', 'The Great Gatsby', 'To Kill a Mockingbird', 'The Hobbit'],
+  scifi: ['Dune Frank Herbert', 'Foundation Asimov', 'Neuromancer Gibson', 'Fahrenheit 451'],
+  mystery: ['The Adventures of Sherlock Holmes', 'Agatha Christie Poirot', 'Gone Girl'],
+  cs_ai: ['Automate the Boring Stuff with Python', 'Deep Learning Goodfellow', 'Introduction to Algorithms'],
+  stem: ['University Physics', 'Calculus Stewart', 'Organic Chemistry'],
+  psychology: ['Atomic Habits', 'Thinking Fast and Slow', 'Psychology of Money'],
+  adult_romance: ['Haunting Adeline', 'Fifty Shades of Grey', 'Twisted Love'],
+  classics: ['The Adventures of Sherlock Holmes', 'Dracula Bram Stoker', 'Pride and Prejudice'],
+  scifi_audio: ['Dune', 'The War of the Worlds', 'The Time Machine'],
+  thriller_audio: ['The Tell-Tale Heart', 'The Murders in the Rue Morgue', 'Dr Jekyll and Mr Hyde'],
+  philosophy: ['The Art of War Sun Tzu', 'Meditations Marcus Aurelius', 'Tao Te Ching'],
+  adult_audio: ['The Picture of Dorian Gray', 'Carmilla', 'Frankenstein'],
+};
+
+function extractSearchTerms(query) {
+  if (!query) return [];
+  const clean = query.trim().toLowerCase();
+  if (SUBCAT_SEEDS[clean]) {
+    return SUBCAT_SEEDS[clean];
+  }
+  const parts = query
+    .split(/\s+OR\s+|\|/i)
+    .map((s) => s.trim().replace(/^["'(]+|[)"']+$/g, ''))
+    .filter(Boolean);
+  return parts.length > 0 ? parts : [query.trim()];
+}
 
 /**
  * Connector A: Open Library + Z-Lib / eBook-Hunter Indexer
  */
 async function searchOpenLibrary(query, limit = 16, page = 1) {
   try {
-    const url = `https://openlibrary.org/search.json?q=${encodeURIComponent(
-      query
-    )}&limit=${limit}&page=${page}&fields=key,title,author_name,first_publish_year,cover_i,ia,subject,ratings_average,number_of_pages_median`;
-    const res = await safeFetch(url, 6000);
-    if (!res.ok) return [];
-    const data = await res.json();
+    const terms = extractSearchTerms(query);
+    let docs = [];
+
+    if (terms.length > 1) {
+      const seeds = terms.slice(0, 3);
+      const perSeed = Math.max(4, Math.floor(limit / seeds.length));
+      const subLists = await Promise.all(
+        seeds.map(async (seed) => {
+          try {
+            const url = `https://openlibrary.org/search.json?q=${encodeURIComponent(
+              seed
+            )}&limit=${perSeed}&page=${page}&fields=key,title,author_name,first_publish_year,cover_i,ia,subject,ratings_average,number_of_pages_median`;
+            const res = await safeFetch(url, 6000);
+            if (!res.ok) return [];
+            const data = await res.json();
+            return data.docs || [];
+          } catch {
+            return [];
+          }
+        })
+      );
+      docs = subLists.flat();
+    } else {
+      const url = `https://openlibrary.org/search.json?q=${encodeURIComponent(
+        query
+      )}&limit=${limit}&page=${page}&fields=key,title,author_name,first_publish_year,cover_i,ia,subject,ratings_average,number_of_pages_median`;
+      const res = await safeFetch(url, 6000);
+      if (res.ok) {
+        const data = await res.json();
+        docs = data.docs || [];
+      }
+    }
     const ebookMirrors = ['z-lib.gd', 'ebook-hunter.org', 'oceanofpdf.com', 'annas-archive.gl'];
     return (data.docs || []).map((doc, idx) => {
       const iaList = Array.isArray(doc.ia) ? doc.ia : [];
@@ -293,15 +359,29 @@ async function searchAcademicPdfs(query, limit = 8, page = 1) {
  */
 async function searchComics(query, limit = 16, page = 1) {
   const comicBadges = ['getcomics.org', 'globalcomix.com', 'xoxocomic.com', 'comicbookplus.com', 'batcave.biz'];
+  const terms = extractSearchTerms(query);
 
   const gcPromise = (async () => {
     try {
-      const url = `https://getcomics.org/wp-json/wp/v2/posts?search=${encodeURIComponent(
-        query
-      )}&per_page=${Math.min(limit, 12)}&page=${page}&_embed=1`;
-      const res = await safeFetch(url, 6000);
-      if (!res.ok) return [];
-      const posts = await res.json();
+      const searchSeeds = terms.length > 1 ? terms.slice(0, 4) : [query];
+      const perSeedLimit = terms.length > 1 ? Math.max(3, Math.floor(limit / searchSeeds.length)) : Math.min(limit, 12);
+
+      const seedResults = await Promise.all(
+        searchSeeds.map(async (seed) => {
+          try {
+            const url = `https://getcomics.org/wp-json/wp/v2/posts?search=${encodeURIComponent(
+              seed
+            )}&per_page=${perSeedLimit}&page=${page}&_embed=1`;
+            const res = await safeFetch(url, 6000);
+            if (!res.ok) return [];
+            return await res.json();
+          } catch {
+            return [];
+          }
+        })
+      );
+
+      const posts = seedResults.flat();
       return posts.map((post, idx) => {
         const html = post.content?.rendered || '';
         const excerpt = decodeHtml(post.excerpt?.rendered || '');
@@ -335,7 +415,8 @@ async function searchComics(query, limit = 16, page = 1) {
 
   const iaComicsPromise = (async () => {
     try {
-      const q = `mediatype:texts AND (collection:comicbooks OR subject:comics OR subject:"graphic novels") AND (${query})`;
+      const iaQ = terms.length > 1 ? terms.map((t) => `"${t}"`).join(' OR ') : query;
+      const q = `mediatype:texts AND (collection:comicbooks OR subject:comics OR subject:"graphic novels") AND (${iaQ})`;
       const url = `https://archive.org/advancedsearch.php?q=${encodeURIComponent(
         q
       )}&fl[]=identifier&fl[]=title&fl[]=creator&fl[]=year&fl[]=description&sort[]=downloads+desc&rows=${limit}&page=${page}&output=json`;
@@ -396,6 +477,7 @@ async function searchManga(query, limit = 20, page = 1) {
     'kagane.org',
   ];
 
+  const terms = extractSearchTerms(query);
   const isGenericBrowse = /^(manga|popular|action|fantasy|adventure|romance|shonen|manhwa)$/i.test(
     query.trim()
   );
@@ -491,6 +573,26 @@ async function searchManga(query, limit = 20, page = 1) {
         return subLists.flat().map((m, idx) => mapMdItem(m, idx));
       }
 
+      if (terms.length > 1) {
+        const seeds = terms.slice(0, 5);
+        const subLists = await Promise.all(
+          seeds.map(async (seed) => {
+            try {
+              const url = `https://api.mangadex.org/manga?title=${encodeURIComponent(
+                seed
+              )}&limit=5&includes[]=cover_art&includes[]=author`;
+              const res = await safeFetch(url, 6000, { 'User-Agent': 'BookFlix/1.0' });
+              if (!res.ok) return [];
+              const data = await res.json();
+              return data.data || [];
+            } catch {
+              return [];
+            }
+          })
+        );
+        return subLists.flat().map((m, idx) => mapMdItem(m, idx));
+      }
+
       const mdLimit = Math.min(limit, 24);
       const mdOffset = Math.max(0, (page - 1) * mdLimit);
       const url = `https://api.mangadex.org/manga?title=${encodeURIComponent(
@@ -508,9 +610,10 @@ async function searchManga(query, limit = 20, page = 1) {
   // 2. Internet Archive Full-Volume Manga Tankobon PDFs/CBZs
   const iaMangaPromise = (async () => {
     try {
+      const iaQ = terms.length > 1 ? terms.map((t) => `"${t}"`).join(' OR ') : query;
       const q = isGenericBrowse
         ? `mediatype:texts AND subject:manga`
-        : `mediatype:texts AND (subject:manga OR title:manga) AND (${query})`;
+        : `mediatype:texts AND (subject:manga OR title:manga) AND (${iaQ})`;
       const url = `https://archive.org/advancedsearch.php?q=${encodeURIComponent(
         q
       )}&fl[]=identifier&fl[]=title&fl[]=creator&fl[]=year&fl[]=description&sort[]=downloads+desc&rows=16&page=${page}&output=json`;
@@ -1432,11 +1535,11 @@ function proxyRemoteStream(targetUrl, req, res, forceDownloadFilename = null, re
 }
 
 process.on('uncaughtException', (err) => {
-  console.error('⚠️ [UncaughtException Handled]:', err.message);
+  console.error('[UncaughtException Handled]:', err.message);
 });
 
 process.on('unhandledRejection', (reason) => {
-  console.error('⚠️ [UnhandledRejection Handled]:', reason);
+  console.error('[UnhandledRejection Handled]:', reason);
 });
 
 // ============================================================================
@@ -1536,15 +1639,18 @@ async function requestHandler(req, res) {
 
   // API 2: Multi-Source Unified Search (With Smart Relevance Ranking & Deep Pagination)
   if (pathname === '/api/search') {
-    const q = (reqUrl.searchParams.get('q') || '').trim();
+    const rawQ = (reqUrl.searchParams.get('q') || '').trim();
+    const subcat = (reqUrl.searchParams.get('subcat') || '').trim().toLowerCase();
     const category = reqUrl.searchParams.get('type') || 'all'; // all | ebook | comic | manga | audiobook
     const page = Math.max(1, parseInt(reqUrl.searchParams.get('page') || '1', 10) || 1);
+
+    const q = rawQ || (subcat && SUBCAT_SEEDS[subcat] ? SUBCAT_SEEDS[subcat].join(' OR ') : '');
     if (!q) {
       res.writeHead(400, { 'Content-Type': 'application/json' });
       return res.end(JSON.stringify({ error: 'Missing query parameter q' }));
     }
 
-    const cacheKey = `search_v3:${category}:${q.toLowerCase()}:p${page}`;
+    const cacheKey = `search_v4:${category}:${subcat}:${q.toLowerCase()}:p${page}`;
     const cached = getCache(cacheKey);
     if (cached) {
       res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
@@ -1708,7 +1814,7 @@ async function requestHandler(req, res) {
             contact: (data.contact || 'Anonymous Reader').slice(0, 100),
             timestamp: new Date().toISOString(),
           };
-          console.log(`📩 [BookFlix Feedback]: [${feedbackEntry.category}] ${feedbackEntry.subject} (${ticketId})`);
+          console.log(`[BookFlix Feedback]: [${feedbackEntry.category}] ${feedbackEntry.subject} (${ticketId})`);
           res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
           return res.end(
             JSON.stringify({
@@ -1887,8 +1993,8 @@ if (require.main === module) {
 
     server.listen(PORT, '0.0.0.0', () => {
       console.log(`\n==================================================================`);
-      console.log(`🎬 BookFlix Server running at http://localhost:${PORT} (0.0.0.0:${PORT})`);
-      console.log(`📚 28 E-Book, Comic, Manga & Audiobook Backends Active!`);
+      console.log(`BookFlix Server running at http://localhost:${PORT} (0.0.0.0:${PORT})`);
+      console.log(`28 E-Book, Comic, Manga & Audiobook Backends Active!`);
       console.log(`==================================================================\n`);
     });
   }
