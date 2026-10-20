@@ -39,7 +39,7 @@
   <meta name="apple-mobile-web-app-title" content="BookFlix" />
   <meta name="mobile-web-app-capable" content="yes" />
 
-  <link rel="manifest" href="/manifest.json?v=53" />
+  <link rel="manifest" href="/manifest.json?v=54" />
   <link rel="icon" type="image/svg+xml" href="/logo.svg?v=20" />
   <link rel="icon" type="image/x-icon" href="/favicon.ico?v=20" />
   <link rel="shortcut icon" href="/favicon.ico?v=20" />
@@ -57,8 +57,8 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js" defer></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js" defer></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js" defer></script>
-  <script src="/firebase-config.js?v=53" defer></script>
-  <link rel="stylesheet" href="/styles.css?v=53" />
+  <script src="/firebase-config.js?v=54" defer></script>
+  <link rel="stylesheet" href="/styles.css?v=54" />
 
   <!-- Structured Data (JSON-LD): Organization, WebSite (SearchAction), WebApplication -->
   <script type="application/ld+json">
@@ -371,11 +371,47 @@
           <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
           </svg>
+          <span id="myListCount" class="rail-badge">0</span>
         </span>
-        <span class="rail-label">My Space <span id="myListCount" class="rail-badge">0</span></span>
+        <span class="rail-label">My Space</span>
       </button>
 
-      <button class="rail-item rail-auth-btn" id="railAuthBtn" data-tab="account" title="Account & Reading Profile">
+      <div class="rail-divider"></div>
+
+      <button class="rail-item" id="lanQrBtn" title="Connect Devices (Local Wi-Fi QR Code)">
+        <span class="rail-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="7" height="7"></rect>
+            <rect x="14" y="3" width="7" height="7"></rect>
+            <rect x="14" y="14" width="7" height="7"></rect>
+            <rect x="3" y="14" width="7" height="7"></rect>
+            <path d="M7 7h.01M17 7h.01M7 17h.01"></path>
+          </svg>
+        </span>
+        <span class="rail-label">Connect Devices</span>
+      </button>
+
+      <button class="rail-item" id="topFeedbackBtn" title="Send Feedback &amp; Request Titles">
+        <span class="rail-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+          </svg>
+        </span>
+        <span class="rail-label">Feedback</span>
+      </button>
+
+      <button class="rail-item rail-install-btn hidden" id="railInstallAppBtn" title="Install BookFlix as an App">
+        <span class="rail-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+        </span>
+        <span class="rail-label">Install App</span>
+      </button>
+
+      <button class="rail-item rail-auth-btn" id="railAuthBtn" data-tab="account" title="Account &amp; Reading Profile">
         <span class="rail-icon">
           <span class="rail-user-avatar" id="railUserAvatar">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
@@ -384,18 +420,7 @@
             </svg>
           </span>
         </span>
-        <span class="rail-label" id="railAuthLabel">Sign In</span>
-      </button>
-
-      <button class="rail-item rail-install-btn hidden" id="railInstallAppBtn" title="Install BookFlix as an App">
-        <span class="rail-icon">
-          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-            <polyline points="7 10 12 15 17 10"></polyline>
-            <line x1="12" y1="15" x2="12" y2="3"></line>
-          </svg>
-        </span>
-        <span class="rail-label">Install App</span>
+        <span class="rail-label" id="railAuthLabel">Account</span>
       </button>
     </nav>
   </aside>
@@ -442,85 +467,50 @@
         </div>
       </div>
 
-      <!-- APPLE LIQUID GLASS TOP UTILITY BAR -->
-      <div class="top-utility-bar" id="topUtilityBar">
-        <!-- Single Quick Category Segmented Control -->
-        <div class="top-segmented-control" id="topSegmentedControl" role="tablist" aria-label="Media Category">
-          <button type="button" class="seg-pill active" data-cat="home">All</button>
-          <button type="button" class="seg-pill" data-cat="ebook">Books</button>
-          <button type="button" class="seg-pill" data-cat="manga">Manga</button>
-          <button type="button" class="seg-pill" data-cat="comic">Comics</button>
-          <button type="button" class="seg-pill" data-cat="audiobook">Audiobooks</button>
-        </div>
+      <!-- Apple Liquid Glass Quick Actions Strip (Single Sleek Row) -->
+      <div class="top-quick-actions" id="topQuickActions">
+        <button type="button" class="top-action-btn" id="topResumeBtn" title="Resume your last opened title">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+          </svg>
+          <span id="topResumeLabel">Resume Read</span>
+        </button>
 
-        <!-- Quick Actions: Auth/Profile + Surprise Me + Resume + Host on Local Network QR -->
-        <div class="top-quick-actions">
-          <button type="button" class="top-action-btn top-auth-btn" id="topAuthBtn" title="Account & Reading Profile">
-            <span class="top-avatar-icon" id="topUserAvatar">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                <circle cx="12" cy="7" r="4"></circle>
-              </svg>
-            </span>
-            <span id="topAuthLabel">Sign In</span>
-          </button>
+        <button type="button" class="top-action-btn" id="surpriseMeBtn" title="Open a random featured book, manga, or audiobook">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="16 3 21 3 21 8"></polyline>
+            <line x1="4" y1="20" x2="21" y2="3"></line>
+            <polyline points="21 16 21 21 16 21"></polyline>
+            <line x1="15" y1="15" x2="21" y2="21"></line>
+            <line x1="4" y1="4" x2="9" y2="9"></line>
+          </svg>
+          <span>Surprise Me</span>
+        </button>
 
-          <button type="button" class="top-action-btn" id="surpriseMeBtn" title="Open a random featured book, manga, or audiobook">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="16 3 21 3 21 8"></polyline>
-              <line x1="4" y1="20" x2="21" y2="3"></line>
-              <polyline points="21 16 21 21 16 21"></polyline>
-              <line x1="15" y1="15" x2="21" y2="21"></line>
-              <line x1="4" y1="4" x2="9" y2="9"></line>
+        <button type="button" class="top-action-btn top-icon-only-btn" id="topShareAppBtn" title="Share BookFlix">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="18" cy="5" r="3"></circle>
+            <circle cx="6" cy="12" r="3"></circle>
+            <circle cx="18" cy="19" r="3"></circle>
+            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+            <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+          </svg>
+          <span class="sr-only">Share</span>
+        </button>
+
+        <button type="button" class="top-action-btn top-avatar-btn" id="topAuthBtn" title="Account &amp; Reading Profile">
+          <span class="top-avatar-icon" id="topUserAvatar">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
             </svg>
-            <span>Surprise Me</span>
-          </button>
+          </span>
+          <span id="topAuthLabel" class="top-auth-text">Sign In</span>
+        </button>
 
-          <button type="button" class="top-action-btn" id="topResumeBtn" title="Resume your last opened title">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
-              <polygon points="5 3 19 12 5 21 5 3"></polygon>
-            </svg>
-            <span id="topResumeLabel">Resume Read</span>
-          </button>
-
-          <button type="button" class="top-action-btn top-qr-btn" id="lanQrBtn" title="Share on Local Wi-Fi (QR Code & Link for Phone / Tablet / Other PC)">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="3" y="3" width="7" height="7"></rect>
-              <rect x="14" y="3" width="7" height="7"></rect>
-              <rect x="14" y="14" width="7" height="7"></rect>
-              <rect x="3" y="14" width="7" height="7"></rect>
-              <path d="M7 7h.01M17 7h.01M7 17h.01"></path>
-            </svg>
-            <span>Devices &amp; QR</span>
-          </button>
-
-          <button type="button" class="top-action-btn" id="topShareAppBtn" title="Share BookFlix via WhatsApp or System Share">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="18" cy="5" r="3"></circle>
-              <circle cx="6" cy="12" r="3"></circle>
-              <circle cx="18" cy="19" r="3"></circle>
-              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
-              <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
-            </svg>
-            <span>Share</span>
-          </button>
-
-          <button type="button" class="top-action-btn" id="topFeedbackBtn" title="Send Feedback, Request Books, or Report Issues">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-            </svg>
-            <span>Feedback</span>
-          </button>
-
-          <button type="button" class="top-action-btn install-pwa-btn hidden" id="topInstallAppBtn" title="Install BookFlix as an App on Phone, Tablet or PC">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-              <polyline points="7 10 12 15 17 10"></polyline>
-              <line x1="12" y1="15" x2="12" y2="3"></line>
-            </svg>
-            <span>Install App</span>
-          </button>
-        </div>
+        <!-- Compatibility hooks for scripts -->
+        <div id="topSegmentedControl" class="hidden" style="display:none;" aria-hidden="true"><button type="button" class="seg-pill active" data-cat="home"></button></div>
+        <button type="button" class="hidden" id="topInstallAppBtn" style="display:none;" aria-hidden="true"></button>
       </div>
     </div>
 
@@ -2455,6 +2445,6 @@
     </div>
   </div>
 
-  <script src="/app.js?v=53"></script>
+  <script src="/app.js?v=54"></script>
 </body>
 </html>

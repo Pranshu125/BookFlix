@@ -1,12 +1,12 @@
-// BookFlix PWA Service Worker (v53 - Dedicated Account & Reader Profile Liquid Glass Page)
-const CACHE_NAME = 'bookflix-cache-v53';
+// BookFlix PWA Service Worker (v54 - Streamlined Responsive Top Bar, Redistributed Utilities & Non-Clipping Rail)
+const CACHE_NAME = 'bookflix-cache-v54';
 const PRECACHE_ASSETS = [
   '/',
-  '/index.html?v=53',
-  '/styles.css?v=53',
-  '/app.js?v=53',
-  '/firebase-config.js?v=53',
-  '/manifest.json?v=53',
+  '/index.html?v=54',
+  '/styles.css?v=54',
+  '/app.js?v=54',
+  '/firebase-config.js?v=54',
+  '/manifest.json?v=54',
   '/logo.svg?v=20',
   '/favicon.ico?v=20',
   '/favicon.svg?v=20',

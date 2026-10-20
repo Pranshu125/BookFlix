@@ -1641,12 +1641,17 @@ function handleTabSwitch(tab) {
   document.getElementById('accountProfileSection')?.classList.add('hidden');
 
   const subcatRibbon = document.getElementById('subcatRibbonContainer');
-  if (subcatRibbon) subcatRibbon.classList.remove('hidden');
-
-  renderSubcategoryRibbon(tab);
+  const isCatalogShelf = ['home', 'ebook', 'manga', 'comic', 'audiobook'].includes(tab);
+  if (subcatRibbon) {
+    if (isCatalogShelf) {
+      subcatRibbon.classList.remove('hidden');
+      renderSubcategoryRibbon(tab);
+    } else {
+      subcatRibbon.classList.add('hidden');
+    }
+  }
 
   if (tab === 'account') {
-    if (subcatRibbon) subcatRibbon.classList.add('hidden');
     showAccountProfilePage();
   } else if (tab === 'search') {
     heroSection.classList.remove('hidden');
@@ -3089,7 +3094,28 @@ function updateModalBookmarkButton() {
 function renderMyListGrid() {
   myListGrid.innerHTML = '';
   if (state.myList.length === 0) {
-    myListGrid.innerHTML = `<p style="grid-column: 1/-1; color: var(--text-secondary);">Your space is empty. Click Save on any Book, Manga, Comic, or Audiobook to keep it here.</p>`;
+    myListGrid.innerHTML = `
+      <div class="my-space-empty-card">
+        <div class="empty-icon-halo">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+          </svg>
+        </div>
+        <h3 class="empty-title">Your Personal Space is Empty</h3>
+        <p class="empty-desc">
+          Save your favorite books, manga series, comics, or audiobooks while browsing to build your private, instant-streaming offline library.
+        </p>
+        <button type="button" class="btn btn-primary btn-sm empty-explore-btn" id="emptyExploreBtn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+          </svg>
+          <span>Explore All Shelves</span>
+        </button>
+      </div>
+    `;
+    document.getElementById('emptyExploreBtn')?.addEventListener('click', () => {
+      document.querySelector('.rail-item[data-tab="home"]')?.click();
+    });
     return;
   }
   state.myList.forEach((item) => {

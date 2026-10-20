@@ -348,8 +348,15 @@ select {
   flex-direction: column;
   gap: 6px;
   margin: 18px 0 0 0;
-  padding: 0 12px;
+  padding: 0 10px;
   flex: 1;
+}
+
+.rail-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.08);
+  margin: 8px 4px;
+  flex-shrink: 0;
 }
 
 .rail-auth-btn {
@@ -361,9 +368,10 @@ select {
 .rail-item {
   display: flex;
   align-items: center;
-  gap: 16px;
+  justify-content: center;
+  gap: 0;
   height: 48px;
-  padding: 0 14px;
+  padding: 0;
   border-radius: 15px;
   background: transparent;
   border: 1px solid transparent;
@@ -375,7 +383,14 @@ select {
   position: relative;
 }
 
+.hotstar-rail:hover .rail-item {
+  justify-content: flex-start;
+  padding: 0 14px;
+  gap: 14px;
+}
+
 .rail-icon {
+  position: relative;
   width: 24px;
   height: 24px;
   flex-shrink: 0;
@@ -385,13 +400,38 @@ select {
   transition: transform 0.28s var(--spring), color 0.28s var(--spring);
 }
 
+.rail-badge {
+  position: absolute;
+  top: -4px;
+  right: -8px;
+  min-width: 17px;
+  height: 17px;
+  padding: 0 4px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #06b6d4, #6366f1);
+  border: 1.5px solid #0b0c10;
+  color: #ffffff;
+  font-size: 0.65rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+  pointer-events: none;
+  line-height: 1;
+}
+
 .rail-label {
-  font-size: 0.94rem;
+  font-size: 0.92rem;
   font-weight: 500;
   letter-spacing: -0.01em;
   opacity: 0;
-  transform: translateX(-10px);
-  transition: opacity 0.26s var(--spring), transform 0.26s var(--spring), font-weight 0.2s;
+  width: 0;
+  overflow: hidden;
+  pointer-events: none;
+  white-space: nowrap;
+  transform: translateX(-8px);
+  transition: opacity 0.24s var(--spring), transform 0.24s var(--spring), width 0.26s ease;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -399,6 +439,9 @@ select {
 
 .hotstar-rail:hover .rail-label {
   opacity: 1;
+  width: auto;
+  overflow: visible;
+  pointer-events: auto;
   transform: translateX(0);
 }
 
@@ -410,7 +453,7 @@ select {
 }
 
 .rail-item:hover .rail-icon {
-  transform: scale(1.12);
+  transform: scale(1.1);
   color: #ffffff;
 }
 
@@ -435,16 +478,6 @@ select {
   border-radius: 0 4px 4px 0;
   background: #ffffff;
   box-shadow: 0 0 12px rgba(255, 255, 255, 0.9);
-}
-
-.rail-badge {
-  background: rgba(255, 255, 255, 0.22);
-  border: 1px solid rgba(255, 255, 255, 0.28);
-  color: #fff;
-  font-size: 0.7rem;
-  font-weight: 600;
-  padding: 1px 7px;
-  border-radius: 99px;
 }
 
 /* ============================================================================
@@ -810,94 +843,38 @@ select {
   text-transform: uppercase;
 }
 
-/* Apple Liquid Glass Top Utility & Quick Switcher Dock */
-.top-utility-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 14px;
-  flex: 1;
-  min-width: 0;
-}
-
-.top-segmented-control {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  padding: 4px;
-  border-radius: 999px;
-  background: linear-gradient(
-    165deg,
-    rgba(255, 255, 255, 0.15) 0%,
-    rgba(255, 255, 255, 0.06) 48%,
-    rgba(255, 255, 255, 0.025) 100%
-  );
-  backdrop-filter: blur(34px) saturate(200%);
-  -webkit-backdrop-filter: blur(34px) saturate(200%);
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  box-shadow: var(--glass-highlight-strong), 0 12px 28px rgba(0, 0, 0, 0.45);
-}
-
-.seg-pill {
-  background: transparent;
-  color: rgba(245, 245, 247, 0.74);
-  border: none;
-  padding: 6px 15px;
-  border-radius: 999px;
-  font-family: var(--font-sans);
-  font-size: 0.78rem;
-  font-weight: 600;
-  white-space: nowrap;
-  cursor: pointer;
-  transition: all 0.26s var(--spring);
-}
-
-.seg-pill:hover {
-  color: #ffffff;
-  background: rgba(255, 255, 255, 0.11);
-}
-
-.seg-pill.active {
-  background: linear-gradient(180deg, #ffffff 0%, #e4ecf7 100%);
-  color: #08090e;
-  font-weight: 700;
-  box-shadow:
-    inset 0 1px 0 #ffffff,
-    0 6px 16px rgba(0, 0, 0, 0.44),
-    0 0 16px rgba(255, 255, 255, 0.24);
-}
-
+/* Apple Liquid Glass Top Quick Action Strip */
 .top-quick-actions {
   display: flex;
   align-items: center;
   gap: 8px;
   flex-shrink: 0;
+  flex-wrap: nowrap;
 }
 
 .top-action-btn {
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  padding: 8px 15px;
+  padding: 8px 14px;
   border-radius: 999px;
   background: linear-gradient(
     165deg,
-    rgba(255, 255, 255, 0.15) 0%,
-    rgba(255, 255, 255, 0.055) 50%,
-    rgba(255, 255, 255, 0.025) 100%
+    rgba(255, 255, 255, 0.12) 0%,
+    rgba(255, 255, 255, 0.045) 50%,
+    rgba(255, 255, 255, 0.02) 100%
   );
-  backdrop-filter: blur(30px) saturate(195%);
-  -webkit-backdrop-filter: blur(30px) saturate(195%);
-  border: 1px solid rgba(255, 255, 255, 0.21);
-  box-shadow: var(--glass-highlight-strong), 0 10px 26px rgba(0, 0, 0, 0.42);
+  backdrop-filter: blur(24px) saturate(190%);
+  -webkit-backdrop-filter: blur(24px) saturate(190%);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.2);
   color: rgba(255, 255, 255, 0.92);
   font-family: var(--font-sans);
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   font-weight: 600;
   white-space: nowrap;
   cursor: pointer;
-  transition: all 0.26s var(--spring);
-  max-width: 210px;
+  transition: all 0.24s var(--spring);
 }
 
 .top-action-btn span {
@@ -909,30 +886,95 @@ select {
 .top-action-btn:hover {
   background: linear-gradient(
     165deg,
-    rgba(255, 255, 255, 0.24) 0%,
-    rgba(255, 255, 255, 0.1) 50%,
-    rgba(255, 255, 255, 0.05) 100%
+    rgba(255, 255, 255, 0.2) 0%,
+    rgba(255, 255, 255, 0.08) 50%,
+    rgba(255, 255, 255, 0.04) 100%
   );
-  border-color: rgba(255, 255, 255, 0.38);
+  border-color: rgba(255, 255, 255, 0.32);
   color: #ffffff;
-  transform: translateY(-2px);
-  box-shadow: var(--glass-highlight-strong), 0 14px 32px rgba(0, 0, 0, 0.52);
+  transform: translateY(-1.5px);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
-.top-qr-btn {
-  background: linear-gradient(145deg, rgba(56, 189, 248, 0.24), rgba(129, 140, 248, 0.18));
-  border-color: rgba(125, 211, 252, 0.44);
-  color: #f0f9ff;
+.top-icon-only-btn {
+  padding: 8px 11px;
 }
 
-.top-qr-btn:hover {
-  background: linear-gradient(145deg, rgba(56, 189, 248, 0.36), rgba(129, 140, 248, 0.28));
-  border-color: rgba(125, 211, 252, 0.68);
+.top-avatar-btn {
+  padding: 4px 12px 4px 5px;
+  gap: 8px;
 }
 
-@media (max-width: 1120px) {
-  .top-utility-bar {
+.top-avatar-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.3), rgba(168, 85, 247, 0.3));
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+}
+
+.top-auth-text {
+  max-width: 110px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+@media (max-width: 1040px) {
+  .top-search-strip {
+    padding: 12px 20px;
+    gap: 10px;
+  }
+
+  .top-action-btn span:not(.sr-only) {
+    display: none;
+  }
+
+  .top-action-btn {
+    padding: 8px 10px;
+  }
+
+  .top-avatar-btn {
+    padding: 4px;
+  }
+
+  .top-auth-text {
+    display: none !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .top-search-strip {
+    padding: 10px 14px;
+    gap: 8px;
     flex-wrap: wrap;
+  }
+
+  .search-wrapper {
+    order: 2;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .mobile-brand-pill {
+    order: 1;
+  }
+
+  .top-quick-actions {
+    order: 1;
+    margin-left: auto;
   }
 }
 
@@ -1727,6 +1769,71 @@ select {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
   gap: 20px;
+}
+
+/* My Space Liquid Glass Empty State */
+.my-space-empty-card {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 56px 28px;
+  margin: 28px auto;
+  max-width: 580px;
+  width: 100%;
+  box-sizing: border-box;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.05) 0%,
+    rgba(255, 255, 255, 0.015) 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 26px;
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.empty-icon-halo {
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.16), rgba(99, 102, 241, 0.18));
+  border: 1px solid rgba(56, 189, 248, 0.32);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #38bdf8;
+  margin-bottom: 20px;
+  box-shadow: 0 0 28px rgba(56, 189, 248, 0.22);
+}
+
+.empty-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 8px 0;
+  letter-spacing: -0.3px;
+}
+
+.empty-desc {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0 0 22px 0;
+  max-width: 440px;
+}
+
+.empty-explore-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 22px;
+  border-radius: 999px;
+  font-size: 0.86rem;
+  font-weight: 700;
 }
 
 /* JioHotstar Style Genre Tiles */
@@ -5559,10 +5666,11 @@ html[data-device="phone"] .bottom-audio-bar .sp-bar-play-btn {
 ============================================================================ */
 @media (min-width: 768px) and (max-width: 1180px) {
   :root {
-    --rail-width: 92px;
+    --rail-width: 74px;
   }
 
   .hotstar-rail {
+    width: 74px;
     justify-content: flex-start;
   }
 
@@ -5578,36 +5686,43 @@ html[data-device="phone"] .bottom-audio-bar .sp-bar-play-btn {
   }
 
   .hotstar-rail .rail-item {
-    flex-direction: column;
     justify-content: center;
-    gap: 4px;
-    height: 58px;
-    padding: 6px 4px;
-    text-align: center;
+    gap: 0;
+    height: 48px;
+    padding: 0;
   }
 
   .hotstar-rail .rail-label {
-    opacity: 0.92;
-    transform: none;
-    font-size: 0.66rem;
-    font-weight: 600;
+    opacity: 0;
+    width: 0;
+    overflow: hidden;
+    pointer-events: none;
+    transform: translateX(-8px);
   }
 
   .hotstar-rail .rail-brand .rail-label {
     opacity: 0;
   }
 
+  .hotstar-rail:hover {
+    width: 240px;
+  }
+
   .hotstar-rail:hover .rail-item {
     flex-direction: row;
     justify-content: flex-start;
     padding: 0 14px;
-    height: 50px;
+    height: 48px;
     gap: 14px;
   }
 
   .hotstar-rail:hover .rail-label {
     font-size: 0.92rem;
     opacity: 1;
+    width: auto;
+    overflow: visible;
+    pointer-events: auto;
+    transform: translateX(0);
   }
 
   .top-search-strip {
