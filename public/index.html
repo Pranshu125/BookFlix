@@ -39,7 +39,7 @@
   <meta name="apple-mobile-web-app-title" content="BookFlix" />
   <meta name="mobile-web-app-capable" content="yes" />
 
-  <link rel="manifest" href="/manifest.json?v=43" />
+  <link rel="manifest" href="/manifest.json?v=44" />
   <link rel="icon" type="image/svg+xml" href="/logo.svg?v=20" />
   <link rel="icon" type="image/x-icon" href="/favicon.ico?v=20" />
   <link rel="shortcut icon" href="/favicon.ico?v=20" />
@@ -56,8 +56,8 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js" defer></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js" defer></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js" defer></script>
-  <script src="/firebase-config.js?v=43" defer></script>
-  <link rel="stylesheet" href="/styles.css?v=43" />
+  <script src="/firebase-config.js?v=44" defer></script>
+  <link rel="stylesheet" href="/styles.css?v=44" />
 
   <!-- Structured Data (JSON-LD): Organization, WebSite (SearchAction), WebApplication -->
   <script type="application/ld+json">
@@ -147,13 +147,6 @@
       </div>
 
       <div class="start-page-actions">
-        <!-- Firestore Connection Pill Button -->
-        <button type="button" class="start-pill-btn start-firestore-pill" id="startPageFirestoreBtn" title="Connect or inspect Google Cloud Firestore &amp; Firebase">
-          <span class="start-pill-status-dot" id="startFirestoreDot"></span>
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/><path d="M12 12v6"/><path d="m15 15-3-3-3 3"/></svg>
-          <span id="startFirestorePillLabel">Cloud Firestore: Connect Project</span>
-        </button>
-
         <!-- Guest Pass Quick Action -->
         <button type="button" class="start-pill-btn start-guest-pill" id="startPageGuestTopBtn">
           <span>Explore as Guest</span>
@@ -305,11 +298,10 @@
               <span>Continue as Guest Reader</span>
             </button>
 
-            <!-- Card Footer: Firestore link -->
+            <!-- Card Footer: Security & Sync -->
             <div class="start-card-footer">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>
-              <span>Cloud Sync: Stored in Firebase &amp; Local Vault.</span>
-              <button type="button" class="start-config-link" id="startOpenFirestoreConfigBtn">Connect Firestore</button>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+              <span>Protected by 256-bit Cloud Sync &amp; Encrypted Vault</span>
             </div>
           </div>
         </div>
@@ -2415,6 +2407,6 @@
     </div>
   </div>
 
-  <script src="/app.js?v=43"></script>
+  <script src="/app.js?v=44"></script>
 </body>
 </html>

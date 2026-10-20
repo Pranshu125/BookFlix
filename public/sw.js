@@ -1,12 +1,12 @@
-// BookFlix PWA Service Worker (v43 - Independent Firebase & Refined Age Gate)
-const CACHE_NAME = 'bookflix-cache-v43';
+// BookFlix PWA Service Worker (v44 - Clean Consumer Gateway & Independent Firebase)
+const CACHE_NAME = 'bookflix-cache-v44';
 const PRECACHE_ASSETS = [
   '/',
-  '/index.html?v=43',
-  '/styles.css?v=43',
-  '/app.js?v=43',
-  '/firebase-config.js?v=43',
-  '/manifest.json?v=43',
+  '/index.html?v=44',
+  '/styles.css?v=44',
+  '/app.js?v=44',
+  '/firebase-config.js?v=44',
+  '/manifest.json?v=44',
   '/logo.svg?v=20',
   '/favicon.ico?v=20',
   '/favicon.svg?v=20',
