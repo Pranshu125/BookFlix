@@ -7900,43 +7900,35 @@ html.auth-required-gateway .dedicated-starting-page {
 
 .start-card-header {
   display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 14px;
-}
-
-.start-card-avatar {
-  width: 38px;
-  height: 38px;
-  border-radius: 12px;
-  background: linear-gradient(135deg, rgba(56, 189, 248, 0.28) 0%, rgba(99, 102, 241, 0.28) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  box-shadow: 0 6px 18px rgba(56, 189, 248, 0.3), inset 1px 1px 2px rgba(255, 255, 255, 0.4);
-  display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: #38bdf8;
-  flex-shrink: 0;
+  text-align: center;
+  margin-bottom: 16px;
 }
 
 .start-card-title-group {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
 .start-card-title {
   font-family: var(--font-display);
-  font-size: 1.22rem;
+  font-size: 1.36rem;
   font-weight: 800;
   color: #ffffff;
-  margin: 0;
+  margin: 0 0 3px;
   line-height: 1.2;
+  text-align: center;
 }
 
 .start-card-subtitle {
-  font-size: 0.74rem;
-  color: rgba(255, 255, 255, 0.58);
-  margin-top: 1px;
+  font-size: 0.78rem;
+  color: rgba(226, 232, 240, 0.65);
+  margin: 0;
+  text-align: center;
 }
 
 /* Liquid Glass Google Sign In Button */
@@ -8156,18 +8148,6 @@ html.auth-required-gateway .dedicated-starting-page {
 .start-submit-btn:hover {
   transform: translateY(-1px) scale(1.01);
   box-shadow: 0 12px 32px rgba(56, 189, 248, 0.6), inset 0 1.5px 2px rgba(255, 255, 255, 0.75);
-}
-
-.start-card-footer {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 7px;
-  font-size: 0.7rem;
-  color: rgba(255, 255, 255, 0.45);
-  margin-top: 12px;
-  padding-top: 10px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .start-config-link {
