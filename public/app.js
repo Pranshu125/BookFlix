@@ -787,11 +787,8 @@ function setupEventListeners() {
         executeSearch(q, type, heading, subcat);
       };
 
-      if (isMature && !is18PlusVerified()) {
-        promptAgeGate(runTileSearch);
-      } else {
-        runTileSearch();
-      }
+      // Browse catalog smoothly without intrusive popups
+      runTileSearch();
     });
   });
 
@@ -2168,7 +2165,22 @@ function renderSourcesDirectory(sources) {
 // 3. UNIVERSAL ITEM MODAL & DEEP STREAM RESOLVER
 // ============================================================================
 
+function isItemMature(item) {
+  if (!item) return false;
+  if (item.mature === true || item.is18Plus === true) return true;
+  if (['adult_comics', 'adult_manga', 'adult_romance', 'adult_audio', 'mature_hub'].includes(item.subcat)) return true;
+  if (currentActiveSubId && ['adult_comics', 'adult_manga', 'adult_romance', 'adult_audio', 'mature_hub'].includes(currentActiveSubId)) return true;
+  const text = `${item.title || ''} ${item.description || ''} ${item.sourceBadge || ''} ${item.subcat || ''} ${(item.subjects || []).join(' ')}`.toLowerCase();
+  return /\b(18\+|erotica|ecchi|hentai|explicit|mature content|dark romance novel|vertigo mature)\b/i.test(text);
+}
+
 async function openItemModal(item, autoPlayAudio = false) {
+  // Ask ONCE only when opening any comic/book of this 18+ category (if not already verified)
+  if (isItemMature(item) && !is18PlusVerified()) {
+    promptAgeGate(() => openItemModal(item, autoPlayAudio));
+    return;
+  }
+
   state.currentItem = item;
   state.currentResolved = null;
   saveToHistory(item);
@@ -3805,11 +3817,8 @@ function renderSubcategoryRibbon(category = 'home', activeSubId = null) {
         executeSearch(sub.query, searchCat, sub.heading, sub.id);
       };
 
-      if (sub.is18Plus && !is18PlusVerified()) {
-        promptAgeGate(runSubSearch);
-      } else {
-        runSubSearch();
-      }
+      // Browse subcategories smoothly without intrusive popups
+      runSubSearch();
     });
 
     ribbon.appendChild(chip);
@@ -4339,6 +4348,10 @@ function setupStartingPageAuth() {
 
   // Guest buttons
   const guestHandler = () => {
+    const ageConfirmed = Boolean(document.getElementById('startAgeConfirmCheck')?.checked);
+    if (ageConfirmed) {
+      localStorage.setItem('bookflix_age_verified', 'true');
+    }
     const guestUser = {
       uid: 'guest_' + Date.now(),
       email: 'guest@bookflix.local',
@@ -4349,7 +4362,7 @@ function setupStartingPageAuth() {
       streak: 1,
       createdAt: new Date().toISOString(),
       lastLoginDate: new Date().toISOString(),
-      matureEnabled: localStorage.getItem('bookflix_age_verified') === 'true',
+      matureEnabled: ageConfirmed || localStorage.getItem('bookflix_age_verified') === 'true',
       titlesRead: 0,
     };
     completeAuthentication(guestUser, 'Welcome to BookFlix! Enjoy open streaming.');
@@ -4391,6 +4404,10 @@ function setupStartingPageAuth() {
     const email = document.getElementById('startEmailInput')?.value.trim();
     const pwd = document.getElementById('startPasswordInput')?.value;
     const nickname = document.getElementById('startNameInput')?.value.trim();
+    const ageConfirmed = Boolean(document.getElementById('startAgeConfirmCheck')?.checked);
+    if (ageConfirmed) {
+      localStorage.setItem('bookflix_age_verified', 'true');
+    }
 
     if (!email || !pwd) {
       if (feedback) {
@@ -4535,17 +4552,17 @@ function setupFirestoreManagerEvents() {
     document.getElementById('firestoreConfigModal')?.classList.add('hidden');
   });
 
-  // Pre-fill with Exammind template
-  document.getElementById('fillExammindPresetBtn')?.addEventListener('click', () => {
+  // Pre-fill with BookFlix template
+  document.getElementById('fillBookflixTemplateBtn')?.addEventListener('click', () => {
     const input = document.getElementById('firestoreConfigInput');
     if (input) {
       input.value = `const firebaseConfig = {
-  apiKey: "Paste_Your_Web_API_Key_From_Firebase_Console",
-  authDomain: "exammind-074518.firebaseapp.com",
-  projectId: "exammind-074518",
-  storageBucket: "exammind-074518.appspot.com",
-  messagingSenderId: "102938475610",
-  appId: "1:102938475610:web:bf9a1b2c3d4e5f60"
+  apiKey: "PASTE_YOUR_API_KEY_HERE",
+  authDomain: "your-bookflix-project.firebaseapp.com",
+  projectId: "your-bookflix-project",
+  storageBucket: "your-bookflix-project.appspot.com",
+  messagingSenderId: "123456789012",
+  appId: "1:123456789012:web:abcdef123456"
 };`;
       input.focus();
       input.select();

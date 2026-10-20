@@ -39,7 +39,7 @@
   <meta name="apple-mobile-web-app-title" content="BookFlix" />
   <meta name="mobile-web-app-capable" content="yes" />
 
-  <link rel="manifest" href="/manifest.json?v=42" />
+  <link rel="manifest" href="/manifest.json?v=43" />
   <link rel="icon" type="image/svg+xml" href="/logo.svg?v=20" />
   <link rel="icon" type="image/x-icon" href="/favicon.ico?v=20" />
   <link rel="shortcut icon" href="/favicon.ico?v=20" />
@@ -56,8 +56,8 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js" defer></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js" defer></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js" defer></script>
-  <script src="/firebase-config.js?v=42" defer></script>
-  <link rel="stylesheet" href="/styles.css?v=42" />
+  <script src="/firebase-config.js?v=43" defer></script>
+  <link rel="stylesheet" href="/styles.css?v=43" />
 
   <!-- Structured Data (JSON-LD): Organization, WebSite (SearchAction), WebApplication -->
   <script type="application/ld+json">
@@ -279,6 +279,14 @@
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                   </button>
                 </div>
+              </div>
+
+              <!-- 18+ Age Confirmation Checkbox (Ask once at login/signup) -->
+              <div class="start-age-confirm-wrap">
+                <label class="start-checkbox-label">
+                  <input type="checkbox" id="startAgeConfirmCheck" />
+                  <span>I confirm I am 18 years of age or older (Unlocks mature catalogs)</span>
+                </label>
               </div>
 
               <!-- Submit Button -->
@@ -2286,13 +2294,13 @@
           </div>
         </div>
 
-        <!-- Quick 1-Click Template for Exammind / BookFlix -->
+        <!-- Quick 1-Click Independent Template for BookFlix -->
         <div class="firestore-presets-banner">
           <div class="preset-label-text">
-            <span>Detected Firebase project from your console: <strong>exammind-074518</strong></span>
+            <span>Independent Firebase project setup at <a href="https://console.firebase.google.com/" target="_blank" rel="noopener noreferrer">console.firebase.google.com</a></span>
           </div>
-          <button type="button" class="btn btn-secondary btn-xs" id="fillExammindPresetBtn" title="Auto-fill with your Exammind project">
-            <span>Use Exammind Template</span>
+          <button type="button" class="btn btn-secondary btn-xs" id="fillBookflixTemplateBtn" title="Auto-fill with BookFlix project template">
+            <span>Use BookFlix Template</span>
           </button>
         </div>
 
@@ -2342,10 +2350,10 @@
             <strong>How to get your config in 60 seconds:</strong>
           </div>
           <ol class="firestore-steps-list">
-            <li>Open <a href="https://console.firebase.google.com/" target="_blank" rel="noopener noreferrer">console.firebase.google.com</a> and click your project (<strong>Exammind</strong> or create <strong>BookFlix</strong>).</li>
-            <li>Click <strong>Project Settings</strong> (gear icon) &gt; <strong>General</strong> &gt; scroll down to <strong>Your apps</strong> and click the Web <strong>&lt;/&gt;</strong> icon.</li>
+            <li>Open <a href="https://console.firebase.google.com/" target="_blank" rel="noopener noreferrer">console.firebase.google.com</a> and click <strong>Create a new Firebase project</strong> (name it <strong>BookFlix</strong>).</li>
+            <li>Under <strong>Authentication</strong> &gt; <strong>Sign-in method</strong>, enable <strong>Google</strong> (and optionally Email/Password).</li>
+            <li>Click <strong>Project Settings</strong> (gear icon) &gt; <strong>General</strong> &gt; scroll to <strong>Your apps</strong> and click the Web <strong>&lt;/&gt;</strong> icon to register the web app.</li>
             <li>Copy the <code>firebaseConfig</code> code snippet and paste it into the box above.</li>
-            <li>Under <strong>Authentication</strong> &gt; <strong>Sign-in method</strong>, enable <strong>Google</strong> and <strong>Email/Password</strong>.</li>
             <li>Under <strong>Firestore Database</strong>, click <strong>Create database</strong> (choose Test mode for immediate access).</li>
           </ol>
         </div>
@@ -2407,6 +2415,6 @@
     </div>
   </div>
 
-  <script src="/app.js?v=42"></script>
+  <script src="/app.js?v=43"></script>
 </body>
 </html>

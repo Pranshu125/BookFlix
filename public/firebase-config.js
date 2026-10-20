@@ -1,7 +1,8 @@
-// BookFlix Firebase & Cloud Firestore Configuration
-// You can edit this file directly or paste your config via the in-app "Connect Firestore" button.
+// BookFlix Independent Firebase & Cloud Firestore Configuration
+// 1. Create a dedicated project named "BookFlix" at https://console.firebase.google.com/
+// 2. Enable Google Sign-In under Authentication > Sign-in method
+// 3. Paste your Web App credentials below or via the in-app "Connect Firestore" button:
 window.__BOOKFLIX_FIREBASE_CONFIG__ = window.__BOOKFLIX_FIREBASE_CONFIG__ || {
-  // Example for project exammind-074518 or your BookFlix project:
   apiKey: "",
   authDomain: "",
   projectId: "",

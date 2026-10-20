@@ -1,12 +1,12 @@
-// BookFlix PWA Service Worker (v42 - Dedicated Starting Page & Firestore Hub)
-const CACHE_NAME = 'bookflix-cache-v42';
+// BookFlix PWA Service Worker (v43 - Independent Firebase & Refined Age Gate)
+const CACHE_NAME = 'bookflix-cache-v43';
 const PRECACHE_ASSETS = [
   '/',
-  '/index.html?v=42',
-  '/styles.css?v=42',
-  '/app.js?v=42',
-  '/firebase-config.js?v=42',
-  '/manifest.json?v=42',
+  '/index.html?v=43',
+  '/styles.css?v=43',
+  '/app.js?v=43',
+  '/firebase-config.js?v=43',
+  '/manifest.json?v=43',
   '/logo.svg?v=20',
   '/favicon.ico?v=20',
   '/favicon.svg?v=20',
