@@ -1,12 +1,12 @@
-// BookFlix PWA Service Worker (v57 - Hide Footer Contact Support & SEO Links)
-const CACHE_NAME = 'bookflix-cache-v57';
+// BookFlix PWA Service Worker (v58 - Remove Configure Firestore button)
+const CACHE_NAME = 'bookflix-cache-v58';
 const PRECACHE_ASSETS = [
   '/',
-  '/index.html?v=57',
-  '/styles.css?v=57',
-  '/app.js?v=57',
-  '/firebase-config.js?v=57',
-  '/manifest.json?v=57',
+  '/index.html?v=58',
+  '/styles.css?v=58',
+  '/app.js?v=58',
+  '/firebase-config.js?v=58',
+  '/manifest.json?v=58',
   '/logo.svg?v=20',
   '/favicon.ico?v=20',
   '/favicon.svg?v=20',
