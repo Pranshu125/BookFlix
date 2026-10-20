@@ -1,12 +1,12 @@
-// BookFlix PWA Service Worker (v45 - Single 18+ Verification & Clean UI)
-const CACHE_NAME = 'bookflix-cache-v45';
+// BookFlix PWA Service Worker (v46 - Firebase Project bookflix-7168c Integration)
+const CACHE_NAME = 'bookflix-cache-v46';
 const PRECACHE_ASSETS = [
   '/',
-  '/index.html?v=45',
-  '/styles.css?v=45',
-  '/app.js?v=45',
-  '/firebase-config.js?v=45',
-  '/manifest.json?v=45',
+  '/index.html?v=46',
+  '/styles.css?v=46',
+  '/app.js?v=46',
+  '/firebase-config.js?v=46',
+  '/manifest.json?v=46',
   '/logo.svg?v=20',
   '/favicon.ico?v=20',
   '/favicon.svg?v=20',

@@ -4284,7 +4284,11 @@ async function handleGoogleSignIn() {
       }
     } catch (popupErr) {
       console.warn('Firebase Google Auth popup notice:', popupErr.message);
-      showAppToast('Google Sign-In notice: ' + popupErr.message);
+      if (popupErr.code === 'auth/unauthorized-domain') {
+        showAppToast('Firebase Auth: Please authorize ' + window.location.hostname + ' in Firebase Console > Authentication > Settings > Authorized domains.');
+      } else if (popupErr.code !== 'auth/popup-closed-by-user') {
+        showAppToast('Google Sign-In notice: ' + popupErr.message);
+      }
       return;
     }
   }
@@ -4465,17 +4469,19 @@ async function processSignIn(emailOrUsername, password, feedbackEl) {
   }
 
   // Check local cryptographic vault
-  const localVault = getVaultUsers();
+  const vault = getUsersVault();
   const lower = emailOrUsername.toLowerCase();
-  const matched = localVault.find((u) => u.email.toLowerCase() === lower || u.username.toLowerCase() === lower);
+  const matched = vault[lower] || Object.values(vault).find((u) => (u.email && u.email.toLowerCase() === lower) || (u.username && u.username.toLowerCase() === lower));
 
   if (!matched) {
+    const pwdHash = await hashPassword(password);
     const newProfile = {
       uid: 'user_' + Date.now(),
       email: emailOrUsername.includes('@') ? emailOrUsername : `${emailOrUsername}@bookflix.local`,
       username: emailOrUsername.split('@')[0].toLowerCase(),
       nickname: emailOrUsername.split('@')[0],
       avatar: 'scholar',
+      passwordHash: pwdHash,
       provider: 'email',
       streak: 1,
       createdAt: new Date().toISOString(),
@@ -4488,7 +4494,8 @@ async function processSignIn(emailOrUsername, password, feedbackEl) {
     return;
   }
 
-  if (matched.passwordHash !== hashPassword(password)) {
+  const pwdHash = await hashPassword(password);
+  if (matched.passwordHash && matched.passwordHash !== pwdHash) {
     if (feedbackEl) {
       feedbackEl.textContent = 'Incorrect password. Please verify and try again.';
       feedbackEl.className = 'form-feedback error-msg';
@@ -4537,6 +4544,7 @@ async function processSignUp(nickname, email, password, feedbackEl) {
   }
 
   // Create in Local Vault
+  const pwdHash = await hashPassword(password);
   const profile = {
     uid: 'user_' + Date.now(),
     email: email.includes('@') ? email : `${email}@bookflix.local`,
@@ -4544,7 +4552,7 @@ async function processSignUp(nickname, email, password, feedbackEl) {
     nickname: nickname || email.split('@')[0],
     avatar: 'scholar',
     provider: 'email',
-    passwordHash: hashPassword(password),
+    passwordHash: pwdHash,
     streak: 1,
     createdAt: new Date().toISOString(),
     lastLoginDate: new Date().toISOString(),
@@ -4552,9 +4560,9 @@ async function processSignUp(nickname, email, password, feedbackEl) {
     titlesRead: 0,
   };
 
-  const users = getVaultUsers();
-  users.push(profile);
-  saveVaultUsers(users);
+  const currentVault = getUsersVault();
+  currentVault[profile.email.toLowerCase()] = profile;
+  saveUsersVault(currentVault);
   completeAuthentication(profile, `Welcome to BookFlix, ${profile.nickname}! Encrypted account created.`);
 }
 
