@@ -1,12 +1,12 @@
-// BookFlix PWA Service Worker (v51 - Centered Auth Card Title & Streamlined Clean Form)
-const CACHE_NAME = 'bookflix-cache-v51';
+// BookFlix PWA Service Worker (v52 - Balanced Sidebar Natural Top Flow & Clean Search Strip)
+const CACHE_NAME = 'bookflix-cache-v52';
 const PRECACHE_ASSETS = [
   '/',
-  '/index.html?v=51',
-  '/styles.css?v=51',
-  '/app.js?v=51',
-  '/firebase-config.js?v=51',
-  '/manifest.json?v=51',
+  '/index.html?v=52',
+  '/styles.css?v=52',
+  '/app.js?v=52',
+  '/firebase-config.js?v=52',
+  '/manifest.json?v=52',
   '/logo.svg?v=20',
   '/favicon.ico?v=20',
   '/favicon.svg?v=20',
