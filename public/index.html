@@ -52,7 +52,7 @@
   <link rel="dns-prefetch" href="https://archive.org" />
   <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Outfit:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" defer></script>
-  <link rel="stylesheet" href="/styles.css?v=37" />
+  <link rel="stylesheet" href="/styles.css?v=38" />
 
   <!-- Structured Data (JSON-LD): Organization, WebSite (SearchAction), WebApplication -->
   <script type="application/ld+json">
@@ -760,6 +760,21 @@
         </div>
 
         <div class="modal-actions-right">
+          <button type="button" class="btn-icon fullscreen-toggle-btn" id="readerFullscreenBtn" title="Toggle Fullscreen Comic / Book (F)" aria-label="Toggle Fullscreen">
+            <svg class="icon-enter-fullscreen" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="15 3 21 3 21 9"></polyline>
+              <polyline points="9 21 3 21 3 15"></polyline>
+              <line x1="21" y1="3" x2="14" y2="10"></line>
+              <line x1="3" y1="21" x2="10" y2="14"></line>
+            </svg>
+            <svg class="icon-exit-fullscreen hidden" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="4 14 10 14 10 20"></polyline>
+              <polyline points="20 10 14 10 14 4"></polyline>
+              <line x1="14" y1="10" x2="21" y2="3"></line>
+              <line x1="3" y1="21" x2="10" y2="14"></line>
+            </svg>
+            <span class="fullscreen-label">Fullscreen</span>
+          </button>
           <button class="btn-icon" id="modalBookmarkBtn" title="Save to My Space">Save</button>
           <button class="btn-close" id="closeModalBtn" title="Close (Esc)" aria-label="Close">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
@@ -811,20 +826,43 @@
 
         <!-- 2. INTERACTIVE 2-PAGE FLIP READER PANE -->
         <div class="reader-pane hidden" id="paneBookReader">
+          <div class="comic-floating-bar">
+            <button type="button" class="comic-fullscreen-floating-btn" id="comicFloatingFullscreenBtn" title="Fullscreen Comic View (F)">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 3 21 3 21 9"></polyline>
+                <polyline points="9 21 3 21 3 15"></polyline>
+                <line x1="21" y1="3" x2="14" y2="10"></line>
+                <line x1="3" y1="21" x2="10" y2="14"></line>
+              </svg>
+              <span>Fullscreen Comic</span>
+            </button>
+          </div>
           <iframe
             id="bookReaderIframe"
             class="full-reader-iframe"
             allowfullscreen
-            title="Interactive Book Reader"
+            title="Interactive Book &amp; Comic Reader"
           ></iframe>
         </div>
 
         <!-- 3. PDF STREAM PANE -->
         <div class="reader-pane hidden" id="panePdfReader">
+          <div class="comic-floating-bar">
+            <button type="button" class="comic-fullscreen-floating-btn" id="pdfFloatingFullscreenBtn" title="Fullscreen PDF Comic View (F)">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 3 21 3 21 9"></polyline>
+                <polyline points="9 21 3 21 3 15"></polyline>
+                <line x1="21" y1="3" x2="14" y2="10"></line>
+                <line x1="3" y1="21" x2="10" y2="14"></line>
+              </svg>
+              <span>Fullscreen View</span>
+            </button>
+          </div>
           <iframe
             id="pdfReaderIframe"
             class="full-reader-iframe"
-            title="PDF Viewer"
+            allowfullscreen
+            title="PDF Comic &amp; Document Viewer"
           ></iframe>
         </div>
 
@@ -867,6 +905,7 @@
               <label>View</label>
               <button class="theme-chip active" data-mangalayout="webtoon" id="layoutWebtoonBtn">Vertical Scroll</button>
               <button class="theme-chip" data-mangalayout="Wide" id="layoutWideBtn">Expanded Width</button>
+              <button class="theme-chip manga-fullscreen-chip" id="mangaFullscreenBtn">⛶ Fullscreen</button>
             </div>
           </div>
           <div class="manga-pages-container" id="mangaPagesContainer">
@@ -2150,6 +2189,6 @@
     </div>
   </div>
 
-  <script src="/app.js?v=37"></script>
+  <script src="/app.js?v=38"></script>
 </body>
 </html>

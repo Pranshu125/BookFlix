@@ -7232,6 +7232,154 @@ html[data-device="tv"] .results-grid {
   }
 }
 
+/* ============================================================================
+   COMIC & READER FULLSCREEN IMMERSIVE SYSTEM
+============================================================================ */
+.fullscreen-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: var(--clay-radius-pill);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #ffffff;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.22s var(--ease);
+  box-shadow: var(--clay-shadow-sm);
+}
+
+.fullscreen-toggle-btn:hover {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.35) 0%, rgba(6, 182, 212, 0.35) 100%);
+  border-color: #38bdf8;
+  box-shadow: 0 4px 16px rgba(56, 189, 248, 0.35);
+  transform: translateY(-1.5px);
+}
+
+.fullscreen-toggle-btn svg {
+  flex-shrink: 0;
+}
+
+.comic-floating-bar {
+  position: absolute;
+  top: 14px;
+  right: 18px;
+  z-index: 60;
+  pointer-events: auto;
+}
+
+.comic-fullscreen-floating-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: rgba(8, 10, 18, 0.85);
+  backdrop-filter: blur(24px) saturate(190%);
+  -webkit-backdrop-filter: blur(24px) saturate(190%);
+  border: 1px solid rgba(99, 102, 241, 0.45);
+  color: #ffffff;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6), 0 0 16px rgba(99, 102, 241, 0.28);
+  transition: all 0.25s var(--ease);
+}
+
+.comic-fullscreen-floating-btn:hover {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.9) 0%, rgba(6, 182, 212, 0.9) 100%);
+  border-color: #38bdf8;
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.7), 0 0 24px rgba(56, 189, 248, 0.45);
+}
+
+.comic-fullscreen-floating-btn:active {
+  transform: scale(0.96);
+}
+
+.manga-fullscreen-chip {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.25) 0%, rgba(6, 182, 212, 0.25) 100%) !important;
+  border-color: rgba(99, 102, 241, 0.5) !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+}
+
+.manga-fullscreen-chip:hover {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.45) 0%, rgba(6, 182, 212, 0.45) 100%) !important;
+  border-color: #38bdf8 !important;
+}
+
+.full-comic-btn {
+  background: linear-gradient(135deg, #f43f5e 0%, #a855f7 50%, #6366f1 100%) !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+  color: #ffffff !important;
+  box-shadow: 0 6px 20px rgba(244, 63, 94, 0.35) !important;
+}
+
+/* Immersive Fullscreen Reader Window Override */
+.modal-window.is-immersive-fullscreen,
+#readerModal:fullscreen .modal-window,
+#readerModal:-webkit-full-screen .modal-window {
+  width: 100vw !important;
+  max-width: 100vw !important;
+  height: 100vh !important;
+  height: 100dvh !important;
+  max-height: 100vh !important;
+  max-height: 100dvh !important;
+  border-radius: 0 !important;
+  border: none !important;
+  margin: 0 !important;
+  box-shadow: none !important;
+  background: #040508 !important;
+}
+
+.modal-window.is-immersive-fullscreen .modal-header,
+#readerModal:fullscreen .modal-header,
+#readerModal:-webkit-full-screen .modal-header {
+  padding: 8px 18px;
+  background: rgba(7, 9, 16, 0.92);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.modal-window.is-immersive-fullscreen .modal-body,
+#readerModal:fullscreen .modal-body,
+#readerModal:-webkit-full-screen .modal-body {
+  height: calc(100vh - 54px) !important;
+  height: calc(100dvh - 54px) !important;
+  padding: 0 !important;
+  background: #000000 !important;
+}
+
+.modal-window.is-immersive-fullscreen .reader-pane,
+#readerModal:fullscreen .reader-pane,
+#readerModal:-webkit-full-screen .reader-pane {
+  height: 100% !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.modal-window.is-immersive-fullscreen .full-reader-iframe,
+#readerModal:fullscreen .full-reader-iframe,
+#readerModal:-webkit-full-screen .full-reader-iframe {
+  width: 100% !important;
+  height: 100% !important;
+  border: none !important;
+  border-radius: 0 !important;
+}
+
+.modal-window.is-immersive-fullscreen .manga-pages-container,
+#readerModal:fullscreen .manga-pages-container,
+#readerModal:-webkit-full-screen .manga-pages-container {
+  height: calc(100vh - 60px) !important;
+  height: calc(100dvh - 60px) !important;
+  padding: 10px 0 !important;
+  background: #000000 !important;
+}
+
+
 
 
 

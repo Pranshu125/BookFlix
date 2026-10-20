@@ -1,11 +1,11 @@
-// BookFlix PWA Service Worker (v37 - Minimalist Logo & Aurora Theme Refresh)
-const CACHE_NAME = 'bookflix-cache-v37';
+// BookFlix PWA Service Worker (v38 - Comic Immersive Fullscreen Mode)
+const CACHE_NAME = 'bookflix-cache-v38';
 const PRECACHE_ASSETS = [
   '/',
-  '/index.html?v=37',
-  '/styles.css?v=37',
-  '/app.js?v=37',
-  '/manifest.json?v=37',
+  '/index.html?v=38',
+  '/styles.css?v=38',
+  '/app.js?v=38',
+  '/manifest.json?v=38',
   '/logo.svg?v=20',
   '/favicon.ico?v=20',
   '/favicon.svg?v=20',

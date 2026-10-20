@@ -883,11 +883,50 @@ function setupEventListeners() {
   readerModal.addEventListener('click', (e) => {
     if (e.target === readerModal) closeReaderModal();
   });
+
+  // Fullscreen Comic & Reader Toggle Handlers
+  document.getElementById('readerFullscreenBtn')?.addEventListener('click', () => toggleReaderFullscreen());
+  document.getElementById('comicFloatingFullscreenBtn')?.addEventListener('click', () => toggleReaderFullscreen());
+  document.getElementById('pdfFloatingFullscreenBtn')?.addEventListener('click', () => toggleReaderFullscreen());
+  document.getElementById('mangaFullscreenBtn')?.addEventListener('click', () => toggleReaderFullscreen());
+
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
+      const modalWindow = document.querySelector('#readerModal .modal-window');
+      if (modalWindow?.classList.contains('is-immersive-fullscreen')) {
+        toggleReaderFullscreen(false);
+        return;
+      }
       if (!readerModal.classList.contains('hidden')) closeReaderModal();
       if (lanModal && !lanModal.classList.contains('hidden')) lanModal.classList.add('hidden');
+    } else if ((e.key === 'f' || e.key === 'F') && !readerModal.classList.contains('hidden')) {
+      const activeTag = document.activeElement?.tagName;
+      if (activeTag !== 'INPUT' && activeTag !== 'TEXTAREA' && activeTag !== 'SELECT') {
+        e.preventDefault();
+        toggleReaderFullscreen();
+      }
     }
+  });
+
+  ['fullscreenchange', 'webkitfullscreenchange', 'mozfullscreenchange', 'MSFullscreenChange'].forEach((ev) => {
+    document.addEventListener(ev, () => {
+      const isFs = Boolean(
+        document.fullscreenElement ||
+        document.webkitFullscreenElement ||
+        document.mozFullScreenElement ||
+        document.msFullscreenElement
+      );
+      const modalWindow = document.querySelector('#readerModal .modal-window');
+      if (!isFs && modalWindow) {
+        modalWindow.classList.remove('is-immersive-fullscreen');
+        readerModal?.classList.remove('is-immersive-mode');
+        updateFullscreenButtonUI(false);
+      } else if (isFs && modalWindow && readerModal && !readerModal.classList.contains('hidden')) {
+        modalWindow.classList.add('is-immersive-fullscreen');
+        readerModal.classList.add('is-immersive-mode');
+        updateFullscreenButtonUI(true);
+      }
+    });
   });
 
   modalBookmarkBtn.addEventListener('click', () => {
@@ -2224,6 +2263,13 @@ function populateModalActions(item, resolved, autoPlayAudio = false) {
       }
     );
     instantReadButtons.appendChild(readMangaBtn);
+
+    const fullMangaBtn = createActionButton('⛶ Read Fullscreen Manga', 'btn-primary full-comic-btn', () => {
+      switchReaderMode('mangareader');
+      loadMangaChapterByIndex(0);
+      toggleReaderFullscreen(true);
+    });
+    instantReadButtons.appendChild(fullMangaBtn);
   }
 
   // 2. AUDIOBOOK MULTI-CHAPTER STUDIO PLAYER
@@ -2257,12 +2303,38 @@ function populateModalActions(item, resolved, autoPlayAudio = false) {
   }
 
   // 3. INTERACTIVE 2-PAGE FLIP BOOK / COMIC READER
+  const isComicOrGraphicNovel =
+    item.type === 'comic' ||
+    item.type === 'manga' ||
+    item.type === 'graphic-novel' ||
+    item.category === 'comics' ||
+    item.subcategory === 'marvel' ||
+    item.subcategory === 'dc' ||
+    item.subcategory === 'manga' ||
+    /comic|graphic novel|marvel|batman|spider-man|superman|avengers|manga|webtoon/i.test(
+      (item.title || '') + ' ' + (item.genre || '') + ' ' + (item.category || '')
+    );
+
   if (resolved.embedReaderUrl) {
     tabBookReader.classList.remove('hidden');
-    const flipBtn = createActionButton('Open Page-Flip Reader', 'btn-primary', () => {
-      bookReaderIframe.src = resolved.embedReaderUrl;
-      switchReaderMode('bookreader');
-    });
+
+    if (isComicOrGraphicNovel) {
+      const fullComicBtn = createActionButton('⛶ Read in Fullscreen', 'btn-primary full-comic-btn', () => {
+        bookReaderIframe.src = resolved.embedReaderUrl;
+        switchReaderMode('bookreader');
+        toggleReaderFullscreen(true);
+      });
+      instantReadButtons.appendChild(fullComicBtn);
+    }
+
+    const flipBtn = createActionButton(
+      isComicOrGraphicNovel ? 'Open Windowed Reader' : 'Open Page-Flip Reader',
+      isComicOrGraphicNovel ? 'btn-secondary' : 'btn-primary',
+      () => {
+        bookReaderIframe.src = resolved.embedReaderUrl;
+        switchReaderMode('bookreader');
+      }
+    );
     instantReadButtons.appendChild(flipBtn);
   }
 
@@ -2273,6 +2345,15 @@ function populateModalActions(item, resolved, autoPlayAudio = false) {
     const proxiedPdfDownload = `/api/download?url=${encodeURIComponent(
       resolved.pdfUrl
     )}&filename=${encodeURIComponent(safeTitle + '.pdf')}`;
+
+    if (isComicOrGraphicNovel && !resolved.embedReaderUrl) {
+      const fullPdfComicBtn = createActionButton('⛶ Read in Fullscreen', 'btn-primary full-comic-btn', () => {
+        pdfReaderIframe.src = proxiedPdfStream;
+        switchReaderMode('pdfreader');
+        toggleReaderFullscreen(true);
+      });
+      instantReadButtons.appendChild(fullPdfComicBtn);
+    }
 
     const pdfReadBtn = createActionButton('Open PDF Viewer', 'btn-primary', () => {
       pdfReaderIframe.src = proxiedPdfStream;
@@ -2370,9 +2451,120 @@ function switchReaderMode(mode) {
 }
 
 function closeReaderModal() {
+  toggleReaderFullscreen(false);
   readerModal.classList.add('hidden');
   bookReaderIframe.src = 'about:blank';
   pdfReaderIframe.src = 'about:blank';
+}
+
+function toggleReaderFullscreen(forceState = null) {
+  const modalWindow = document.querySelector('#readerModal .modal-window');
+  if (!modalWindow) return;
+
+  const isCurrentFs =
+    modalWindow.classList.contains('is-immersive-fullscreen') ||
+    Boolean(
+      document.fullscreenElement ||
+      document.webkitFullscreenElement ||
+      document.mozFullScreenElement ||
+      document.msFullscreenElement
+    );
+
+  const targetState = forceState !== null ? Boolean(forceState) : !isCurrentFs;
+
+  if (targetState) {
+    modalWindow.classList.add('is-immersive-fullscreen');
+    readerModal.classList.add('is-immersive-mode');
+
+    // Try HTML5 Fullscreen API for seamless native screen take-over
+    const docFs =
+      document.fullscreenElement ||
+      document.webkitFullscreenElement ||
+      document.mozFullScreenElement ||
+      document.msFullscreenElement;
+
+    if (!docFs) {
+      const elem = readerModal.requestFullscreen ? readerModal : document.documentElement;
+      try {
+        const req =
+          elem.requestFullscreen ||
+          elem.webkitRequestFullscreen ||
+          elem.mozRequestFullScreen ||
+          elem.msRequestFullscreen;
+        if (req) {
+          const promise = req.call(elem);
+          if (promise && typeof promise.catch === 'function') {
+            promise.catch((err) => {
+              console.debug('Native fullscreen request blocked or unsupported:', err);
+            });
+          }
+        }
+      } catch (err) {
+        console.debug('Native fullscreen exception:', err);
+      }
+    }
+    updateFullscreenButtonUI(true);
+  } else {
+    modalWindow.classList.remove('is-immersive-fullscreen');
+    readerModal.classList.remove('is-immersive-mode');
+
+    // Exit native fullscreen if currently active
+    const docFs =
+      document.fullscreenElement ||
+      document.webkitFullscreenElement ||
+      document.mozFullScreenElement ||
+      document.msFullscreenElement;
+
+    if (docFs) {
+      try {
+        const exit =
+          document.exitFullscreen ||
+          document.webkitExitFullscreen ||
+          document.mozCancelFullScreen ||
+          document.msExitFullscreen;
+        if (exit) {
+          const promise = exit.call(document);
+          if (promise && typeof promise.catch === 'function') {
+            promise.catch(() => {});
+          }
+        }
+      } catch (err) {
+        console.debug('Exit fullscreen exception:', err);
+      }
+    }
+    updateFullscreenButtonUI(false);
+  }
+}
+
+function updateFullscreenButtonUI(isFullscreen) {
+  const fsBtn = document.getElementById('readerFullscreenBtn');
+  if (fsBtn) {
+    fsBtn.querySelector('.icon-enter-fullscreen')?.classList.toggle('hidden', isFullscreen);
+    fsBtn.querySelector('.icon-exit-fullscreen')?.classList.toggle('hidden', !isFullscreen);
+    const label = fsBtn.querySelector('.fullscreen-label');
+    if (label) label.textContent = isFullscreen ? 'Exit' : 'Fullscreen';
+    fsBtn.title = isFullscreen ? 'Exit Fullscreen (Esc or F)' : 'Toggle Fullscreen Comic / Book (F)';
+  }
+
+  const comicFloatBtn = document.getElementById('comicFloatingFullscreenBtn');
+  if (comicFloatBtn) {
+    const span = comicFloatBtn.querySelector('span');
+    if (span) span.textContent = isFullscreen ? 'Exit Fullscreen' : 'Fullscreen Comic';
+    comicFloatBtn.title = isFullscreen ? 'Exit Fullscreen (Esc or F)' : 'Fullscreen Comic View (F)';
+  }
+
+  const pdfFloatBtn = document.getElementById('pdfFloatingFullscreenBtn');
+  if (pdfFloatBtn) {
+    const span = pdfFloatBtn.querySelector('span');
+    if (span) span.textContent = isFullscreen ? 'Exit Fullscreen' : 'Fullscreen View';
+    pdfFloatBtn.title = isFullscreen ? 'Exit Fullscreen (Esc or F)' : 'Fullscreen PDF Comic View (F)';
+  }
+
+  const mangaFsBtn = document.getElementById('mangaFullscreenBtn');
+  if (mangaFsBtn) {
+    mangaFsBtn.classList.toggle('active', isFullscreen);
+    mangaFsBtn.textContent = isFullscreen ? '✕ Exit Fullscreen' : '⛶ Fullscreen';
+  }
 }
 
 // ============================================================================
