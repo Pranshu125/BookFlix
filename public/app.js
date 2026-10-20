@@ -1700,6 +1700,23 @@ function handleTabSwitch(tab) {
 }
 
 async function executeSearch(query, category = 'all', customHeading = null, subcat = null) {
+  // Auto-detect direct GetComics URLs
+  if (/getcomics\.org\/cat\/marvel/i.test(query)) {
+    category = 'comic';
+    subcat = 'marvel';
+    if (searchCategory) searchCategory.value = 'comic';
+    customHeading = customHeading || 'GetComics • Marvel Comics Vault';
+  } else if (/getcomics\.org\/cat\/dc/i.test(query)) {
+    category = 'comic';
+    subcat = 'dc';
+    if (searchCategory) searchCategory.value = 'comic';
+    customHeading = customHeading || 'GetComics • DC Comics Vault';
+  } else if (/getcomics\.org/i.test(query)) {
+    category = 'comic';
+    if (searchCategory) searchCategory.value = 'comic';
+    customHeading = customHeading || 'GetComics Digital Vault';
+  }
+
   heroSection.classList.add('hidden');
   catalogRowsContainer.classList.add('hidden');
   myListSection.classList.add('hidden');
@@ -2283,6 +2300,8 @@ async function openItemModal(item, autoPlayAudio = false) {
       type: item.type || 'ebook',
       gutenbergId: item.gutenbergId || '',
       directPdfUrl: item.directPdfUrl || '',
+      directDownloadUrl: item.directDownloadUrl || '',
+      mirrors: item.downloadMirrors ? JSON.stringify(item.downloadMirrors) : '',
     });
 
     const res = await fetch(`/api/resolve?${q.toString()}`);
@@ -2293,6 +2312,9 @@ async function openItemModal(item, autoPlayAudio = false) {
     }
     if (item.directDownloadUrl && !resolved.cbrUrl) {
       resolved.cbrUrl = item.directDownloadUrl;
+    }
+    if (item.downloadMirrors && item.downloadMirrors.length > 0 && (!resolved.downloadMirrors || resolved.downloadMirrors.length === 0)) {
+      resolved.downloadMirrors = item.downloadMirrors;
     }
 
     state.currentResolved = resolved;
@@ -2459,14 +2481,36 @@ function populateModalActions(item, resolved, autoPlayAudio = false) {
     }
   }
 
-  // 6. COMIC CBR / CBZ DOWNLOAD
-  if (resolved.cbrUrl) {
+  // 6. COMIC CBR / CBZ & FAST CLOUD MIRRORS
+  const cbrUrl = resolved.cbrUrl || item.directDownloadUrl;
+  if (cbrUrl) {
+    const isDirectDls = /getcomics\.org\/dls\//i.test(cbrUrl);
     const proxiedComicDownload = `/api/download?url=${encodeURIComponent(
-      resolved.cbrUrl
+      cbrUrl
     )}&filename=${encodeURIComponent(safeTitle + '.cbr')}`;
     directDownloadButtons.appendChild(
       createLinkButton('Download Comic Archive (CBR/PDF)', proxiedComicDownload, 'btn-primary')
     );
+  }
+
+  const activeMirrors = (resolved.downloadMirrors && resolved.downloadMirrors.length > 0)
+    ? resolved.downloadMirrors
+    : (item.downloadMirrors || []);
+
+  if (activeMirrors.length > 0) {
+    activeMirrors.slice(0, 4).forEach((m) => {
+      const mirrorName = m.name || 'Cloud Mirror';
+      const isDls = /getcomics\.org\/dls\//i.test(m.url);
+      const mirrorUrl = isDls
+        ? `/api/download?url=${encodeURIComponent(m.url)}&filename=${encodeURIComponent(safeTitle + '_' + mirrorName.replace(/\s+/g, '_') + '.cbr')}`
+        : m.url;
+      const btn = createLinkButton(`Mirror: ${mirrorName}`, mirrorUrl, 'btn-secondary');
+      if (!isDls) {
+        btn.setAttribute('target', '_blank');
+        btn.setAttribute('rel', 'noopener noreferrer');
+      }
+      directDownloadButtons.appendChild(btn);
+    });
   }
 
   if (instantReadButtons.children.length === 0) {

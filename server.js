@@ -190,8 +190,8 @@ async function searchOpenLibrary(query, limit = 16, page = 1) {
         docs = data.docs || [];
       }
     }
-    const ebookMirrors = ['z-lib.gd', 'ebook-hunter.org', 'oceanofpdf.com', 'annas-archive.gl'];
-    return (data.docs || []).map((doc, idx) => {
+    const ebookMirrors = ['z-lib.gd', 'annas-archive.gl', 'libgen.li', 'ebook-hunter.org', 'oceanofpdf.com'];
+    return (docs || []).map((doc, idx) => {
       const iaList = Array.isArray(doc.ia) ? doc.ia : [];
       const primaryIa = iaList[0] || null;
       const coverUrl = doc.cover_i
@@ -357,22 +357,90 @@ async function searchAcademicPdfs(query, limit = 8, page = 1) {
  * Connector E: Comics & Graphic Novels
  * (getcomics.org, globalcomix.com, xoxocomic.com, comicbookplus.com, batcave.biz)
  */
-async function searchComics(query, limit = 16, page = 1) {
+async function searchComics(query, limit = 16, page = 1, subcat = null) {
   const comicBadges = ['getcomics.org', 'globalcomix.com', 'xoxocomic.com', 'comicbookplus.com', 'batcave.biz'];
-  const terms = extractSearchTerms(query);
+  const rawQ = (query || '').trim();
+  const lowerQ = rawQ.toLowerCase();
+
+  // Detect GetComics categories or specialized publisher targets
+  let gcCategory = null;
+  let cleanSeed = rawQ;
+
+  if (
+    /getcomics\.org\/cat\/marvel/i.test(lowerQ) ||
+    lowerQ === 'marvel' ||
+    lowerQ === 'marvel comics' ||
+    lowerQ === 'cat/marvel' ||
+    subcat === 'marvel'
+  ) {
+    gcCategory = 3; // Marvel Category ID on GetComics
+    cleanSeed = '';
+  } else if (
+    /getcomics\.org\/cat\/dc/i.test(lowerQ) ||
+    lowerQ === 'dc' ||
+    lowerQ === 'dc comics' ||
+    lowerQ === 'cat/dc' ||
+    subcat === 'dc'
+  ) {
+    gcCategory = 2; // DC Category ID on GetComics
+    cleanSeed = '';
+  } else if (/getcomics\.org\/cat\/other-comics/i.test(lowerQ) || lowerQ === 'other comics') {
+    gcCategory = 212; // Other Comics Category ID on GetComics
+    cleanSeed = '';
+  } else if (/getcomics\.org/i.test(lowerQ)) {
+    // Strips general getcomics URL parts to extract clean comic name if provided
+    cleanSeed = lowerQ.replace(/https?:\/\/getcomics\.org\/?(cat\/)?/i, '').replace(/[/-]/g, ' ').trim();
+  }
+
+  // Detect superhero publisher seeds for targeted category routing
+  const marvelKeywords = [
+    'spider-man', 'spiderman', 'avengers', 'x-men', 'xmen', 'wolverine', 'deadpool',
+    'iron man', 'thor', 'hulk', 'venom', 'fantastic four', 'captain america',
+    'daredevil', 'punisher', 'black panther', 'thanos', 'moon knight', 'ghost rider',
+    'carnage', 'miles morales'
+  ];
+  const dcKeywords = [
+    'batman', 'superman', 'flash', 'wonder woman', 'justice league', 'joker',
+    'harley quinn', 'nightwing', 'green lantern', 'aquaman', 'robin', 'catwoman'
+  ];
+
+  if (!gcCategory) {
+    if (marvelKeywords.some((k) => lowerQ.includes(k))) {
+      gcCategory = 3;
+    } else if (dcKeywords.some((k) => lowerQ.includes(k))) {
+      gcCategory = 2;
+    }
+  }
+
+  const terms = extractSearchTerms(cleanSeed || rawQ);
 
   const gcPromise = (async () => {
     try {
-      const searchSeeds = terms.length > 1 ? terms.slice(0, 4) : [query];
-      const perSeedLimit = terms.length > 1 ? Math.max(3, Math.floor(limit / searchSeeds.length)) : Math.min(limit, 12);
+      let urls = [];
+      if (gcCategory && !cleanSeed) {
+        // Direct category browse (e.g. https://getcomics.org/cat/marvel/)
+        urls.push(
+          `https://getcomics.org/wp-json/wp/v2/posts?categories=${gcCategory}&per_page=${Math.min(limit, 24)}&page=${page}&_embed=1`
+        );
+      } else if (gcCategory && cleanSeed) {
+        // Scoped category search (e.g. marvel spider-man)
+        urls.push(
+          `https://getcomics.org/wp-json/wp/v2/posts?categories=${gcCategory}&search=${encodeURIComponent(cleanSeed)}&per_page=${Math.min(limit, 16)}&page=${page}&_embed=1`
+        );
+      } else {
+        // Multi-term or general search across GetComics
+        const searchSeeds = terms.length > 1 ? terms.slice(0, 3) : [cleanSeed || rawQ];
+        const perSeedLimit = terms.length > 1 ? Math.max(4, Math.floor(limit / searchSeeds.length)) : Math.min(limit, 16);
+        urls = searchSeeds.map(
+          (seed) =>
+            `https://getcomics.org/wp-json/wp/v2/posts?search=${encodeURIComponent(seed)}&per_page=${perSeedLimit}&page=${page}&_embed=1`
+        );
+      }
 
       const seedResults = await Promise.all(
-        searchSeeds.map(async (seed) => {
+        urls.map(async (u) => {
           try {
-            const url = `https://getcomics.org/wp-json/wp/v2/posts?search=${encodeURIComponent(
-              seed
-            )}&per_page=${perSeedLimit}&page=${page}&_embed=1`;
-            const res = await safeFetch(url, 6000);
+            const res = await safeFetch(u, 7500);
             if (!res.ok) return [];
             return await res.json();
           } catch {
@@ -389,22 +457,48 @@ async function searchComics(query, limit = 16, page = 1) {
           post._embedded?.['wp:featuredmedia']?.[0]?.source_url ||
           (html.match(/<img[^>]+src=["']([^"']+)["']/i) || [])[1] ||
           null;
-        const dlsMatch = html.match(/https?:\/\/getcomics\.org\/dls\/[^"'\s<>]+/i);
+
+        // Extract direct DLS links and fast cloud mirrors (Pixeldrain, Mediafire, Mega, Terabox, Vikingfile, Datanodes)
+        const linkRegex = /<a\s+[^>]*href=["']([^"']+)["'][^>]*>([\s\S]*?)<\/a>/gi;
+        const mirrors = [];
+        let dlsDirect = null;
+        let m;
+        while ((m = linkRegex.exec(html)) !== null) {
+          const href = m[1];
+          const text = m[2].replace(/<[^>]+>/g, '').trim().toUpperCase();
+          if (/getcomics\.info\/(how-to|contact|sitemap)|yacreader|comicrack|cdisplayex|7-zip/i.test(href)) {
+            continue;
+          }
+          if (/getcomics\.org\/dls\//i.test(href)) {
+            if (!dlsDirect && /DOWNLOAD NOW|MAIN SERVER|DIRECT/i.test(text)) {
+              dlsDirect = href;
+            }
+            mirrors.push({ name: text || 'Direct Server', url: href });
+          } else if (/pixeldrain|mediafire|mega\.nz|terabox|vikingfile|datanodes/i.test(href)) {
+            mirrors.push({ name: text || 'Cloud Mirror', url: href });
+          }
+        }
+
+        if (!dlsDirect && mirrors.length > 0) {
+          dlsDirect = mirrors[0].url;
+        }
+
         const sizeMatch = html.match(/Size\s*:\s*<\/strong>\s*([^<\n]+)/i);
         const badge = idx % 2 === 0 ? 'getcomics.org' : 'batcave.biz';
 
         return {
           id: `gc_${post.id}`,
           title: decodeHtml(post.title?.rendered || 'Comic Issue'),
-          author: 'Marvel / DC / Image Comics',
-          year: (post.date || '').slice(0, 4) || '2025',
+          author: gcCategory === 3 ? 'Marvel Comics' : gcCategory === 2 ? 'DC Comics' : 'Marvel / DC / Image Comics',
+          year: (post.date || '').slice(0, 4) || '2026',
           type: 'comic',
           format: sizeMatch ? `CBR/PDF (${sizeMatch[1].trim()})` : 'Comic CBR / PDF',
           source: `${badge} • Direct`,
           sourceBadge: badge,
           cover: featuredImg,
-          directDownloadUrl: dlsMatch ? dlsMatch[0] : null,
-          rating: '4.8',
+          directDownloadUrl: dlsDirect,
+          downloadMirrors: mirrors,
+          rating: '4.9',
           description: excerpt || decodeHtml(html).slice(0, 260) + '...',
         };
       });
@@ -415,7 +509,10 @@ async function searchComics(query, limit = 16, page = 1) {
 
   const iaComicsPromise = (async () => {
     try {
-      const iaQ = terms.length > 1 ? terms.map((t) => `"${t}"`).join(' OR ') : query;
+      if (/getcomics\.org\/cat/i.test(lowerQ)) {
+        return [];
+      }
+      const iaQ = terms.length > 1 ? terms.map((t) => `"${t}"`).join(' OR ') : (cleanSeed || rawQ);
       const q = `mediatype:texts AND (collection:comicbooks OR subject:comics OR subject:"graphic novels") AND (${iaQ})`;
       const url = `https://archive.org/advancedsearch.php?q=${encodeURIComponent(
         q
@@ -450,6 +547,9 @@ async function searchComics(query, limit = 16, page = 1) {
   })();
 
   const [gcRes, iaRes] = await Promise.all([gcPromise, iaComicsPromise]);
+  if (/getcomics\.org|marvel|dc/i.test(lowerQ) || subcat === 'marvel' || subcat === 'dc') {
+    return [...gcRes, ...iaRes];
+  }
   const results = [];
   const maxLen = Math.max(gcRes.length, iaRes.length);
   for (let i = 0; i < maxLen; i++) {
@@ -1050,10 +1150,19 @@ async function getMangaChapterPages(chapterId) {
 // ============================================================================
 
 async function resolveDirectStreams(params) {
-  const { iaId, title = '', author = '', type = 'ebook', gutenbergId, directPdfUrl, mangaId } = params;
-  const cacheKey = `resolve:${type}:${iaId || ''}:${mangaId || ''}:${gutenbergId || ''}:${title}:${directPdfUrl || ''}`;
+  const { iaId, title = '', author = '', type = 'ebook', gutenbergId, directPdfUrl, mangaId, directDownloadUrl, mirrors } = params;
+  const cacheKey = `resolve:${type}:${iaId || ''}:${mangaId || ''}:${gutenbergId || ''}:${title}:${directPdfUrl || ''}:${directDownloadUrl || ''}`;
   const cached = getCache(cacheKey);
   if (cached) return cached;
+
+  let parsedMirrors = [];
+  if (mirrors) {
+    try {
+      parsedMirrors = typeof mirrors === 'string' ? JSON.parse(mirrors) : mirrors;
+    } catch {
+      parsedMirrors = [];
+    }
+  }
 
   const result = {
     title,
@@ -1063,7 +1172,8 @@ async function resolveDirectStreams(params) {
     epubUrl: null,
     txtUrl: null,
     htmlUrl: null,
-    cbrUrl: null,
+    cbrUrl: directDownloadUrl || null,
+    downloadMirrors: Array.isArray(parsedMirrors) ? parsedMirrors : [],
     embedReaderUrl: null,
     audioTracks: [],
     mangaChapters: [],
@@ -1434,6 +1544,8 @@ function proxyRemoteStream(targetUrl, req, res, forceDownloadFilename = null, re
     referer = 'https://fulllengthaudiobooks.com/';
   } else if (/archive\.org/i.test(parsed.host)) {
     referer = 'https://archive.org/';
+  } else if (/getcomics/i.test(parsed.host)) {
+    referer = 'https://getcomics.org/';
   }
 
   const headers = {
@@ -1485,6 +1597,10 @@ function proxyRemoteStream(targetUrl, req, res, forceDownloadFilename = null, re
         outHeaders['Content-Type'] = 'audio/wav';
       } else if (/\.pdf($|\?)/i.test(targetUrl)) {
         outHeaders['Content-Type'] = 'application/pdf';
+      } else if (/\.cbr($|\?)/i.test(targetUrl) || (forceDownloadFilename && /\.cbr$/i.test(forceDownloadFilename))) {
+        outHeaders['Content-Type'] = 'application/x-cbr';
+      } else if (/\.cbz($|\?)/i.test(targetUrl) || (forceDownloadFilename && /\.cbz$/i.test(forceDownloadFilename))) {
+        outHeaders['Content-Type'] = 'application/x-cbz';
       } else if (proxyRes.headers['content-type']) {
         outHeaders['Content-Type'] = proxyRes.headers['content-type'];
       }
@@ -1659,8 +1775,11 @@ async function requestHandler(req, res) {
 
     try {
       let rawItems = [];
-      if (category === 'comic') {
-        rawItems = await searchComics(q, 32, page);
+      const isGetComicsUrl = /getcomics\.org/i.test(q);
+      const isComicQuery = category === 'comic' || isGetComicsUrl || subcat === 'marvel' || subcat === 'dc';
+
+      if (isGetComicsUrl || (isComicQuery && category !== 'all')) {
+        rawItems = await searchComics(q, 32, page, subcat);
       } else if (category === 'manga') {
         rawItems = await searchManga(q, 32, page);
       } else if (category === 'audiobook') {
@@ -1680,7 +1799,7 @@ async function requestHandler(req, res) {
           searchInternetArchiveTexts(q, 16, page),
           page === 1 ? searchGutenberg(q, 8) : Promise.resolve([]),
           searchManga(q, 12, page),
-          searchComics(q, 12, page),
+          searchComics(q, 12, page, subcat),
           searchAudiobooks(q, 12, page),
           searchAcademicPdfs(q, 8, page),
         ]);
@@ -1718,6 +1837,8 @@ async function requestHandler(req, res) {
         type: reqUrl.searchParams.get('type') || 'ebook',
         gutenbergId: reqUrl.searchParams.get('gutenbergId') || '',
         directPdfUrl: reqUrl.searchParams.get('directPdfUrl') || '',
+        directDownloadUrl: reqUrl.searchParams.get('directDownloadUrl') || '',
+        mirrors: reqUrl.searchParams.get('mirrors') || '',
       });
       res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
       return res.end(JSON.stringify(resolved));
