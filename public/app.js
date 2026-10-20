@@ -547,9 +547,11 @@ function renderCatalogRows(rows) {
       <div class="row-scroller"></div>
     `;
     const scroller = section.querySelector('.row-scroller');
+    const fragment = document.createDocumentFragment();
     row.items.forEach((item) => {
-      scroller.appendChild(createBookCard(item));
+      fragment.appendChild(createBookCard(item));
     });
+    scroller.appendChild(fragment);
     catalogRowsContainer.appendChild(section);
   }
 }
@@ -558,6 +560,7 @@ function createBookCard(item) {
   const card = document.createElement('div');
   const isAudio = item.type === 'audiobook';
   card.className = `book-card${isAudio ? ' audiobook-card' : ''}`;
+  card._itemData = item;
 
   const typeLabel =
     item.type === 'manga'
@@ -602,17 +605,17 @@ function createBookCard(item) {
     </div>
   `;
 
-  const fab = card.querySelector('.spotify-card-play-fab');
-  if (fab) {
-    fab.addEventListener('click', (e) => {
-      e.stopPropagation();
-      openItemModal(item, true);
-    });
-  }
-
   card.tabIndex = 0;
   card.setAttribute('role', 'button');
-  card.addEventListener('click', () => openItemModal(item, false));
+  card.addEventListener('click', (e) => {
+    const isFab = Boolean(e.target.closest('.spotify-card-play-fab'));
+    if (isFab) {
+      e.stopPropagation();
+      openItemModal(item, true);
+    } else {
+      openItemModal(item, false);
+    }
+  });
   card.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
@@ -793,9 +796,11 @@ function setupEventListeners() {
   });
 
   // Search Results Sort Dropdown & Load More / Infinite Scroll
-  document.getElementById('searchSortSelect').addEventListener('change', (e) => {
+  document.getElementById('searchSortSelect')?.addEventListener('change', (e) => {
     state.activeSearchSort = e.target.value;
-    renderFilteredSearchResults();
+    requestAnimationFrame(() => {
+      renderFilteredSearchResults();
+    });
   });
 
   document.getElementById('loadMoreBtn')?.addEventListener('click', () => {
@@ -1804,11 +1809,13 @@ async function loadMoreSearchResults() {
 
     if (freshItems.length > 0) {
       state.searchItems.push(...freshItems);
+      const fragment = document.createDocumentFragment();
       freshItems.forEach((item) => {
         if (state.activeSearchFilter === 'all' || item.type === state.activeSearchFilter) {
-          searchResultsGrid.appendChild(createBookCard(item));
+          fragment.appendChild(createBookCard(item));
         }
       });
+      searchResultsGrid.appendChild(fragment);
       searchResultsSubtitle.textContent = `${state.searchItems.length} editions loaded — scroll for more.`;
       state.searchHasMore = nextPage < 15;
     } else {
@@ -1876,10 +1883,12 @@ function renderFilteredSearchResults() {
   `;
   document.getElementById('topMatchOpenBtn').addEventListener('click', () => openItemModal(bestItem));
 
-  // Render all items in the grid as well
+  // Render all items in the grid in a single DocumentFragment batch
+  const fragment = document.createDocumentFragment();
   list.forEach((item) => {
-    searchResultsGrid.appendChild(createBookCard(item));
+    fragment.appendChild(createBookCard(item));
   });
+  searchResultsGrid.appendChild(fragment);
 }
 
 const DEVICE_PRESET_SPECS = {
@@ -2196,8 +2205,8 @@ async function openItemModal(item, autoPlayAudio = false) {
 
   state.currentItem = item;
   state.currentResolved = null;
-  saveToHistory(item);
 
+  // FAST PATH: Update critical modal DOM and reveal overlay immediately (< 16ms paint)
   readerModal.classList.remove('hidden');
   switchReaderMode('overview');
 
@@ -2206,9 +2215,6 @@ async function openItemModal(item, autoPlayAudio = false) {
   tabFlowReader.classList.add('hidden');
   tabMangaReader.classList.add('hidden');
   tabAudioPlayer.classList.add('hidden');
-
-  bookReaderIframe.src = 'about:blank';
-  pdfReaderIframe.src = 'about:blank';
 
   modalTypeBadge.textContent = (item.type || 'book').toUpperCase();
   modalTitle.textContent = item.title;
@@ -2240,6 +2246,17 @@ async function openItemModal(item, autoPlayAudio = false) {
   instantReadButtons.innerHTML = '';
   directDownloadButtons.innerHTML = '';
   modalMirrorsList.innerHTML = '';
+
+  // Non-blocking deferred tasks: yield to let browser paint the opened modal frame immediately
+  setTimeout(() => {
+    saveToHistory(item);
+    if (bookReaderIframe.getAttribute('src') && !bookReaderIframe.getAttribute('src').endsWith('about:blank')) {
+      bookReaderIframe.src = 'about:blank';
+    }
+    if (pdfReaderIframe.getAttribute('src') && !pdfReaderIframe.getAttribute('src').endsWith('about:blank')) {
+      pdfReaderIframe.src = 'about:blank';
+    }
+  }, 0);
 
   try {
     const q = new URLSearchParams({
@@ -3118,16 +3135,20 @@ function renderMyListGrid() {
     });
     return;
   }
+  const fragment = document.createDocumentFragment();
   state.myList.forEach((item) => {
-    myListGrid.appendChild(createBookCard(item));
+    fragment.appendChild(createBookCard(item));
   });
+  myListGrid.appendChild(fragment);
 }
 
 function saveToHistory(item) {
   state.history = state.history.filter((x) => x.id !== item.id);
   state.history.unshift(item);
   state.history = state.history.slice(0, 18);
-  localStorage.setItem('bookflix_history', JSON.stringify(state.history));
+  try {
+    localStorage.setItem('bookflix_history', JSON.stringify(state.history));
+  } catch {}
   renderContinueRow();
 }
 
@@ -3143,9 +3164,11 @@ function renderContinueRow() {
   }
   continueRow.classList.remove('hidden');
   continueScroller.innerHTML = '';
+  const fragment = document.createDocumentFragment();
   state.history.forEach((item) => {
-    continueScroller.appendChild(createBookCard(item));
+    fragment.appendChild(createBookCard(item));
   });
+  continueScroller.appendChild(fragment);
 }
 
 // ============================================================================

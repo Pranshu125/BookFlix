@@ -1,12 +1,12 @@
-// BookFlix PWA Service Worker (v54 - Streamlined Responsive Top Bar, Redistributed Utilities & Non-Clipping Rail)
-const CACHE_NAME = 'bookflix-cache-v54';
+// BookFlix PWA Service Worker (v55 - INP Optimization & Fast Path Frame Rendering)
+const CACHE_NAME = 'bookflix-cache-v55';
 const PRECACHE_ASSETS = [
   '/',
-  '/index.html?v=54',
-  '/styles.css?v=54',
-  '/app.js?v=54',
-  '/firebase-config.js?v=54',
-  '/manifest.json?v=54',
+  '/index.html?v=55',
+  '/styles.css?v=55',
+  '/app.js?v=55',
+  '/firebase-config.js?v=55',
+  '/manifest.json?v=55',
   '/logo.svg?v=20',
   '/favicon.ico?v=20',
   '/favicon.svg?v=20',
