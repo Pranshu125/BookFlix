@@ -3738,7 +3738,9 @@ let pendingAgeGateAction = null;
 function is18PlusVerified() {
   const activeUser = getActiveUser();
   if (activeUser && activeUser.matureEnabled) return true;
-  return localStorage.getItem('bookflix_age_verified') === 'true';
+  if (localStorage.getItem('bookflix_age_verified') === 'true') return true;
+  if (sessionStorage.getItem('bookflix_age_verified') === 'true') return true;
+  return false;
 }
 
 function promptAgeGate(actionCallback) {
@@ -3755,13 +3757,14 @@ function initAgeGate() {
 
   confirmBtn?.addEventListener('click', () => {
     localStorage.setItem('bookflix_age_verified', 'true');
+    sessionStorage.setItem('bookflix_age_verified', 'true');
     const activeUser = getActiveUser();
     if (activeUser) {
       activeUser.matureEnabled = true;
       saveActiveUser(activeUser);
     }
     modal?.classList.add('hidden');
-    showAppToast('Age verified (18+). Welcome to Mature Lounge.');
+    showAppToast('Age verified (18+). Welcome.');
     if (typeof pendingAgeGateAction === 'function') {
       const act = pendingAgeGateAction;
       pendingAgeGateAction = null;
