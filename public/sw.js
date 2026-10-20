@@ -1,12 +1,12 @@
-// BookFlix PWA Service Worker (v55 - INP Optimization & Fast Path Frame Rendering)
-const CACHE_NAME = 'bookflix-cache-v55';
+// BookFlix PWA Service Worker (v56 - INP Card Click & Modal Optimization)
+const CACHE_NAME = 'bookflix-cache-v56';
 const PRECACHE_ASSETS = [
   '/',
-  '/index.html?v=55',
-  '/styles.css?v=55',
-  '/app.js?v=55',
-  '/firebase-config.js?v=55',
-  '/manifest.json?v=55',
+  '/index.html?v=56',
+  '/styles.css?v=56',
+  '/app.js?v=56',
+  '/firebase-config.js?v=56',
+  '/manifest.json?v=56',
   '/logo.svg?v=20',
   '/favicon.ico?v=20',
   '/favicon.svg?v=20',

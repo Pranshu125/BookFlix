@@ -166,6 +166,13 @@ const tabFlowReader = document.getElementById('tabFlowReader');
 const tabMangaReader = document.getElementById('tabMangaReader');
 const tabAudioPlayer = document.getElementById('tabAudioPlayer');
 
+const paneOverview = document.getElementById('paneOverview');
+const paneBookReader = document.getElementById('paneBookReader');
+const panePdfReader = document.getElementById('panePdfReader');
+const paneFlowReader = document.getElementById('paneFlowReader');
+const paneMangaReader = document.getElementById('paneMangaReader');
+const paneAudioPlayer = document.getElementById('paneAudioPlayer');
+
 const bookReaderIframe = document.getElementById('bookReaderIframe');
 const pdfReaderIframe = document.getElementById('pdfReaderIframe');
 const flowContentContainer = document.getElementById('flowContentContainer');
@@ -611,15 +618,17 @@ function createBookCard(item) {
     const isFab = Boolean(e.target.closest('.spotify-card-play-fab'));
     if (isFab) {
       e.stopPropagation();
-      openItemModal(item, true);
-    } else {
-      openItemModal(item, false);
     }
+    requestAnimationFrame(() => {
+      openItemModal(item, isFab);
+    });
   });
   card.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
-      openItemModal(item, false);
+      requestAnimationFrame(() => {
+        openItemModal(item, false);
+      });
     }
   });
   return card;
@@ -703,7 +712,7 @@ function setupEventListeners() {
       });
       if (allItems.length > 0) {
         const randomItem = allItems[Math.floor(Math.random() * allItems.length)];
-        openItemModal(randomItem);
+        requestAnimationFrame(() => openItemModal(randomItem));
       }
     });
   }
@@ -713,9 +722,9 @@ function setupEventListeners() {
   if (topResumeBtn) {
     topResumeBtn.addEventListener('click', () => {
       if (state.history.length > 0) {
-        openItemModal(state.history[0]);
+        requestAnimationFrame(() => openItemModal(state.history[0]));
       } else if (state.featuredItem) {
-        openItemModal(state.featuredItem);
+        requestAnimationFrame(() => openItemModal(state.featuredItem));
       }
     });
   }
@@ -831,13 +840,13 @@ function setupEventListeners() {
   });
 
   document.getElementById('heroReadBtn').addEventListener('click', () => {
-    if (state.featuredItem) openItemModal(state.featuredItem);
+    if (state.featuredItem) requestAnimationFrame(() => openItemModal(state.featuredItem));
   });
 
   const heroCoverShowcase = document.getElementById('heroCoverShowcase');
   if (heroCoverShowcase) {
     heroCoverShowcase.addEventListener('click', () => {
-      if (state.featuredItem) openItemModal(state.featuredItem);
+      if (state.featuredItem) requestAnimationFrame(() => openItemModal(state.featuredItem));
     });
   }
 
@@ -1613,7 +1622,9 @@ async function fetchLiveSuggestions(query, category) {
       `;
       row.addEventListener('click', () => {
         searchDropdown.classList.add('hidden');
-        openItemModal(item);
+        requestAnimationFrame(() => {
+          openItemModal(item);
+        });
       });
       dropdownList.appendChild(row);
     });
@@ -1881,7 +1892,9 @@ function renderFilteredSearchResults() {
       </div>
     </div>
   `;
-  document.getElementById('topMatchOpenBtn').addEventListener('click', () => openItemModal(bestItem));
+  document.getElementById('topMatchOpenBtn').addEventListener('click', () => {
+    requestAnimationFrame(() => openItemModal(bestItem));
+  });
 
   // Render all items in the grid in a single DocumentFragment batch
   const fragment = document.createDocumentFragment();
@@ -2219,33 +2232,35 @@ async function openItemModal(item, autoPlayAudio = false) {
   modalTypeBadge.textContent = (item.type || 'book').toUpperCase();
   modalTitle.textContent = item.title;
   modalAuthor.textContent = item.author || 'Digital Edition';
-  modalCoverImg.src =
-    item.cover ||
-    'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=600&q=80';
   modalDescription.textContent = item.description || '';
 
-  modalMetaPills.innerHTML = `
-    <span class="meta-pill">${escapeHtml(item.sourceBadge || 'Digital Catalog')}</span>
-    <span class="meta-pill">${escapeHtml(item.format || 'PDF / EPUB')}</span>
-    ${item.year ? `<span class="meta-pill">${escapeHtml(String(item.year))}</span>` : ''}
-  `;
-
-  updateModalBookmarkButton();
-
-  // If audiobook already has preloaded tracks, show Spotify Studio immediately
-  if (item.type === 'audiobook' && item.audioTracks && item.audioTracks.length > 0) {
-    tabAudioPlayer.classList.remove('hidden');
-    setupAudioStudio(item, item.audioTracks);
-    switchReaderMode('audioplayer');
-    if (autoPlayAudio) {
-      playAudioTrack(0);
-    }
-  }
-
   resolverStatus.classList.remove('hidden');
-  instantReadButtons.innerHTML = '';
-  directDownloadButtons.innerHTML = '';
-  modalMirrorsList.innerHTML = '';
+  instantReadButtons.textContent = '';
+  directDownloadButtons.textContent = '';
+  modalMirrorsList.textContent = '';
+
+  requestAnimationFrame(() => {
+    modalCoverImg.src =
+      item.cover ||
+      'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=600&q=80';
+
+    modalMetaPills.innerHTML = `
+      <span class="meta-pill">${escapeHtml(item.sourceBadge || 'Digital Catalog')}</span>
+      <span class="meta-pill">${escapeHtml(item.format || 'PDF / EPUB')}</span>
+      ${item.year ? `<span class="meta-pill">${escapeHtml(String(item.year))}</span>` : ''}
+    `;
+
+    updateModalBookmarkButton();
+
+    if (item.type === 'audiobook' && item.audioTracks && item.audioTracks.length > 0) {
+      tabAudioPlayer.classList.remove('hidden');
+      setupAudioStudio(item, item.audioTracks);
+      switchReaderMode('audioplayer');
+      if (autoPlayAudio) {
+        playAudioTrack(0);
+      }
+    }
+  });
 
   // Non-blocking deferred tasks: yield to let browser paint the opened modal frame immediately
   setTimeout(() => {
@@ -2479,12 +2494,12 @@ function switchReaderMode(mode) {
     t.classList.toggle('active', t.getAttribute('data-mode') === mode);
   });
 
-  document.getElementById('paneOverview').classList.toggle('hidden', mode !== 'overview');
-  document.getElementById('paneBookReader').classList.toggle('hidden', mode !== 'bookreader');
-  document.getElementById('panePdfReader').classList.toggle('hidden', mode !== 'pdfreader');
-  document.getElementById('paneFlowReader').classList.toggle('hidden', mode !== 'flowreader');
-  document.getElementById('paneMangaReader').classList.toggle('hidden', mode !== 'mangareader');
-  document.getElementById('paneAudioPlayer').classList.toggle('hidden', mode !== 'audioplayer');
+  if (paneOverview) paneOverview.classList.toggle('hidden', mode !== 'overview');
+  if (paneBookReader) paneBookReader.classList.toggle('hidden', mode !== 'bookreader');
+  if (panePdfReader) panePdfReader.classList.toggle('hidden', mode !== 'pdfreader');
+  if (paneFlowReader) paneFlowReader.classList.toggle('hidden', mode !== 'flowreader');
+  if (paneMangaReader) paneMangaReader.classList.toggle('hidden', mode !== 'mangareader');
+  if (paneAudioPlayer) paneAudioPlayer.classList.toggle('hidden', mode !== 'audioplayer');
 
   if (mode === 'bookreader' && state.currentResolved?.embedReaderUrl && bookReaderIframe.src === 'about:blank') {
     bookReaderIframe.src = state.currentResolved.embedReaderUrl;
