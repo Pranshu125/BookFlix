@@ -2,8 +2,8 @@
   "rules": {
     "readers": {
       "$uid": {
-        ".read": "auth != null",
-        ".write": "auth != null"
+        ".read": "auth != null && auth.uid === $uid",
+        ".write": "auth != null && auth.uid === $uid"
       }
     }
   }

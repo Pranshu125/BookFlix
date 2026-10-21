@@ -1,12 +1,12 @@
-// BookFlix PWA Service Worker (v60 - GetComics & 24-Site Direct Integration)
-const CACHE_NAME = 'bookflix-cache-v60';
+// BookFlix PWA Service Worker (v61 - Performance Boost, CSP & Hardened Vault Security)
+const CACHE_NAME = 'bookflix-cache-v61';
 const PRECACHE_ASSETS = [
   '/',
-  '/index.html?v=60',
-  '/styles.css?v=60',
-  '/app.js?v=60',
-  '/firebase-config.js?v=60',
-  '/manifest.json?v=60',
+  '/index.html?v=61',
+  '/styles.css?v=61',
+  '/app.js?v=61',
+  '/firebase-config.js?v=61',
+  '/manifest.json?v=61',
   '/logo.svg?v=20',
   '/favicon.ico?v=20',
   '/favicon.svg?v=20',

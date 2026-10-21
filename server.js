@@ -1688,6 +1688,11 @@ async function requestHandler(req, res) {
   res.setHeader('Access-Control-Allow-Headers', 'Range, Origin, Accept, X-Requested-With, Content-Type');
   res.setHeader('Access-Control-Expose-Headers', 'Content-Range, Content-Length, Accept-Ranges, Content-Type');
   res.setHeader('Accept-Ranges', 'bytes');
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'SAMEORIGIN');
+  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+  res.setHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=(), payment=()');
+  res.setHeader('Cross-Origin-Opener-Policy', 'same-origin-allow-popups');
 
   if (req.method === 'OPTIONS') {
     res.writeHead(204);

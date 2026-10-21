@@ -3912,10 +3912,11 @@ function renderSubcategoryRibbon(category = 'home', activeSubId = null) {
     const chip = document.createElement('button');
     chip.type = 'button';
     chip.className = 'subcat-chip' + (sub.is18Plus ? ' subcat-18plus' : '');
+    const isFirstActive = (activeSubId && sub.id === activeSubId) || (!activeSubId && idx === 0);
     chip.setAttribute('role', 'tab');
+    chip.setAttribute('aria-selected', isFirstActive ? 'true' : 'false');
     chip.setAttribute('data-subid', sub.id);
 
-    const isFirstActive = (activeSubId && sub.id === activeSubId) || (!activeSubId && idx === 0);
     if (isFirstActive) {
       chip.classList.add('active');
       currentActiveSubId = sub.id;
@@ -3926,8 +3927,12 @@ function renderSubcategoryRibbon(category = 'home', activeSubId = null) {
 
     chip.addEventListener('click', () => {
       const runSubSearch = () => {
-        ribbon.querySelectorAll('.subcat-chip').forEach((c) => c.classList.remove('active'));
+        ribbon.querySelectorAll('.subcat-chip').forEach((c) => {
+          c.classList.remove('active');
+          c.setAttribute('aria-selected', 'false');
+        });
         chip.classList.add('active');
+        chip.setAttribute('aria-selected', 'true');
         currentActiveSubId = sub.id;
         chip.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
 
@@ -4331,7 +4336,9 @@ function switchAuthTab(mode) {
 
   if (mode === 'forgot') {
     tabSignInBtn?.classList.remove('active');
+    tabSignInBtn?.setAttribute('aria-selected', 'false');
     tabSignUpBtn?.classList.remove('active');
+    tabSignUpBtn?.setAttribute('aria-selected', 'false');
     signInForm?.classList.add('hidden');
     signUpForm?.classList.add('hidden');
     forgotForm?.classList.remove('hidden');
@@ -4341,7 +4348,9 @@ function switchAuthTab(mode) {
     if (sub) sub.textContent = 'Enter your email to receive recovery instructions';
   } else if (mode === 'signup') {
     tabSignInBtn?.classList.remove('active');
+    tabSignInBtn?.setAttribute('aria-selected', 'false');
     tabSignUpBtn?.classList.add('active');
+    tabSignUpBtn?.setAttribute('aria-selected', 'true');
     forgotForm?.classList.add('hidden');
     signInForm?.classList.add('hidden');
     signUpForm?.classList.remove('hidden');
@@ -4351,7 +4360,9 @@ function switchAuthTab(mode) {
     if (sub) sub.textContent = 'Sync Library Across All Devices • Free Forever';
   } else {
     tabSignUpBtn?.classList.remove('active');
+    tabSignUpBtn?.setAttribute('aria-selected', 'false');
     tabSignInBtn?.classList.add('active');
+    tabSignInBtn?.setAttribute('aria-selected', 'true');
     forgotForm?.classList.add('hidden');
     signUpForm?.classList.add('hidden');
     signInForm?.classList.remove('hidden');
@@ -4456,6 +4467,9 @@ function openProfileModal(user) {
 }
 
 async function handleGoogleSignIn() {
+  if (!isFirebaseConnected || !fbAuthInstance) {
+    initFirebaseService();
+  }
   const cfg = getStoredFirebaseConfig();
   if (isRealFirebaseConfig(cfg) && isFirebaseConnected && fbAuthInstance) {
     try {
@@ -4529,14 +4543,18 @@ function setupStartingPageAuth() {
     if (feedback) feedback.classList.add('hidden');
     if (mode === 'signup') {
       tabSignUp?.classList.add('active');
+      tabSignUp?.setAttribute('aria-selected', 'true');
       tabSignIn?.classList.remove('active');
+      tabSignIn?.setAttribute('aria-selected', 'false');
       nameGroup?.classList.remove('hidden');
       if (submitText) submitText.textContent = 'Create Free Account';
       if (cardTitle) cardTitle.textContent = 'Join BookFlix';
       if (cardSub) cardSub.textContent = 'Create your streaming reader profile';
     } else {
       tabSignIn?.classList.add('active');
+      tabSignIn?.setAttribute('aria-selected', 'true');
       tabSignUp?.classList.remove('active');
+      tabSignUp?.setAttribute('aria-selected', 'false');
       nameGroup?.classList.add('hidden');
       if (submitText) submitText.textContent = 'Sign In to BookFlix';
       if (cardTitle) cardTitle.textContent = 'Sign In to BookFlix';
@@ -4900,13 +4918,23 @@ function setupFirestoreManagerEvents() {
 }
 
 function initAuthSystem() {
-  initFirebaseService();
+  const currentUser = getActiveUser();
+  if (currentUser && currentUser.provider === 'google') {
+    initFirebaseService();
+  } else {
+    // Defer heavy Firebase initialization to idle time so initial paint has 0 ms blocking time
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(() => initFirebaseService(), { timeout: 2500 });
+    } else {
+      setTimeout(initFirebaseService, 1200);
+    }
+  }
+
   setupStartingPageAuth();
   setupFirestoreManagerEvents();
   updateAuthUI();
 
   // If no user is logged in, show dedicated starting page
-  const currentUser = getActiveUser();
   if (!currentUser) {
     document.documentElement.classList.add('auth-required-gateway');
   } else {
