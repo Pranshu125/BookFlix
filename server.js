@@ -130,6 +130,10 @@ const SUBCAT_SEEDS = {
   scifi: ['Dune Frank Herbert', 'Foundation Asimov', 'Neuromancer Gibson', 'Fahrenheit 451'],
   mystery: ['The Adventures of Sherlock Holmes', 'Agatha Christie Poirot', 'Gone Girl'],
   cs_ai: ['Automate the Boring Stuff with Python', 'Deep Learning Goodfellow', 'Introduction to Algorithms'],
+  religious: ['Holy Bible', 'The Quran', 'Bhagavad Gita', 'The Torah', 'Dhammapada', 'Tao Te Ching'],
+  religious_hub: ['Holy Bible', 'The Quran', 'Bhagavad Gita', 'The Torah', 'Dhammapada', 'Tao Te Ching'],
+  religious_books: ['Holy Bible', 'The Quran', 'Bhagavad Gita', 'The Torah', 'Dhammapada', 'Tao Te Ching'],
+  religious_audio: ['Holy Bible Audio', 'Quran Recitation', 'Bhagavad Gita Audio', 'Dhammapada Audio'],
   stem: ['University Physics', 'Calculus Stewart', 'Organic Chemistry'],
   psychology: ['Atomic Habits', 'Thinking Fast and Slow', 'Psychology of Money'],
   adult_romance: ['Haunting Adeline', 'Fifty Shades of Grey', 'Twisted Love'],
@@ -139,6 +143,16 @@ const SUBCAT_SEEDS = {
   philosophy: ['The Art of War Sun Tzu', 'Meditations Marcus Aurelius', 'Tao Te Ching'],
   adult_audio: ['The Picture of Dorian Gray', 'Carmilla', 'Frankenstein'],
 };
+
+const ADULT_SUBCATS = new Set(['adult_comics', 'adult_manga', 'adult_romance', 'adult_audio', 'mature_hub']);
+
+function isMatureItem(item) {
+  if (!item) return false;
+  if (item.mature === true || item.is18Plus === true) return true;
+  if (item.subcat && ADULT_SUBCATS.has(item.subcat)) return true;
+  const text = `${item.title || ''} ${item.description || ''} ${item.sourceBadge || ''} ${item.subcat || ''} ${(item.subjects || []).join(' ')}`.toLowerCase();
+  return /\b(18\+|erotica|ecchi|hentai|explicit|mature content|dark romance novel|vertigo mature)\b/i.test(text);
+}
 
 function extractSearchTerms(query) {
   if (!query) return [];
@@ -1511,6 +1525,13 @@ async function getHomeCatalog() {
     ],
   };
 
+  // Ensure no mature items bleed into public home rows
+  catalog.rows.forEach((r) => {
+    if (r.items) {
+      r.items = r.items.filter((item) => !isMatureItem(item));
+    }
+  });
+
   const totalItems = catalog.rows.reduce((sum, r) => sum + (r.items ? r.items.length : 0), 0);
   if (totalItems >= 4) {
     setCache('home_catalog_v3', catalog);
@@ -1811,7 +1832,10 @@ async function requestHandler(req, res) {
         rawItems = [...ol, ...ia, ...gb, ...manga, ...comics, ...audio, ...oa];
       }
 
-      const items = rankAndDeduplicateResults(rawItems, q);
+      let items = rankAndDeduplicateResults(rawItems, q);
+      if (!ADULT_SUBCATS.has(subcat)) {
+        items = items.filter((item) => !isMatureItem(item));
+      }
 
       const payload = {
         query: q,

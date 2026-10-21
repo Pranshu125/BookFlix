@@ -7098,11 +7098,13 @@ html[data-device="tv"] .results-grid {
 
 .profile-theme-grid {
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
 }
 
 .profile-theme-btn {
-  flex: 1;
+  flex: 1 1 calc(33.333% - 10px);
+  min-width: 110px;
   padding: 10px 14px;
   border-radius: 14px;
   border: 1px solid rgba(255, 255, 255, 0.12);
@@ -7152,6 +7154,30 @@ html[data-device="tv"] .results-grid {
   border-color: #f59e0b;
   color: #fef3c7;
   box-shadow: 0 0 16px rgba(245, 158, 11, 0.35);
+}
+
+.profile-theme-btn[data-apptheme="monochrome"]:hover {
+  border-color: #ffffff;
+  color: #ffffff;
+}
+
+.profile-theme-btn[data-apptheme="monochrome"].active {
+  background: #ffffff;
+  border-color: #ffffff;
+  color: #000000;
+  box-shadow: 0 0 16px rgba(255, 255, 255, 0.45);
+}
+
+.profile-theme-btn[data-apptheme="nordic"]:hover {
+  border-color: rgba(56, 189, 248, 0.5);
+  color: #f0f9ff;
+}
+
+.profile-theme-btn[data-apptheme="nordic"].active {
+  background: linear-gradient(135deg, rgba(14, 165, 233, 0.35), rgba(30, 58, 138, 0.45));
+  border-color: #38bdf8;
+  color: #f0f9ff;
+  box-shadow: 0 0 16px rgba(56, 189, 248, 0.35);
 }
 
 /* ============================================================================
@@ -7267,6 +7293,121 @@ html[data-theme="sepia"] .rail-item.active::before {
   box-shadow: 0 0 10px rgba(245, 158, 11, 0.85) !important;
 }
 
+/* 4. Monochrome B&W (True Stark E-Ink Black & White) */
+html[data-theme="monochrome"] {
+  --bg-canvas: #000000 !important;
+  --bg-matte-deep: #000000 !important;
+  --bg-matte-elevated: #0a0a0a !important;
+  --glass-modal: #000000 !important;
+  --glass-surface: #050505 !important;
+  --glass-surface-hover: #141414 !important;
+  --glass-border: rgba(255, 255, 255, 0.35) !important;
+  --glass-border-bright: #ffffff !important;
+  --text-primary: #ffffff !important;
+  --text-secondary: #e5e5e5 !important;
+  --text-tertiary: #a3a3a3 !important;
+  --accent-sky: #ffffff !important;
+  --accent-cyan: #ffffff !important;
+  --accent-glow: #ffffff !important;
+  --liquid-clay-card: #000000 !important;
+}
+
+html[data-theme="monochrome"] body,
+html[data-theme="monochrome"] .ambient-canvas,
+html[data-theme="monochrome"] .hotstar-rail,
+html[data-theme="monochrome"] .top-search-strip,
+html[data-theme="monochrome"] .account-glass-card,
+html[data-theme="monochrome"] .modal-window,
+html[data-theme="monochrome"] .site-footer {
+  background: #000000 !important;
+  border-color: rgba(255, 255, 255, 0.35) !important;
+  color: #ffffff !important;
+}
+
+html[data-theme="monochrome"] .ambient-orb {
+  display: none !important;
+}
+
+html[data-theme="monochrome"] .book-card {
+  background: #000000 !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  box-shadow: none !important;
+}
+
+html[data-theme="monochrome"] .book-card:hover {
+  border-color: #ffffff !important;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.45) !important;
+}
+
+html[data-theme="monochrome"] .rail-item.active::before {
+  background: #ffffff !important;
+  box-shadow: 0 0 12px #ffffff !important;
+}
+
+html[data-theme="monochrome"] .btn-primary {
+  background: #ffffff !important;
+  color: #000000 !important;
+  border-color: #ffffff !important;
+  box-shadow: 0 0 14px rgba(255, 255, 255, 0.4) !important;
+}
+
+html[data-theme="monochrome"] .badge-pill-18,
+html[data-theme="monochrome"] .subcat-tag-badge {
+  background: #ffffff !important;
+  color: #000000 !important;
+  border-color: #ffffff !important;
+}
+
+/* 5. Nordic Slate (Deep Cool Arctic Midnight Slate) */
+html[data-theme="nordic"] {
+  --bg-canvas: #070c18 !important;
+  --bg-matte-deep: #040811 !important;
+  --bg-matte-elevated: #0d1527 !important;
+  --glass-modal: #0d1527 !important;
+  --glass-surface: #101a30 !important;
+  --glass-surface-hover: #182647 !important;
+  --glass-border: rgba(56, 189, 248, 0.22) !important;
+  --glass-border-bright: rgba(56, 189, 248, 0.45) !important;
+  --text-primary: #f8fafc !important;
+  --text-secondary: #cbd5e1 !important;
+  --text-tertiary: #94a3b8 !important;
+  --accent-sky: #38bdf8 !important;
+  --accent-cyan: #0ea5e9 !important;
+  --accent-glow: #0284c7 !important;
+  --liquid-clay-card: #0f172a !important;
+}
+
+html[data-theme="nordic"] body {
+  background: #070c18 !important;
+}
+
+html[data-theme="nordic"] .ambient-canvas {
+  background: radial-gradient(125% 95% at 50% 0%, #152238 0%, #0c1424 55%, #050811 100%) !important;
+}
+
+html[data-theme="nordic"] .ambient-orb {
+  background: rgba(56, 189, 248, 0.12) !important;
+}
+
+html[data-theme="nordic"] .hotstar-rail,
+html[data-theme="nordic"] .top-search-strip,
+html[data-theme="nordic"] .account-glass-card,
+html[data-theme="nordic"] .modal-window,
+html[data-theme="nordic"] .site-footer {
+  background: #0d1527 !important;
+  border-color: rgba(56, 189, 248, 0.22) !important;
+}
+
+html[data-theme="nordic"] .book-card {
+  background: #101a30 !important;
+  border-color: rgba(56, 189, 248, 0.2) !important;
+}
+
+html[data-theme="nordic"] .rail-item.active::before {
+  background: #38bdf8 !important;
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.85) !important;
+}
+
 .profile-actions-row {
   display: flex;
   align-items: center;
@@ -7280,12 +7421,12 @@ html[data-theme="sepia"] .rail-item.active::before {
    18+ AGE GATE MODAL
 ============================================================================ */
 .age-gate-dialog {
-  max-width: 440px;
-  text-align: center;
+  max-width: 480px;
+  text-align: left;
 }
 
 .age-gate-dialog .dialog-title-lockup {
-  justify-content: center;
+  justify-content: flex-start;
   text-align: left;
 }
 
@@ -7295,18 +7436,60 @@ html[data-theme="sepia"] .rail-item.active::before {
   border-color: rgba(239, 68, 68, 0.45) !important;
 }
 
-.age-gate-text {
-  font-size: 0.9rem;
-  line-height: 1.6;
-  color: var(--text-secondary);
-  margin-bottom: 12px;
+.age-gate-disclaimer-card {
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.28);
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 14px;
 }
 
-.age-gate-question {
-  font-size: 1rem;
+.age-disclaimer-badge {
+  font-size: 0.72rem;
   font-weight: 800;
-  color: #ffffff;
-  margin-bottom: 20px;
+  letter-spacing: 0.08em;
+  color: #f87171;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+
+.age-gate-text {
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: var(--text-secondary);
+  margin-bottom: 0;
+}
+
+.age-gate-consent-box {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 12px;
+  padding: 12px 14px;
+  margin-bottom: 18px;
+}
+
+.age-gate-checkbox-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.age-gate-checkbox {
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  accent-color: #ef4444;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.age-gate-consent-text {
+  font-size: 0.86rem;
+  line-height: 1.45;
+  color: #f1f5f9;
+  font-weight: 600;
 }
 
 .age-gate-actions {
@@ -7319,8 +7502,17 @@ html[data-theme="sepia"] .rail-item.active::before {
   background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
   border-color: #f87171 !important;
   box-shadow: 0 4px 18px rgba(239, 68, 68, 0.45) !important;
-  padding: 11px !important;
+  padding: 12px !important;
   font-weight: 800 !important;
+  font-size: 0.92rem !important;
+  transition: all 0.2s ease !important;
+}
+
+.age-confirm-btn:disabled {
+  opacity: 0.42 !important;
+  cursor: not-allowed !important;
+  filter: grayscale(85%) !important;
+  box-shadow: none !important;
 }
 
 .age-cancel-btn {

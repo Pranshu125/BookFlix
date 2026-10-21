@@ -1,12 +1,12 @@
-// BookFlix PWA Service Worker (v61 - Performance Boost, CSP & Hardened Vault Security)
-const CACHE_NAME = 'bookflix-cache-v61';
+// BookFlix PWA Service Worker (v62 - 18+ Age Gate with Disclaimer & Consent Checkbox, Religious Content Hub, Stark B&W and Nordic Themes)
+const CACHE_NAME = 'bookflix-cache-v62';
 const PRECACHE_ASSETS = [
   '/',
-  '/index.html?v=61',
-  '/styles.css?v=61',
-  '/app.js?v=61',
-  '/firebase-config.js?v=61',
-  '/manifest.json?v=61',
+  '/index.html?v=62',
+  '/styles.css?v=62',
+  '/app.js?v=62',
+  '/firebase-config.js?v=62',
+  '/manifest.json?v=62',
   '/logo.svg?v=20',
   '/favicon.ico?v=20',
   '/favicon.svg?v=20',

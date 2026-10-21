@@ -81,6 +81,7 @@ const SUBCATEGORIES_CONFIG = {
     { id: 'manga_hub', label: 'Top Manga', query: 'one piece OR jujutsu kaisen OR berserk OR solo leveling', type: 'manga', heading: 'Top Manga & Webtoons' },
     { id: 'fiction_hub', label: 'Fiction Bestsellers', query: 'bestseller fiction OR contemporary literature OR thriller novel', type: 'ebook', heading: 'Fiction & Bestsellers' },
     { id: 'tech_hub', label: 'Computer Science & AI', query: 'python programming OR machine learning algorithms OR deep learning', type: 'ebook', heading: 'Computer Science & AI Hub' },
+    { id: 'religious_hub', label: 'Religious & Sacred', query: 'holy bible OR quran OR bhagavad gita OR torah OR dhammapada OR tao te ching', type: 'ebook', heading: 'Sacred & Religious Texts' },
     { id: 'audio_hub', label: 'Audiobooks Studio', query: 'harry potter OR sherlock OR stephen king OR fantasy', type: 'audiobook', heading: 'Featured Audiobooks' },
     { id: 'mature_hub', label: 'Adult & Mature (18+)', query: 'mature comics OR dark romance novel OR mature seinen', type: 'all', heading: 'Adult & Mature Collection (18+)', is18Plus: true },
   ],
@@ -107,6 +108,7 @@ const SUBCATEGORIES_CONFIG = {
     { id: 'scifi', label: 'Sci-Fi & Cyberpunk', query: 'dune OR tolkien OR asimov OR cyberpunk OR foundation', type: 'ebook', heading: 'Sci-Fi, Cyberpunk & Epic Worlds' },
     { id: 'mystery', label: 'Mystery & Crime', query: 'sherlock holmes OR agatha christie OR thriller crime OR stephen king', type: 'ebook', heading: 'Mystery, Suspense & Crime' },
     { id: 'cs_ai', label: 'Computer Science & AI', query: 'python programming OR machine learning algorithms OR deep learning', type: 'ebook', heading: 'Computer Science, AI & Engineering' },
+    { id: 'religious_books', label: 'Religious & Sacred Texts', query: 'holy bible OR quran OR bhagavad gita OR torah OR dhammapada OR tao te ching', type: 'ebook', heading: 'Sacred & Religious Texts' },
     { id: 'stem', label: 'STEM Textbooks', query: 'physics calculus OR biology medicine OR chemistry mathematics', type: 'ebook', heading: 'University STEM Textbooks' },
     { id: 'psychology', label: 'Psychology & Finance', query: 'psychology mindset OR economics finance OR atomic habits OR philosophy', type: 'ebook', heading: 'Psychology, Mindset & Wealth' },
     { id: 'adult_romance', label: 'Adult & Dark Romance (18+)', query: 'dark romance novel OR adult fiction mature OR fifty shades', type: 'ebook', heading: 'Adult & Dark Romance (18+)', is18Plus: true },
@@ -116,6 +118,7 @@ const SUBCATEGORIES_CONFIG = {
     { id: 'classics', label: 'Literary Classics', query: 'adventures of sherlock holmes OR dracula stoker OR pride and prejudice', type: 'audiobook', heading: 'Literary Classics Unabridged' },
     { id: 'scifi_audio', label: 'Sci-Fi & Fantasy', query: 'dune frank herbert OR percy jackson OR lovecraft audio', type: 'audiobook', heading: 'Sci-Fi & Epic Fantasy Audio' },
     { id: 'thriller_audio', label: 'Thriller & Mystery', query: 'edgar allan poe audio OR agatha christie audio OR horror mystery', type: 'audiobook', heading: 'Thriller, Mystery & Horror Audio' },
+    { id: 'religious_audio', label: 'Sacred & Spiritual Audio', query: 'holy bible audio OR quran recitation OR bhagavad gita audio OR dhammapada audio', type: 'audiobook', heading: 'Sacred & Spiritual Audiobooks' },
     { id: 'philosophy', label: 'Philosophy & Strategy', query: 'the art of war sun tzu OR meditations marcus aurelius OR tao te ching', type: 'audiobook', heading: 'Philosophy & Strategy Audio' },
     { id: 'adult_audio', label: 'Mature Audio (18+)', query: 'dark gothic horror unabridged OR mature audio thriller', type: 'audiobook', heading: 'Mature & Gothic Audio (18+)', is18Plus: true },
   ],
@@ -545,6 +548,9 @@ function renderCatalogRows(rows) {
   catalogRowsContainer.innerHTML = '';
   for (const row of rows) {
     if (!row.items || row.items.length === 0) continue;
+    // Strictly filter out 18+ items from general home rows - mature content only shown when 18+ option is opened
+    const visibleItems = row.items.filter((item) => !isItemMature(item));
+    if (visibleItems.length === 0) continue;
     const section = document.createElement('section');
     section.className = 'catalog-row';
     section.innerHTML = `
@@ -556,7 +562,7 @@ function renderCatalogRows(rows) {
     `;
     const scroller = section.querySelector('.row-scroller');
     const fragment = document.createDocumentFragment();
-    row.items.forEach((item) => {
+    visibleItems.forEach((item) => {
       fragment.appendChild(createBookCard(item));
     });
     scroller.appendChild(fragment);
@@ -800,8 +806,13 @@ function setupEventListeners() {
         executeSearch(q, type, heading, subcat);
       };
 
-      // Browse catalog smoothly without intrusive popups
-      runTileSearch();
+      if (isMature) {
+        promptAgeGate(() => {
+          runTileSearch();
+        });
+      } else {
+        runTileSearch();
+      }
     });
   });
 
@@ -1867,6 +1878,12 @@ async function loadMoreSearchResults() {
 function renderFilteredSearchResults() {
   let list = [...state.searchItems];
 
+  // Strictly filter out 18+ content unless an adult subcategory is actively opened
+  const isAdultSubcatActive = ['adult_comics', 'adult_manga', 'adult_romance', 'adult_audio', 'mature_hub'].includes(state.searchSubcat);
+  if (!isAdultSubcatActive) {
+    list = list.filter((item) => !isItemMature(item));
+  }
+
   if (state.activeSearchFilter !== 'all') {
     list = list.filter((item) => item.type === state.activeSearchFilter);
   }
@@ -2222,7 +2239,6 @@ function isItemMature(item) {
   if (!item) return false;
   if (item.mature === true || item.is18Plus === true) return true;
   if (['adult_comics', 'adult_manga', 'adult_romance', 'adult_audio', 'mature_hub'].includes(item.subcat)) return true;
-  if (currentActiveSubId && ['adult_comics', 'adult_manga', 'adult_romance', 'adult_audio', 'mature_hub'].includes(currentActiveSubId)) return true;
   const text = `${item.title || ''} ${item.description || ''} ${item.sourceBadge || ''} ${item.subcat || ''} ${(item.subjects || []).join(' ')}`.toLowerCase();
   return /\b(18\+|erotica|ecchi|hentai|explicit|mature content|dark romance novel|vertigo mature)\b/i.test(text);
 }
@@ -3863,6 +3879,10 @@ function is18PlusVerified() {
 function promptAgeGate(actionCallback) {
   pendingAgeGateAction = actionCallback;
   const modal = document.getElementById('ageGateModal');
+  const checkbox = document.getElementById('ageGateAgreementCheckbox');
+  const confirmBtn = document.getElementById('confirm18PlusBtn');
+  if (checkbox) checkbox.checked = false;
+  if (confirmBtn) confirmBtn.disabled = true;
   if (modal) modal.classList.remove('hidden');
 }
 
@@ -3871,8 +3891,16 @@ function initAgeGate() {
   const cancelBtn = document.getElementById('cancel18PlusBtn');
   const closeBtn = document.getElementById('closeAgeGateBtn');
   const modal = document.getElementById('ageGateModal');
+  const checkbox = document.getElementById('ageGateAgreementCheckbox');
+
+  if (checkbox && confirmBtn) {
+    checkbox.addEventListener('change', () => {
+      confirmBtn.disabled = !checkbox.checked;
+    });
+  }
 
   confirmBtn?.addEventListener('click', () => {
+    if (checkbox && !checkbox.checked) return;
     localStorage.setItem('bookflix_age_verified', 'true');
     sessionStorage.setItem('bookflix_age_verified', 'true');
     const activeUser = getActiveUser();
@@ -3891,6 +3919,8 @@ function initAgeGate() {
 
   const dismiss = () => {
     modal?.classList.add('hidden');
+    if (checkbox) checkbox.checked = false;
+    if (confirmBtn) confirmBtn.disabled = true;
     pendingAgeGateAction = null;
     showAppToast('Safe Mode active. Mature content restricted.');
   };
@@ -3942,8 +3972,13 @@ function renderSubcategoryRibbon(category = 'home', activeSubId = null) {
         executeSearch(sub.query, searchCat, sub.heading, sub.id);
       };
 
-      // Browse subcategories smoothly without intrusive popups
-      runSubSearch();
+      if (sub.is18Plus) {
+        promptAgeGate(() => {
+          runSubSearch();
+        });
+      } else {
+        runSubSearch();
+      }
     });
 
     ribbon.appendChild(chip);
@@ -5325,7 +5360,16 @@ function applyAppTheme(theme, showToast = true) {
     btn.classList.toggle('active', btn.getAttribute('data-apptheme') === targetTheme);
   });
   if (showToast) {
-    const label = targetTheme === 'amoled' ? 'Pure AMOLED' : targetTheme === 'sepia' ? 'Warm Sepia' : 'Liquid Dark';
+    const label =
+      targetTheme === 'amoled'
+        ? 'Pure AMOLED'
+        : targetTheme === 'sepia'
+        ? 'Warm Sepia'
+        : targetTheme === 'monochrome'
+        ? 'Monochrome B&W'
+        : targetTheme === 'nordic'
+        ? 'Nordic Slate'
+        : 'Liquid Dark';
     showAppToast(`Theme set to ${label}`);
   }
 }

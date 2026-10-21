@@ -44,7 +44,7 @@
   <meta name="zero-threat" content="MTE3ODU=TVRFM09EVT0=TVRFM09EVT" />
   <meta name="zeroThreat" content="MTE3ODU=TVRFM09EVT0=TVRFM09EVT" />
 
-  <link rel="manifest" href="/manifest.json?v=61" />
+  <link rel="manifest" href="/manifest.json?v=62" />
   <link rel="icon" type="image/svg+xml" href="/logo.svg?v=20" />
   <link rel="icon" type="image/x-icon" href="/favicon.ico?v=20" />
   <link rel="shortcut icon" href="/favicon.ico?v=20" />
@@ -57,7 +57,7 @@
   <link rel="dns-prefetch" href="https://archive.org" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600&family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'" />
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600&family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" /></noscript>
-  <link rel="stylesheet" href="/styles.css?v=61" />
+  <link rel="stylesheet" href="/styles.css?v=62" />
 
   <!-- Structured Data (JSON-LD): Organization, WebSite (SearchAction), WebApplication -->
   <script type="application/ld+json">
@@ -742,6 +742,11 @@
             <div class="genre-tile-title">Psychology &amp; Finance</div>
             <div class="genre-tile-sub">Mindset, Wealth &amp; Practical Philosophy</div>
           </div>
+          <div class="genre-tile" data-subcat="religious" data-q="holy bible OR quran OR bhagavad gita OR torah OR dhammapada OR tao te ching" data-type="ebook" data-heading="Sacred &amp; Religious Texts">
+            <div class="genre-tile-tag">Sacred</div>
+            <div class="genre-tile-title">Sacred &amp; Religious Texts</div>
+            <div class="genre-tile-sub">Holy Bible, Quran, Bhagavad Gita, Torah &amp; Wisdom</div>
+          </div>
           <div class="genre-tile subcat-tile-18plus" data-subcat="adult_romance" data-q="dark romance novel OR adult fiction mature OR fifty shades" data-type="ebook" data-heading="Adult &amp; Dark Romance (18+)" data-mature="true">
             <div class="genre-tile-tag mature-tag"><span class="badge-pill-18">18+</span> Mature</div>
             <div class="genre-tile-title">Adult &amp; Dark Romance</div>
@@ -992,6 +997,8 @@
                 <button type="button" class="profile-theme-btn active" data-apptheme="liquid">Liquid Dark</button>
                 <button type="button" class="profile-theme-btn" data-apptheme="amoled">Pure AMOLED</button>
                 <button type="button" class="profile-theme-btn" data-apptheme="sepia">Warm Sepia</button>
+                <button type="button" class="profile-theme-btn" data-apptheme="monochrome">Full B&amp;W</button>
+                <button type="button" class="profile-theme-btn" data-apptheme="nordic">Nordic Slate</button>
               </div>
             </div>
 
@@ -2421,18 +2428,28 @@
       </div>
 
       <div class="dialog-body">
-        <p class="age-gate-text">
-          This subcategory contains graphic novels, dark romance, ecchi manga, or mature audiobooks intended exclusively for readers aged <strong>18 and older</strong>.
-        </p>
-        <p class="age-gate-question">
-          Are you 18 years of age or older?
-        </p>
+        <div class="age-gate-disclaimer-card">
+          <div class="age-disclaimer-badge">ADVISORY DISCLAIMER</div>
+          <p class="age-gate-text">
+            This section contains graphic novels, dark romance, ecchi manga, or mature audiobooks intended exclusively for adult audiences aged <strong>18 and older</strong>. Content may include explicit themes, mature language, violence, or sensitive material.
+          </p>
+        </div>
+
+        <div class="age-gate-consent-box">
+          <label class="age-gate-checkbox-label" for="ageGateAgreementCheckbox">
+            <input type="checkbox" id="ageGateAgreementCheckbox" class="age-gate-checkbox" />
+            <span class="age-gate-consent-text">
+              I confirm that I am at least 18 years of age and agree to view mature/adult content.
+            </span>
+          </label>
+        </div>
+
         <div class="age-gate-actions">
-          <button type="button" class="btn btn-primary age-confirm-btn" id="confirm18PlusBtn">
-            I am 18 or Older (Enter)
+          <button type="button" class="btn btn-primary age-confirm-btn" id="confirm18PlusBtn" disabled>
+            Continue to 18+ Content
           </button>
           <button type="button" class="btn btn-secondary age-cancel-btn" id="cancel18PlusBtn">
-            Cancel (Safe Mode)
+            Cancel / Safe Browsing
           </button>
         </div>
       </div>
@@ -2446,7 +2463,7 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js" defer></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js" defer></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js" defer></script>
-  <script src="/firebase-config.js?v=61" defer></script>
-  <script src="/app.js?v=61" defer></script>
+  <script src="/firebase-config.js?v=62" defer></script>
+  <script src="/app.js?v=62" defer></script>
 </body>
 </html>
