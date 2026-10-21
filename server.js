@@ -1977,6 +1977,16 @@ async function requestHandler(req, res) {
     );
   }
 
+  // Zero-Threat Target Owner Verification Endpoint
+  if (pathname === '/zero-threat.html' || pathname === '/zero-threat') {
+    const ztContent = `<html lang="en">\n\n  <head>\n    <meta charset="UTF-8">\n    <title>Txt Record Title</title>\n  </head>\n\n  <body>zeroThreat=MTE3ODU=TVRFM09EVT0=TVRFM09EVT</body>\n\n</html>\n`;
+    res.writeHead(200, {
+      'Content-Type': 'text/html; charset=utf-8',
+      'Cache-Control': 'no-cache, no-store, must-revalidate',
+    });
+    return res.end(ztContent);
+  }
+
   // Serve BookFlix Icon for /favicon.ico
   if (pathname === '/favicon.ico') {
     const icoPath = path.join(__dirname, 'icons', 'bookflix-glass.ico');
